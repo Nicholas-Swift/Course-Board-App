@@ -9,30 +9,27 @@
 import Foundation
 import UIKit
 
-class NewProductViewController: UIViewController {
+class NewProductViewController: UITableViewController {
+    
+    // Variables
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
-    @IBOutlet weak var scrollView: UIScrollView!
     
     // For ViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Change separator color to clear
+        tableView.separatorColor = UIColor.clearColor()
+        tableView.editing = false
+        
+        // Let the cells resize to the correct height based on information
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
         // Set up the side menu
         MenuViewController.setupViewController(self, menuButton: menuButton)
-        
-        // Make tap put keyboard down
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewProductViewController.dismissKeyboard))
-        view.addGestureRecognizer(tap)
-        
-        // Make scrollview go up when keyboard is up
-        registerKeyboardNotifications()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        unregisterKeyboardNotifications()
     }
     
     override func didReceiveMemoryWarning() {
@@ -40,39 +37,33 @@ class NewProductViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // Extra
+    // For TableView
     
-    func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
-        view.endEditing(true)
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
     }
     
-    func registerKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
     }
     
-    func unregisterKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
     
-    func keyboardDidShow(notification: NSNotification) {
-        let userInfo: NSDictionary = notification.userInfo!
-        let keyboardSize = userInfo.objectForKey(UIKeyboardFrameBeginUserInfoKey)!.CGRectValue.size
-        let contentInsets = UIEdgeInsetsMake(0, 0, keyboardSize.height, 0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // Set up the header cell
         
-        var viewRect = view.frame
-        viewRect.size.height -= keyboardSize.height
-        /*if CGRectContainsPoint(viewRect, textField.frame.origin) {
-            let scrollPoint = CGPointMake(0, textField.frame.origin.y - keyboardSize.height)
-            scrollView.setContentOffset(scrollPoint, animated: true)
-        }*/
+        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell")
+        
+        return cell
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        scrollView.contentInset = UIEdgeInsetsZero
-        scrollView.scrollIndicatorInsets = UIEdgeInsetsZero
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        // Set up the info cell
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell", forIndexPath: indexPath)
+        
+        return cell
     }
 }

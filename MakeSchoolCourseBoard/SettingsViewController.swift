@@ -20,8 +20,6 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // NOTE: Loading the courses is in CoursesViewController.swift
-        
         // Change separator color to clear
         tableView.separatorColor = UIColor.clearColor()
         tableView.editing = false

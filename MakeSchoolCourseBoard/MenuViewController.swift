@@ -68,6 +68,7 @@ class MenuViewController: UITableViewController {
         if indexPath.row != 0 {
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! MenuCell
             let str = cell.menuLabel.text! + "Segue"
+            print(str)
             
             performSegueWithIdentifier(str, sender: self)
         }

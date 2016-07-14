@@ -21,8 +21,8 @@ class AccountViewController: UITableViewController {
         super.viewDidLoad()
         
         // Change separator color to clear
-        tableView.separatorColor = UIColor.clearColor()
-        tableView.editing = false
+//        tableView.separatorColor = UIColor.clearColor()
+//        tableView.editing = false
         
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 100
@@ -40,7 +40,7 @@ class AccountViewController: UITableViewController {
     // For TableView
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -70,13 +70,12 @@ class AccountViewController: UITableViewController {
         case 1:
             str = "LinkCell"
         case 2:
-            str = "Link Cell"
+            str = "LinkCell"
         case 3:
             str = "AnouncementCell"
         default:
             break
         }
-        print(str)
         
         let cell = tableView.dequeueReusableCellWithIdentifier(str)
         return cell!
