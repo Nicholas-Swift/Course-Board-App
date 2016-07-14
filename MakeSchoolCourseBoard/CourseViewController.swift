@@ -12,20 +12,15 @@ import UIKit
 class CourseViewController: UITableViewController {
     
     // Variables
-    var courses: [Course] = []
-    var headerText = ["Instructor", "Date", "Hours Per Week", "Location", "Objectives", "Description", "Anouncements"]
+    var dictionary: [String: [String]!] = [:]
+    var array: [String]!
     
     // For ViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Get courses
-        JSONHelper.getCourses { (returnCourses, error) in
-            if let returnCourses = returnCourses {
-                self.courses = returnCourses
-            }
-        }
+        // NOTE: Loading the courses is in CoursesViewController.swift
         
         // Change separator color to clear
         tableView.separatorColor = UIColor.clearColor()
@@ -44,11 +39,13 @@ class CourseViewController: UITableViewController {
     // For TableView
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return headerText.count
+        return dictionary.keys.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rowText[section].count
+        let myNum = dictionary[array[section]]!.count
+        
+        return myNum
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -59,19 +56,20 @@ class CourseViewController: UITableViewController {
         // Set up the header cell
         
         let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderTableViewCell
-        cell.headerTitle.text = headerText[section]
+        
+        cell.headerTitle.text = array[section]
         
         return cell
     }
-    
-    var temp = 0
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set up the info cell
         
         let cell = tableView.dequeueReusableCellWithIdentifier("InfoCell", forIndexPath: indexPath) as! CourseInfoTableViewCell
-        cell.informationLabel.text = rowStuff[temp]
-        temp += 1
+        
+        let myInfo = dictionary[array[indexPath.section]]![indexPath.row]
+        
+        cell.informationLabel.text = myInfo
         
         return cell
     }

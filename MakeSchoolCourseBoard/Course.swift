@@ -42,6 +42,10 @@ class Course {
     
     var posts: [String]!
     
+    // FOR SEGUEING VIEWS!!!
+    var segueDictionary: [String: [String]!]!
+    var segueArray: [String]!
+    
     /*, user          : { type: Schema.Types.ObjectId, ref: 'User', required: true }
     , instructor    : { type: Schema.Types.ObjectId, ref: 'User', required: true }
     , students      : [{ type: Schema.Types.ObjectId, ref: 'User' }]

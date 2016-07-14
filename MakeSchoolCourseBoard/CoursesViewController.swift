@@ -63,6 +63,18 @@ class CoursesViewController: UITableViewController {
     
     // For Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //do stuff
+        
+        let destination = segue.destinationViewController as! CourseViewController
+        
+        let indexPath = tableView.indexPathForSelectedRow
+        let course = courses[indexPath!.row]
+        
+        let dictionary: [String: [String]!] = ["Instructor": [course.instructor], "Date": [course.startsOn + "-" + course.endsOn], "Hours Per Week": [course.hours], "Location": [course.location], "Objectives": course.objectives, "Description": [course.description], "Anouncements": course.posts]
+        let array: [String] = ["Instructor", "Date", "Hours Per Week", "Location", "Objectives", "Description", "Anouncements"]
+        
+        destination.title = course.title
+        destination.dictionary = dictionary
+        destination.array = array
+        
     }
 }

@@ -169,8 +169,8 @@
 		0170D3201D3593A00008BB0C /* MoreViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				0170D3211D3593BB0008BB0C /* ProductViewController.swift */,
 				0148A4861D36BFD3002A8D78 /* CourseViewController.swift */,
+				0170D3211D3593BB0008BB0C /* ProductViewController.swift */,
 			);
 			name = MoreViewControllers;
 			sourceTree = "<group>";

@@ -12,12 +12,15 @@ import UIKit
 class ProductViewController: UITableViewController {
     
     // Variables
-    let headerText = ["What problem are you solving?", "Objectives", "Advisor", "Course", "Contributors", "External Links"]
+    var dictionary: [String: [String]!] = [:]
+    var array: [String]! = []
     
     // For ViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // NOTE: Loading the product is in ProductViewController.swift
         
         // Change separator color to clear
         tableView.separatorColor = UIColor.clearColor()
@@ -36,11 +39,11 @@ class ProductViewController: UITableViewController {
     // For TableView
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return headerText.count
+        return array.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rowText[section].count
+        return dictionary[array[section]]!.count
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -51,22 +54,17 @@ class ProductViewController: UITableViewController {
         // Set up the header cell
         
         let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! ProductHeaderTableViewCell
-        cell.headerTitle.text = headerText[section]
+        cell.headerTitle.text = array[section]
         
         return cell
     }
-    
-    var temp = 0
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set up the info cell
         
         let cell = tableView.dequeueReusableCellWithIdentifier("InfoCell", forIndexPath: indexPath) as! ProductInfoTableViewCell
-        cell.informationLabel.text = rowStuff[temp]
-        
-        if temp < rowStuff.count {
-            temp += 1
-        }
+        let myInfo = dictionary[array[indexPath.section]]![indexPath.row]
+        cell.informationLabel.text = myInfo
         
         return cell
     }

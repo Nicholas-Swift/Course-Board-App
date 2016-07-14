@@ -108,9 +108,9 @@ class JSONHelper {
                         product.finishedProduct = String!
                         product.mvp = String!*/
                         
-                        //product.course = String!
+                        product.course = ""
                         product.instructor = json[i]["instructor"]["fullname"].stringValue
-                        //product.contributors = String!
+                        product.contributors = ""
                         
                         products.append(product)
                     }
