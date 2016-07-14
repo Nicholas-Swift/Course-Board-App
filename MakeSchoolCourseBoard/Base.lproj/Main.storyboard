@@ -21,7 +21,7 @@
                     </view>
                     <connections>
                         <segue destination="0MH-uA-7JA" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="BCb-tX-tJx"/>
-                        <segue destination="tCK-De-O1o" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="nMH-6I-Rbm"/>
+                        <segue destination="WDr-cY-PF7" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="MGi-g0-Zzx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -170,11 +170,11 @@
             </objects>
             <point key="canvasLocation" x="2887" y="400"/>
         </scene>
-        <!--Item-->
+        <!--Products-->
         <scene sceneID="B1K-Ar-iA1">
             <objects>
                 <navigationController id="Ffn-19-BbM" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Plo-6z-ysr"/>
+                    <tabBarItem key="tabBarItem" title="Products" image="menu" id="Plo-6z-ysr"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="b53-X9-Xad">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -281,23 +281,16 @@
                             <outlet property="delegate" destination="0MH-uA-7JA" id="aE7-q6-8pK"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <segue destination="fLW-Ur-csD" kind="custom" identifier="CoursesSegue" customClass="SWRevealViewControllerSeguePushController" id="hBV-f6-LMU"/>
-                        <segue destination="Ffn-19-BbM" kind="custom" identifier="All ProductsSegue" customClass="SWRevealViewControllerSeguePushController" id="RLh-R3-84U"/>
-                        <segue destination="TRN-1h-Vxg" kind="custom" identifier="New CourseSegue" customClass="SWRevealViewControllerSeguePushController" id="MRO-VP-Dst"/>
-                        <segue destination="NLT-DG-nUm" kind="custom" identifier="New ProductSegue" customClass="SWRevealViewControllerSeguePushController" id="tlj-l9-WS9"/>
-                        <segue destination="tCK-De-O1o" kind="custom" identifier="AccountSegue" customClass="SWRevealViewControllerSegueSetController" id="LiZ-My-IUz"/>
-                        <segue destination="CiA-FX-ALO" kind="custom" identifier="SettingsSegue" customClass="SWRevealViewControllerSeguePushController" id="aKZ-lb-hwe"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IYJ-D4-JEn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-335" y="1183"/>
+            <point key="canvasLocation" x="-335" y="1147"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--New Course-->
         <scene sceneID="3KM-Og-5Fh">
             <objects>
                 <navigationController id="TRN-1h-Vxg" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="New Course" image="menu" id="ys1-ak-aTa"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mkU-lD-MdM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -546,11 +539,11 @@
             </objects>
             <point key="canvasLocation" x="2887" y="-376"/>
         </scene>
-        <!--Item-->
+        <!--Courses-->
         <scene sceneID="FEc-Ig-hOj">
             <objects>
                 <navigationController id="fLW-Ur-csD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="4ce-c8-tYO"/>
+                    <tabBarItem key="tabBarItem" title="Courses" image="menu" id="4ce-c8-tYO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7cV-F0-P4B">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -563,10 +556,11 @@
             </objects>
             <point key="canvasLocation" x="1292" y="-376"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Account-->
         <scene sceneID="Cdn-yM-RoM">
             <objects>
                 <navigationController id="tCK-De-O1o" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Account" image="menu" id="nkj-ii-C85"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tMC-kd-nrk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -734,10 +728,11 @@
             </objects>
             <point key="canvasLocation" x="2111" y="2750"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Item-->
         <scene sceneID="PZj-Hp-r22">
             <objects>
                 <navigationController id="CiA-FX-ALO" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="N5Y-lp-hhO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QaA-L4-ipy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -826,10 +821,32 @@
             </objects>
             <point key="canvasLocation" x="2111" y="3505"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Tab Bar Controller-->
+        <scene sceneID="qNj-xe-DiO">
+            <objects>
+                <tabBarController id="WDr-cY-PF7" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="lae-te-G8d">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="fLW-Ur-csD" kind="relationship" relationship="viewControllers" id="eO4-bX-KET"/>
+                        <segue destination="Ffn-19-BbM" kind="relationship" relationship="viewControllers" id="XCJ-4a-FPq"/>
+                        <segue destination="TRN-1h-Vxg" kind="relationship" relationship="viewControllers" id="MkP-tK-wkM"/>
+                        <segue destination="NLT-DG-nUm" kind="relationship" relationship="viewControllers" id="ol4-RM-Axe"/>
+                        <segue destination="tCK-De-O1o" kind="relationship" relationship="viewControllers" id="CYO-El-Lgy"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LPD-le-Tg3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-335" y="1911"/>
+        </scene>
+        <!--New Product-->
         <scene sceneID="LO6-be-aaF">
             <objects>
                 <navigationController id="NLT-DG-nUm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="New Product" image="menu" id="2ny-nj-Zrc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JEC-1W-4aY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -924,7 +941,4 @@
         <image name="menu" width="22" height="22"/>
         <image name="profilepic" width="140" height="140"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="nMH-6I-Rbm"/>
-    </inferredMetricsTieBreakers>
 </document>
