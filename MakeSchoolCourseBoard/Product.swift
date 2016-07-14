@@ -26,7 +26,7 @@ class Product {
     
     var course: String!
     var instructor: String!
-    var contributors: String!
+    var contributors: [String]!
     
     // , posts         : [{ type: Schema.Types.ObjectId, ref: 'Post' }]
 }

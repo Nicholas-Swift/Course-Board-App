@@ -64,7 +64,7 @@ class AllProductsViewController: UITableViewController {
         let indexPath = tableView.indexPathForSelectedRow
         let product = products[indexPath!.row]
         
-        let dictionary: [String: [String]!] = ["What problem are you solving?": [product.problem], "Objectives": [product.valueProp], "Advisor": [product.instructor], "Course": [product.course], "Contributors": [product.contributors], "External Links": [product.githubUrl, product.agileUrl, product.lvieurl]]
+        let dictionary: [String: [String]!] = ["What problem are you solving?": [product.problem], "Objectives": [product.valueProp], "Advisor": [product.instructor], "Course": [product.course], "Contributors": product.contributors, "External Links": [product.githubUrl, product.agileUrl, product.lvieurl]]
         let array: [String] = ["What problem are you solving?", "Objectives", "Advisor", "Course", "Contributors", "External Links"]
         
         destination.title = product.name

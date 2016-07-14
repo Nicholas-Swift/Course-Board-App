@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		010B03E31D383CEE001472F3 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010B03E21D383CEE001472F3 /* DateHelper.swift */; };
 		0113B0801D36E1F5003AD618 /* CourseInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0113B07F1D36E1F5003AD618 /* CourseInfoTableViewCell.swift */; };
 		0113B0821D36EA31003AD618 /* ProductHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0113B0811D36EA31003AD618 /* ProductHeaderTableViewCell.swift */; };
 		0113B0841D36EA44003AD618 /* ProductInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0113B0831D36EA44003AD618 /* ProductInfoTableViewCell.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		010B03E21D383CEE001472F3 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		0113B07F1D36E1F5003AD618 /* CourseInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseInfoTableViewCell.swift; sourceTree = "<group>"; };
 		0113B0811D36EA31003AD618 /* ProductHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		0113B0831D36EA44003AD618 /* ProductInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			children = (
 				0148A4841D36BD37002A8D78 /* KeyboardHelper.swift */,
 				0113B0851D36EB93003AD618 /* JSONHelper.swift */,
+				010B03E21D383CEE001472F3 /* DateHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				010B03E31D383CEE001472F3 /* DateHelper.swift in Sources */,
 				0113B0861D36EB93003AD618 /* JSONHelper.swift in Sources */,
 				0148A48C1D36D857002A8D78 /* Course.swift in Sources */,
 				01A24ACC1D35B5F90050B184 /* MenuCell.swift in Sources */,

@@ -41,6 +41,7 @@ class JSONHelper {
                         course.duration = json[i]["duration"].stringValue
                         
                         course.startsOn = json[i]["startsOn"].stringValue
+                        
                         /*course.startsOnDay: String!
                         course.startsOnMonth: String!
                         course.startsOnYear: String!*/
@@ -52,9 +53,9 @@ class JSONHelper {
                         
                         course.hours = json[i]["hours"].stringValue
                         course.location = json[i]["location"].stringValue // NO LOCATION YET?
-                        course.objectives = json[i]["objectives"].stringValue.componentsSeparatedByString(",")
+                        course.objectives = json[i]["objectives"].arrayValue.map{$0.string!}
                         
-                        course.posts = json[i]["posts"].stringValue.componentsSeparatedByString(",")
+                        course.posts = json[i]["posts"].arrayValue.map{$0.string!}
                         
                         courses.append(course)
                     }
@@ -110,7 +111,7 @@ class JSONHelper {
                         
                         product.course = ""
                         product.instructor = json[i]["instructor"]["fullname"].stringValue
-                        product.contributors = ""
+                        product.contributors = json[i]["contributors"].arrayValue.map {$0.string!}
                         
                         products.append(product)
                     }

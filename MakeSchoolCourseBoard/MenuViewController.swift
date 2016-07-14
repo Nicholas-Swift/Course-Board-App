@@ -38,7 +38,7 @@ class MenuViewController: UITableViewController {
     // For TableView
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return 5
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -55,7 +55,7 @@ class MenuViewController: UITableViewController {
         else {
             let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell") as! MenuCell
             
-            let textArray = ["Courses", "All Products", "New Course", "New Product", "Account", "Settings"]
+            let textArray = ["Dashboard", "Contact", "Settings", "Logout"]
             
             cell.menuLabel.text = textArray[indexPath.row - 1]
             
