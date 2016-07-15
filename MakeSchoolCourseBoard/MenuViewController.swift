@@ -38,7 +38,7 @@ class MenuViewController: UITableViewController {
     // For TableView
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -55,7 +55,7 @@ class MenuViewController: UITableViewController {
         else {
             let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell") as! MenuCell
             
-            let textArray = ["Dashboard", "Contact", "Settings", "Logout"]
+            let textArray = ["Dashboard", "Settings", "Logout"]
             
             cell.menuLabel.text = textArray[indexPath.row - 1]
             
@@ -65,12 +65,11 @@ class MenuViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if indexPath.row != 0 {
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as! MenuCell
-            let str = cell.menuLabel.text! + "Segue"
-            print(str)
-            
-            performSegueWithIdentifier(str, sender: self)
+        if indexPath.row == 1 {
+            performSegueWithIdentifier("DashboardSegue", sender: self)
+        }
+        else if indexPath.row == 2 {
+            performSegueWithIdentifier("SettingsSegue", sender: self)
         }
     }
     

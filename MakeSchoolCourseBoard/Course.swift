@@ -17,7 +17,6 @@ class Course {
     
     var title: String!
     var description: String!
-    var instructor: String!
     var duration: String!
     
     var startsOn: String!
@@ -40,15 +39,13 @@ class Course {
     var location: String!
     var objectives: [String]!
     
-    var posts: [String]!
+    //var user: User!
+    var instructor: String!
+    //var students: [User]!
+    //var posts: [Post]!
+    //var products: [Product]!
     
     // FOR SEGUEING VIEWS!!!
     var segueDictionary: [String: [String]!]!
     var segueArray: [String]!
-    
-    /*, user          : { type: Schema.Types.ObjectId, ref: 'User', required: true }
-    , instructor    : { type: Schema.Types.ObjectId, ref: 'User', required: true }
-    , students      : [{ type: Schema.Types.ObjectId, ref: 'User' }]
-    , posts         : [{ type: Schema.Types.ObjectId, ref: 'Post' }]
-    , products      : [{ type: Schema.Types.ObjectId, ref: 'Product' }]*/
 }

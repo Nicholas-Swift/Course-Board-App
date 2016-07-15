@@ -28,7 +28,7 @@ class JSONHelper {
                     
                     var courses = [Course]()
                     for i in 0...(json.count-1) {
-                        //print(json)
+                        print(json)
                         
                         let course = Course()
                         
@@ -37,11 +37,9 @@ class JSONHelper {
                         
                         course.title = json[i]["title"].stringValue
                         course.description = json[i]["description"].stringValue
-                        course.instructor = json[i]["instructor"]["fullname"].stringValue
                         course.duration = json[i]["duration"].stringValue
                         
                         course.startsOn = json[i]["startsOn"].stringValue
-                        
                         /*course.startsOnDay: String!
                         course.startsOnMonth: String!
                         course.startsOnYear: String!*/
@@ -55,7 +53,13 @@ class JSONHelper {
                         course.location = json[i]["location"].stringValue // NO LOCATION YET?
                         course.objectives = json[i]["objectives"].arrayValue.map{$0.string!}
                         
-                        course.posts = json[i]["posts"].arrayValue.map{$0.string!}
+                        //course.user = json[i]["user"]
+                        course.instructor = json[i]["instructor"]["fullname"].stringValue
+                        //course.students = json[i]["students"]
+                        //course.posts = json[i]["posts"]
+                        //course.products = json[i]["products"]
+                        
+                        //course.posts = json[i]["posts"].arrayValue.map{$0.string!}
                         
                         courses.append(course)
                     }

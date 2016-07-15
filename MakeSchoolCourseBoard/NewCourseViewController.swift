@@ -14,6 +14,8 @@ class NewCourseViewController: UITableViewController {
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
+    let newCourseArray = ["Title*", "Instructor", "Start Date", "End Date", "Location", "Hours per Week", "Desciption", "Objectives"]
+    
     // For ViewController
     
     override func viewDidLoad() {
@@ -29,6 +31,10 @@ class NewCourseViewController: UITableViewController {
         
         // Set up the side menu
         MenuViewController.setupViewController(self, menuButton: menuButton)
+        
+        // Dismiss keyboard on tap!
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewCourseViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,7 +49,7 @@ class NewCourseViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return newCourseArray.count + 1
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -61,8 +67,22 @@ class NewCourseViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set up the info cell
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell", forIndexPath: indexPath)
+        if indexPath.row == newCourseArray.count {
+            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell")
+            return cell!
+        }
+        else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell", forIndexPath: indexPath) as! NewCourseFieldCell
+            cell.courseTextLabel.text = newCourseArray[indexPath.row]
+            
+            return cell
+        }
+    }
+    
+    // For Keyboard
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
         
-        return cell
+        view.endEditing(true)
     }
 }

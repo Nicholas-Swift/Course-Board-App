@@ -49,7 +49,7 @@ class CourseViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 40
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -60,6 +60,10 @@ class CourseViewController: UITableViewController {
         cell.headerTitle.text = array[section]
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5.0 // To change the footer so it's not so big!
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
