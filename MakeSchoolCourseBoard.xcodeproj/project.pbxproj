@@ -20,6 +20,9 @@
 		0148A4871D36BFD3002A8D78 /* CourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0148A4861D36BFD3002A8D78 /* CourseViewController.swift */; };
 		0148A4891D36D661002A8D78 /* CourseHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0148A4881D36D661002A8D78 /* CourseHeaderTableViewCell.swift */; };
 		0148A48C1D36D857002A8D78 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0148A48B1D36D857002A8D78 /* Course.swift */; };
+		014EA5861D3EA3FB00E036EE /* ProductButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014EA5851D3EA3FB00E036EE /* ProductButtonTableViewCell.swift */; };
+		014EA5881D3EC0D500E036EE /* AccountNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014EA5871D3EC0D500E036EE /* AccountNameTableViewCell.swift */; };
+		014EA58A1D3EC53500E036EE /* AccountCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014EA5891D3EC53500E036EE /* AccountCourseTableViewCell.swift */; };
 		0170D2FB1D35690D0008BB0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0170D2FA1D35690D0008BB0C /* AppDelegate.swift */; };
 		0170D2FD1D35690D0008BB0C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0170D2FC1D35690D0008BB0C /* ViewController.swift */; };
 		0170D3001D35690D0008BB0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0170D2FE1D35690D0008BB0C /* Main.storyboard */; };
@@ -34,10 +37,13 @@
 		0170D31D1D3570000008BB0C /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0170D31C1D3570000008BB0C /* AccountViewController.swift */; };
 		0170D31F1D35700B0008BB0C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0170D31E1D35700B0008BB0C /* SettingsViewController.swift */; };
 		0170D3221D3593BB0008BB0C /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0170D3211D3593BB0008BB0C /* ProductViewController.swift */; };
+		01818C931D3E937C006E47B1 /* CourseButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01818C921D3E937C006E47B1 /* CourseButtonTableViewCell.swift */; };
 		01A24ACA1D35ADE00050B184 /* MenuProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A24AC91D35ADE00050B184 /* MenuProfileCell.swift */; };
 		01A24ACC1D35B5F90050B184 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A24ACB1D35B5F90050B184 /* MenuCell.swift */; };
 		01A2CB7C1D394E1F000EDD2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7B1D394E1F000EDD2B /* User.swift */; };
 		01A2CB7E1D394E2F000EDD2B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7D1D394E2F000EDD2B /* Post.swift */; };
+		01C1D22A1D3EE4970011C7FF /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1D2291D3EE4970011C7FF /* LoginHelper.swift */; };
+		01EB026C1D3D8D4A00F941CF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EB026B1D3D8D4A00F941CF /* SignInViewController.swift */; };
 		16E0890B392B59E29BB32378 /* Pods_MakeSchoolCourseBoard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783BC9D4F3BF09749A0CBC29 /* Pods_MakeSchoolCourseBoard.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +61,9 @@
 		0148A4861D36BFD3002A8D78 /* CourseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewController.swift; sourceTree = "<group>"; };
 		0148A4881D36D661002A8D78 /* CourseHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		0148A48B1D36D857002A8D78 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		014EA5851D3EA3FB00E036EE /* ProductButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductButtonTableViewCell.swift; sourceTree = "<group>"; };
+		014EA5871D3EC0D500E036EE /* AccountNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountNameTableViewCell.swift; sourceTree = "<group>"; };
+		014EA5891D3EC53500E036EE /* AccountCourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCourseTableViewCell.swift; sourceTree = "<group>"; };
 		0170D2F71D35690D0008BB0C /* MakeSchoolCourseBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeSchoolCourseBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0170D2FA1D35690D0008BB0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0170D2FC1D35690D0008BB0C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -73,10 +82,13 @@
 		0170D31C1D3570000008BB0C /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		0170D31E1D35700B0008BB0C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		0170D3211D3593BB0008BB0C /* ProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		01818C921D3E937C006E47B1 /* CourseButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseButtonTableViewCell.swift; sourceTree = "<group>"; };
 		01A24AC91D35ADE00050B184 /* MenuProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuProfileCell.swift; sourceTree = "<group>"; };
 		01A24ACB1D35B5F90050B184 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		01A2CB7B1D394E1F000EDD2B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		01A2CB7D1D394E2F000EDD2B /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		01C1D2291D3EE4970011C7FF /* LoginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
+		01EB026B1D3D8D4A00F941CF /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		4C8892FB9CD80C05AC2A1A24 /* Pods-MakeSchoolCourseBoard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeSchoolCourseBoard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MakeSchoolCourseBoard/Pods-MakeSchoolCourseBoard.debug.xcconfig"; sourceTree = "<group>"; };
 		783BC9D4F3BF09749A0CBC29 /* Pods_MakeSchoolCourseBoard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeSchoolCourseBoard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF6CF268DE42CF6FFD1C939D /* Pods-MakeSchoolCourseBoard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeSchoolCourseBoard.release.xcconfig"; path = "Pods/Target Support Files/Pods-MakeSchoolCourseBoard/Pods-MakeSchoolCourseBoard.release.xcconfig"; sourceTree = "<group>"; };
@@ -97,6 +109,7 @@
 		0148A4831D36BD29002A8D78 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				01C1D2291D3EE4970011C7FF /* LoginHelper.swift */,
 				0113B0851D36EB93003AD618 /* JSONHelper.swift */,
 				010B03E21D383CEE001472F3 /* DateHelper.swift */,
 			);
@@ -172,6 +185,7 @@
 				0170D31A1D356FEE0008BB0C /* NewProductViewController.swift */,
 				0170D31C1D3570000008BB0C /* AccountViewController.swift */,
 				0170D31E1D35700B0008BB0C /* SettingsViewController.swift */,
+				01EB026B1D3D8D4A00F941CF /* SignInViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -190,8 +204,10 @@
 			children = (
 				0148A4881D36D661002A8D78 /* CourseHeaderTableViewCell.swift */,
 				0113B07F1D36E1F5003AD618 /* CourseInfoTableViewCell.swift */,
+				01818C921D3E937C006E47B1 /* CourseButtonTableViewCell.swift */,
 				0113B0811D36EA31003AD618 /* ProductHeaderTableViewCell.swift */,
 				0113B0831D36EA44003AD618 /* ProductInfoTableViewCell.swift */,
+				014EA5851D3EA3FB00E036EE /* ProductButtonTableViewCell.swift */,
 			);
 			name = MoreViews;
 			sourceTree = "<group>";
@@ -205,6 +221,8 @@
 				0113B08B1D36F87B003AD618 /* ProductCell.swift */,
 				013838BC1D397F7300C354BE /* NewCourseFieldCell.swift */,
 				013838BE1D39905400C354BE /* NewProductFieldCell.swift */,
+				014EA5871D3EC0D500E036EE /* AccountNameTableViewCell.swift */,
+				014EA5891D3EC53500E036EE /* AccountCourseTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -356,12 +374,17 @@
 				0148A48C1D36D857002A8D78 /* Course.swift in Sources */,
 				01A24ACC1D35B5F90050B184 /* MenuCell.swift in Sources */,
 				0113B0801D36E1F5003AD618 /* CourseInfoTableViewCell.swift in Sources */,
+				014EA58A1D3EC53500E036EE /* AccountCourseTableViewCell.swift in Sources */,
 				0170D3171D356FC90008BB0C /* AllProductsViewController.swift in Sources */,
 				0170D3191D356FD40008BB0C /* NewCourseViewController.swift in Sources */,
 				0170D2FD1D35690D0008BB0C /* ViewController.swift in Sources */,
+				014EA5881D3EC0D500E036EE /* AccountNameTableViewCell.swift in Sources */,
+				01EB026C1D3D8D4A00F941CF /* SignInViewController.swift in Sources */,
 				0170D3221D3593BB0008BB0C /* ProductViewController.swift in Sources */,
 				0148A4871D36BFD3002A8D78 /* CourseViewController.swift in Sources */,
 				0170D31F1D35700B0008BB0C /* SettingsViewController.swift in Sources */,
+				014EA5861D3EA3FB00E036EE /* ProductButtonTableViewCell.swift in Sources */,
+				01818C931D3E937C006E47B1 /* CourseButtonTableViewCell.swift in Sources */,
 				0113B0841D36EA44003AD618 /* ProductInfoTableViewCell.swift in Sources */,
 				0148A4891D36D661002A8D78 /* CourseHeaderTableViewCell.swift in Sources */,
 				0113B08A1D36F62C003AD618 /* Product.swift in Sources */,
@@ -375,6 +398,7 @@
 				01A24ACA1D35ADE00050B184 /* MenuProfileCell.swift in Sources */,
 				0113B08C1D36F87B003AD618 /* ProductCell.swift in Sources */,
 				01A2CB7E1D394E2F000EDD2B /* Post.swift in Sources */,
+				01C1D22A1D3EE4970011C7FF /* LoginHelper.swift in Sources */,
 				0170D3151D356FBB0008BB0C /* CoursesViewController.swift in Sources */,
 				0170D31D1D3570000008BB0C /* AccountViewController.swift in Sources */,
 			);

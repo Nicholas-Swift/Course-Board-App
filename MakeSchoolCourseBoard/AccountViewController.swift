@@ -15,20 +15,31 @@ class AccountViewController: UITableViewController {
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
+    let array = ["Info", "Courses", "Products", "Anouncements"]
+    var dict = ["Info": 1, "Courses": 0, "Products": 0, "Anouncements": 0]
+    var user = User()
+    
     // For ViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Change separator color to clear
-//        tableView.separatorColor = UIColor.clearColor()
-//        tableView.editing = false
-        
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        // For Menu
+        JSONHelper.getCurrentUser { (user, error) in
+            self.dict["Courses"] = user.courses.count
+            self.dict["Products"] = user.products.count
+            
+            self.user = user
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Set up the menu
         MenuViewController.setupViewController(self, menuButton: menuButton)
     }
     
@@ -44,41 +55,54 @@ class AccountViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return dict[array[section]] ?? 0
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return array[section]
+    }
+    
+    /*override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
-    }
+    }*/
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    /*override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Set up the header cell
         
         let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell")
         
         return cell
-    }
+    }*/
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set up the info cell
         
-        var str = "NameCell"
+        let mySection = array[indexPath.section]
         
-        switch indexPath.section {
-        case 0:
-            str = "NameCell"
-        case 1:
-            str = "LinkCell"
-        case 2:
-            str = "LinkCell"
-        case 3:
-            str = "AnouncementCell"
-        default:
-            break
+        if mySection == "Info" {
+            let cell = tableView.dequeueReusableCellWithIdentifier("NameCell") as! AccountNameTableViewCell
+            cell.fullNameLabel.text = user.fullname
+            cell.usernameLabel.text = user.username
+            return cell
         }
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier(str)
-        return cell!
+        else if mySection == "Courses" {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("LinkCell") as! AccountCourseTableViewCell
+            cell.linkButton.setTitle(user.courses[indexPath.row].title, forState: .Normal)
+            return cell
+        }
+        else if mySection == "Products" {
+            let cell = tableView.dequeueReusableCellWithIdentifier("LinkCell")
+            return cell!
+        }
+        else if mySection == "Anouncements" {
+            let cell = tableView.dequeueReusableCellWithIdentifier("AnouncementCell")
+            return cell!
+        }
+        else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("NameCell")
+            return cell!
+        }
     }
     
 }

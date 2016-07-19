@@ -22,10 +22,6 @@ class CourseViewController: UITableViewController {
         
         // NOTE: Loading the courses is in CoursesViewController.swift
         
-        // Change separator color to clear
-        tableView.separatorColor = UIColor.clearColor()
-        tableView.editing = false
-        
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -48,26 +44,25 @@ class CourseViewController: UITableViewController {
         return myNum
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // Set up the header cell
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderTableViewCell
-        
-        cell.headerTitle.text = array[section]
-        
-        return cell
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return array[section]
     }
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5.0 // To change the footer so it's not so big!
+        return 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set up the info cell
+        
+        if array[indexPath.section] == "Instructor" {
+            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell", forIndexPath: indexPath) as! CourseButtonTableViewCell
+            
+            let myInfo = dictionary[array[indexPath.section]]![indexPath.row]
+            cell.informationButton.setTitle(myInfo, forState: .Normal)
+            
+            return cell
+        }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("InfoCell", forIndexPath: indexPath) as! CourseInfoTableViewCell
         

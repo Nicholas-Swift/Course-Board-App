@@ -29,7 +29,10 @@ class AllProductsViewController: UITableViewController {
                 self.products = products
             }
         }
-        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Set up the menu
         MenuViewController.setupViewController(self, menuButton: menuButton)
     }
     

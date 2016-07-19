@@ -27,8 +27,10 @@ class SettingsViewController: UITableViewController {
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
-        
-        // For Menu
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Set up the menu
         MenuViewController.setupViewController(self, menuButton: menuButton)
     }
     

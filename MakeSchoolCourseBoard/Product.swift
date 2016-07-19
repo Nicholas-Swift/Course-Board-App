@@ -6,6 +6,8 @@
 //  Copyright © 2016 Nicholas Swift. All rights reserved.
 //
 
+// NEEDS TO BE UPDATED AND STUFF WILDLY!
+
 import Foundation
 
 class Product {

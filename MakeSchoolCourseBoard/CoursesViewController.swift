@@ -26,12 +26,15 @@ class CoursesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        JSONHelper.getCourses({ (courses, error) in
+        JSONHelper.getAllCourses({ (courses, error) in
             if let courses = courses {
                 self.courses = courses
             }
         })
-        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Set up the menu
         MenuViewController.setupViewController(self, menuButton: menuButton)
     }
     
@@ -53,9 +56,9 @@ class CoursesViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell") as! CourseCell
         cell.courseTitle.text = course.title
         cell.instructorName.text = course.instructor
-        cell.locationLabel.text = course.location
+        //cell.locationLabel.text = course.location
         cell.datesLabel.text = DateHelper.stringFromDateShort(course.startsOn) + " - " + DateHelper.stringFromDateShort(course.endsOn)
-        cell.hoursLabel.text = course.hours
+        //cell.hoursLabel.text = course.hours
         //cell.peopleLabel.text = course.
         
         return cell

@@ -22,10 +22,6 @@ class ProductViewController: UITableViewController {
         
         // NOTE: Loading the product is in ProductViewController.swift
         
-        // Change separator color to clear
-        tableView.separatorColor = UIColor.clearColor()
-        tableView.editing = false
-        
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -46,21 +42,22 @@ class ProductViewController: UITableViewController {
         return dictionary[array[section]]!.count
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // Set up the header cell
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! ProductHeaderTableViewCell
-        cell.headerTitle.text = array[section]
-        
-        return cell
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return array[section]
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set up the info cell
+        
+        if array[indexPath.section] == "Advisor" || array[indexPath.section] == "Contributors" || array[indexPath.section] == "External Links" {
+            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell", forIndexPath: indexPath) as! ProductButtonTableViewCell
+            
+            let myInfo = dictionary[array[indexPath.section]]![indexPath.row]
+            cell.informationButton.setTitle(myInfo, forState: .Normal)
+            
+            return cell
+        }
+        
         
         let cell = tableView.dequeueReusableCellWithIdentifier("InfoCell", forIndexPath: indexPath) as! ProductInfoTableViewCell
         let myInfo = dictionary[array[indexPath.section]]![indexPath.row]

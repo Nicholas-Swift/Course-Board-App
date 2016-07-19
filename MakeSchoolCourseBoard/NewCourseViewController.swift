@@ -29,12 +29,14 @@ class NewCourseViewController: UITableViewController {
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        // Set up the side menu
-        MenuViewController.setupViewController(self, menuButton: menuButton)
-        
         // Dismiss keyboard on tap!
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewCourseViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Set up the menu
+        MenuViewController.setupViewController(self, menuButton: menuButton)
     }
     
     override func didReceiveMemoryWarning() {

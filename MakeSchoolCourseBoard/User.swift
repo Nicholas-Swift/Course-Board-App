@@ -6,6 +6,8 @@
 //  Copyright © 2016 Nicholas Swift. All rights reserved.
 //
 
+
+// NEEDS TO BE UPDATED AND STUFF WILDLY!
 import Foundation
 
 class User {
@@ -16,13 +18,16 @@ class User {
     var email: String!
     var password: String!
     
+    var id: String!
     var first: String!
     var last: String!
+    var fullname: String!
     var username: String!
+    
     var role: String!
     
-    var courses: [Course]!
-    var products: [Product]!
+    var courses: [Course] = []
+    var products: [Product] = []
     
     var admin: Bool = false
     

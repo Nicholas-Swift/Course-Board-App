@@ -12,9 +12,9 @@ class CourseCell: UITableViewCell {
     
     @IBOutlet weak var courseTitle: UILabel!
     @IBOutlet weak var instructorName: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
+    //@IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var datesLabel: UILabel!
-    @IBOutlet weak var hoursLabel: UILabel!
-    @IBOutlet weak var peopleLabel: UILabel!
+    //@IBOutlet weak var hoursLabel: UILabel!
+    //@IBOutlet weak var peopleLabel: UILabel!
     
 }

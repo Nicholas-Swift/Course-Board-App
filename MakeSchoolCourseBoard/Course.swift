@@ -6,6 +6,8 @@
 //  Copyright © 2016 Nicholas Swift. All rights reserved.
 //
 
+// NEEDS TO BE UPDATED AND STUFF WILDLY!
+
 import Foundation
 import Alamofire
 import SwiftyJSON
@@ -15,6 +17,7 @@ class Course {
     var createdAt: String!
     var updatedAt: String!
     
+    var id: String!
     var title: String!
     var description: String!
     var duration: String!
