@@ -24,7 +24,7 @@ class AllProductsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        JSONHelper.getProducts { (products, error) in
+        JSONHelper.getAllProducts { (products, error) in
             if let products = products {
                 self.products = products
             }
@@ -67,7 +67,7 @@ class AllProductsViewController: UITableViewController {
         let indexPath = tableView.indexPathForSelectedRow
         let product = products[indexPath!.row]
         
-        let dictionary: [String: [String]!] = ["What problem are you solving?": [product.problem], "Objectives": [product.valueProp], "Advisor": [product.instructor], "Course": [product.course], "Contributors": product.contributors, "External Links": [product.githubUrl, product.agileUrl, product.lvieurl]]
+        let dictionary: [String: [String]!] = ["What problem are you solving?": [product.problem], "Objectives": [product.valueProp], "Advisor": [product.instructor], "Course": [product.course], "Contributors": product.contributors, "External Links": [product.githubUrl, product.agileUrl, product.liveurl]]
         let array: [String] = ["What problem are you solving?", "Objectives", "Advisor", "Course", "Contributors", "External Links"]
         
         destination.title = product.name

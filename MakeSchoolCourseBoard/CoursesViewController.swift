@@ -57,7 +57,7 @@ class CoursesViewController: UITableViewController {
         cell.courseTitle.text = course.title
         cell.instructorName.text = course.instructor
         //cell.locationLabel.text = course.location
-        cell.datesLabel.text = DateHelper.stringFromDateShort(course.startsOn) + " - " + DateHelper.stringFromDateShort(course.endsOn)
+        cell.datesLabel.text = DateHelper.toShortDate(course.startsOn) + " - " + DateHelper.toShortDate(course.endsOn)
         //cell.hoursLabel.text = course.hours
         //cell.peopleLabel.text = course.
         
@@ -72,7 +72,7 @@ class CoursesViewController: UITableViewController {
         let indexPath = tableView.indexPathForSelectedRow
         let course = courses[indexPath!.row]
         
-        let dictionary: [String: [String]!] = ["Instructor": [course.instructor], "Date": [DateHelper.stringFromDateFull(course.startsOn) + " - " + DateHelper.stringFromDateFull(course.endsOn)], "Hours Per Week": [course.hours], "Location": [course.location], "Objectives": course.objectives, "Description": [course.description], "Anouncements": [""]]
+        let dictionary: [String: [String]!] = ["Instructor": [course.instructor], "Date": [DateHelper.toFullDate(course.startsOn) + " - " + DateHelper.toFullDate(course.endsOn)], "Hours Per Week": [course.hours], "Location": [course.location], "Objectives": course.objectives, "Description": [course.description], "Anouncements": [""]]
         let array: [String] = ["Instructor", "Date", "Hours Per Week", "Location", "Objectives", "Description", "Anouncements"]
         
         destination.title = course.title

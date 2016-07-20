@@ -14,56 +14,59 @@ import SwiftyJSON
 
 class JSONHelper {
     
+    // MARK: Courses
+    
     // Get all courses
     static func getAllCourses(complete: ( courses: [Course]?, error: NSError?) -> Void)
     {
+        
         // Url of the api
         let apiToContact = "https://meancourseboard.herokuapp.com/api/courses"
         
-        Alamofire.request(.GET, apiToContact).validate().responseJSON() { response in
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
             switch response.result {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
                     
+                    // Set up courses array and loop through, adding to it
                     var courses = [Course]()
                     for i in 0...(json.count-1) {
                         //print(json)
                         
                         let course = Course()
                         
-                        course.createdAt = json[i]["createdAt"].stringValue
-                        course.updatedAt =  json[i]["updatedAt"].stringValue
+                        course.id = json[i]["_id"].stringValue
                         
-                        course.title = json[i]["title"].stringValue
-                        course.description = json[i]["description"].stringValue
+                        course.createdAt = json[i]["createdAt"].stringValue
+                        course.updatedAt = json[i]["updatedAt"].stringValue
+                        
+                        course.user = json[i]["user"].stringValue // Note, this holds the user id
                         course.duration = json[i]["duration"].stringValue
                         
+                        course.instructor = json[i]["instructor"]["_id"].stringValue
+                        course.title = json[i]["title"].stringValue
+                        course.description = json[i]["description"].stringValue
+                        
                         course.startsOn = json[i]["startsOn"].stringValue
-                        /*course.startsOnDay: String!
-                        course.startsOnMonth: String!
-                        course.startsOnYear: String!*/
-                        
                         course.endsOn = json[i]["endsOn"].stringValue
-                        /*course.endsOnDay: String!
-                        course.endsOnMonth: String!
-                        course.endsOnYear: String!*/
-                        
                         course.hours = json[i]["hours"].stringValue
-                        course.location = json[i]["location"].stringValue // NO LOCATION YET?
+                        
+                        course.location = json[i]["location"].stringValue
+                        
                         course.objectives = json[i]["objectives"].arrayValue.map{$0.string!}
-                        
-                        //course.user = json[i]["user"]
-                        course.instructor = json[i]["instructor"]["fullname"].stringValue
-                        //course.students = json[i]["students"]
-                        //course.posts = json[i]["posts"]
-                        //course.products = json[i]["products"]
-                        
-                        //course.posts = json[i]["posts"].arrayValue.map{$0.string!}
+                        course.students = json[i]["students"].arrayValue.map{$0.string!}
+                        course.posts = json[i]["posts"].arrayValue.map{$0.string!}
+                        course.products = json[i]["products"].arrayValue.map{$0.string!}
                         
                         courses.append(course)
                     }
                     
+                    // Complete and return courses array
                     complete(courses: courses, error: nil)
                     
                 }
@@ -75,49 +78,48 @@ class JSONHelper {
     }
     
     // Get specific course
-    static func getCourse(id: String, complete:
-        ( course: Course?, error: NSError?) -> Void)
+    static func getCourse(id: String, complete: ( course: Course?, error: NSError?) -> Void)
     {
         
         // Call the api
         let apiToContact = "https://meancourseboard.herokuapp.com/api/courses/" + id
         
-        Alamofire.request(.GET, apiToContact).validate().responseJSON() { response in
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
             switch response.result {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
                     
+                    //print(json)
+                    
                     let course = Course()
                     
-                    course.createdAt = json["createdAt"].stringValue
-                    course.updatedAt =  json["updatedAt"].stringValue
+                    course.id = json["_id"].stringValue
                     
-                    course.title = json["title"].stringValue
-                    course.description = json["description"].stringValue
+                    course.createdAt = json["createdAt"].stringValue
+                    course.updatedAt = json["updatedAt"].stringValue
+                    
+                    course.user = json["user"].stringValue // Note, this holds the user id
                     course.duration = json["duration"].stringValue
                     
+                    course.instructor = json["instructor"]["_id"].stringValue
+                    course.title = json["title"].stringValue
+                    course.description = json["description"].stringValue
+                    
                     course.startsOn = json["startsOn"].stringValue
-                    /*course.startsOnDay: String!
-                     course.startsOnMonth: String!
-                     course.startsOnYear: String!*/
-                    
                     course.endsOn = json["endsOn"].stringValue
-                    /*course.endsOnDay: String!
-                     course.endsOnMonth: String!
-                     course.endsOnYear: String!*/
-                    
                     course.hours = json["hours"].stringValue
-                    course.location = json["location"].stringValue // NO LOCATION YET?
+                    
+                    course.location = json["location"].stringValue
+                    
                     course.objectives = json["objectives"].arrayValue.map{$0.string!}
-                    
-                    //course.user = json[i]["user"]
-                    course.instructor = json["instructor"]["fullname"].stringValue
-                    //course.students = json[i]["students"]
-                    //course.posts = json[i]["posts"]
-                    //course.products = json[i]["products"]
-                    
-                    //course.posts = json[i]["posts"].arrayValue.map{$0.string!}
+                    course.students = json["students"].arrayValue.map{$0["_id"].stringValue}
+                    course.posts = json["posts"].arrayValue.map{$0["_id"].stringValue}
+                    course.products = json["products"].arrayValue.map{$0["_id"].stringValue}
                     
                     complete(course: course, error: nil)
                     
@@ -129,15 +131,20 @@ class JSONHelper {
         }
     }
     
+    // MARK: Products
+    
     // Get all products
-    static func getProducts(complete:
-        ( products: [Product]?, error: NSError?) -> Void)
+    static func getAllProducts(complete: ( products: [Product]?, error: NSError?) -> Void)
     {
         
         // Call the api
         let apiToContact = "https://meancourseboard.herokuapp.com/api/products"
         
-        Alamofire.request(.GET, apiToContact).validate().responseJSON() { response in
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
             switch response.result {
             case .Success:
                 if let value = response.result.value {
@@ -146,35 +153,39 @@ class JSONHelper {
                     var products = [Product]()
                     
                     for i in 0...(json.count-1) {
-                        //print(json)
+                        //print(json[i])
                         
                         let product = Product()
                         
-                        product.name = json[i]["name"].stringValue
-                        product.instructor = json[i]["instructor"]["fullname"].stringValue
-                        product.problem = json[i]["problem"].stringValue
+                        product.id = json[i]["_id"].stringValue
                         
                         product.createdAt = json[i]["createdAt"].stringValue
                         product.updatedAt = json[i]["updatedAt"].stringValue
                         
                         product.name = json[i]["name"].stringValue
+                        product.instructor = json[i]["instructor"]["_id"].stringValue
+                        product.course = json[i]["course"].stringValue
                         product.problem = json[i]["problem"].stringValue
+                        
+                        product.valueProp = json[i]["valueProp"].stringValue
                         product.githubUrl = json[i]["githubUrl"].stringValue
                         product.agileUrl = json[i]["agileUrl"].stringValue
-                        product.lvieurl = json[i]["liveUrl"].stringValue
-                        product.valueProp = json[i]["valueProp"].stringValue
-                        /*product.customer = String!
-                        product.assumptions = String!
-                        product.finishedProduct = String!
-                        product.mvp = String!*/
+                        product.liveurl = json[i]["liveUrl"].stringValue
                         
-                        product.course = ""
-                        product.instructor = json[i]["instructor"]["fullname"].stringValue
-                        product.contributors = json[i]["contributors"].arrayValue.map {$0.string!}
+                        product.objectives = json[i]["objectives"].arrayValue.map{$0.string!}
+                        product.posts = json[i]["posts"].arrayValue.map{$0.string!}
+                        
+                        //product.customer = json[i]["customer"].stringValue //???
+                        //product.assumptions = json[i]["assumptions"].stringValue //???
+                        //product.finishedProduct = json[i]["finishedProduct"].stringValue //???
+                        //product.mvp = json[i]["mvp"].stringValue //???
+                        
+                        product.contributors = json[i]["contributors"].arrayValue.map{$0.string!}
                         
                         products.append(product)
                     }
                     
+                    // complete and return products array
                     complete(products: products, error: nil)
                     
                 }
@@ -185,14 +196,75 @@ class JSONHelper {
         }
     }
     
-    // Get current user
-    static func getCurrentUser(complete: (user: User!, error: NSError?) -> Void) {
+    // Get specific product
+    static func getProduct(id: String, complete: ( product: Product?, error: NSError?) -> Void)
+    {
         
         // Call the api
+        let apiToContact = "https://meancourseboard.herokuapp.com/api/products" + id
+        
+        // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
         
+        // Request the data from api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    
+                    print(json)
+                        
+                    let product = Product()
+                        
+                    product.id = json["_id"].stringValue
+                        
+                    product.createdAt = json["createdAt"].stringValue
+                    product.updatedAt = json["updatedAt"].stringValue
+                        
+                    product.name = json["name"].stringValue
+                    product.instructor = json["instructor"]["_id"].stringValue
+                    product.course = json["course"].stringValue
+                    product.problem = json["problem"].stringValue
+                        
+                    product.valueProp = json["valueProp"].stringValue
+                    product.githubUrl = json["githubUrl"].stringValue
+                    product.agileUrl = json["agileUrl"].stringValue
+                    product.liveurl = json["liveUrl"].stringValue
+                        
+                    product.objectives = json["objectives"].arrayValue.map{$0.string!}
+                    product.posts = json["posts"].arrayValue.map{$0["_id"].stringValue}
+                        
+                    //product.customer = json["customer"].stringValue //???
+                    //product.assumptions = json["assumptions"].stringValue //???
+                    //product.finishedProduct = json["finishedProduct"].stringValue //???
+                    //product.mvp = json["mvp"].stringValue //???
+                        
+                    product.contributors = json["contributors"].arrayValue.map{$0["_id"].stringValue}
+                    
+                    // complete and return product
+                    complete(product: product, error: nil)
+                    
+                }
+            case .Failure(let error):
+                print(error)
+                complete(product: nil, error: error)
+            }
+        }
+    }
+    
+    // MARK: Users
+    
+    // Get me
+    static func getMe(complete: (user: User!, error: NSError?) -> Void) {
+        
+        // Call the api
         let apiToContact = "https://meancourseboard.herokuapp.com/api/me"
         
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from the api
         Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
             
             // Add the json info to user
@@ -200,38 +272,32 @@ class JSONHelper {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
+                    
+                    print(json)
+                    
                     let user = User()
                     
-                    //print(json)
+                    user.id = json["_id"].stringValue
                     
-                    user.id = json["id"].stringValue
-                    if json["admin"] == 0 {
-                        user.admin = false
-                    }
-                    else {
-                        user.admin = true
-                    }
+                    user.createdAt = json["createdAt"].stringValue
+                    user.updatedAt = json["updatedAt"].stringValue
+                    
+                    user.email = json["email"].stringValue
+                    //user.password =
+                    
                     user.first = json["first"].stringValue
                     user.last = json["last"].stringValue
                     user.fullname = json["fullname"].stringValue
-                    user.role = json["role"].stringValue
                     user.username = json["username"].stringValue
-                    for i in json["courses"].arrayValue {
-                        print(i["_id"])
-                        JSONHelper.getCourse(i["_id"].stringValue, complete: {
-                            (course, error) in
-                            user.courses.append(course!)
-                            complete(user: user, error: nil)
-                        })
-                    }
-                    /*for i in json["products"].arrayValue {
-                        print(i["_id"])
-                        JSONHelper.getCourse(i["_id"].stringValue, complete: { (course, error) in
-                            user.courses.append(course!)
-                        })
-                    }*/
                     
-                    //complete(user: user, error: nil)
+                    user.role = json["role"].stringValue
+                    
+                    user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
+                    user.products = json["products"].arrayValue.map{$0["_id"].stringValue}
+                    
+                    user.admin = Bool(json["admin"])
+                    
+                    complete(user: user, error: nil)
                     
                 }
             case .Failure(let error):

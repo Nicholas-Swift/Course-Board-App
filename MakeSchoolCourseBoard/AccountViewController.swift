@@ -28,7 +28,7 @@ class AccountViewController: UITableViewController {
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        JSONHelper.getCurrentUser { (user, error) in
+        JSONHelper.getMe { (user, error) in
             self.dict["Courses"] = user.courses.count
             self.dict["Products"] = user.products.count
             
@@ -88,7 +88,7 @@ class AccountViewController: UITableViewController {
         else if mySection == "Courses" {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("LinkCell") as! AccountCourseTableViewCell
-            cell.linkButton.setTitle(user.courses[indexPath.row].title, forState: .Normal)
+            cell.linkButton.setTitle(user.courses[indexPath.row], forState: .Normal)
             return cell
         }
         else if mySection == "Products" {

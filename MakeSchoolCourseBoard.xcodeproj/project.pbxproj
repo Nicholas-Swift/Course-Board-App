@@ -110,8 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				01C1D2291D3EE4970011C7FF /* LoginHelper.swift */,
-				0113B0851D36EB93003AD618 /* JSONHelper.swift */,
 				010B03E21D383CEE001472F3 /* DateHelper.swift */,
+				0113B0851D36EB93003AD618 /* JSONHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
