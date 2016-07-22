@@ -27,6 +27,7 @@ class User {
     
     var courses: [String]!
     var products: [String]!
+    var posts: [String]!
     
     var admin: Bool = false
     

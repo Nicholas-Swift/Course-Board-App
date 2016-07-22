@@ -83,6 +83,7 @@ class JSONHelper {
         
         // Call the api
         let apiToContact = "https://meancourseboard.herokuapp.com/api/courses/" + id
+        //let apiToContact = "http://meancourseboard.herokuapp.com/api/courses/571fb377df5be503008e3b2b"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -260,6 +261,7 @@ class JSONHelper {
         
         // Call the api
         let apiToContact = "https://meancourseboard.herokuapp.com/api/me"
+        //let apiToContact = "http://meancourseboard.herokuapp.com/api/users/5722a3012c74f90300ed957c"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -294,6 +296,60 @@ class JSONHelper {
                     
                     user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
                     user.products = json["products"].arrayValue.map{$0["_id"].stringValue}
+                    user.posts = json["posts"].arrayValue.map{$0.stringValue}
+                    
+                    user.admin = Bool(json["admin"])
+                    
+                    complete(user: user, error: nil)
+                    
+                }
+            case .Failure(let error):
+                print(error)
+                complete(user: nil, error: error)
+            }
+        }
+    }
+    
+    // Get specific user
+    static func getUser(id: String!, complete: (user: User!, error: NSError?) -> Void) {
+        
+        // Call the api
+        let apiToContact = "https://meancourseboard.herokuapp.com/api/users/" + id
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from the api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
+            
+            // Add the json info to user
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    
+                    //print(json)
+                    
+                    let user = User()
+                    
+                    user.id = json["_id"].stringValue
+                    
+                    user.createdAt = json["createdAt"].stringValue
+                    user.updatedAt = json["updatedAt"].stringValue
+                    
+                    user.email = json["email"].stringValue
+                    //user.password =
+                    
+                    user.first = json["first"].stringValue
+                    user.last = json["last"].stringValue
+                    user.fullname = json["fullname"].stringValue
+                    user.username = json["username"].stringValue
+                    
+                    user.role = json["role"].stringValue
+                    
+                    user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
+                    user.products = json["products"].arrayValue.map{$0["_id"].stringValue}
+                    user.posts = json["posts"].arrayValue.map{$0.stringValue}
                     
                     user.admin = Bool(json["admin"])
                     

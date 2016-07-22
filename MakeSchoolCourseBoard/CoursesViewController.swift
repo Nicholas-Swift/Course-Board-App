@@ -9,59 +9,42 @@
 import Foundation
 import UIKit
 
-class CoursesViewController: UITableViewController {
+class CoursesViewController: UIViewController {
     
     // Variables
+    @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var menuButton: UIBarButtonItem!
-    
-    var courses: [Course] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
-    // For ViewController
+    var courses: [Course] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Get courses and fill tableview
         JSONHelper.getAllCourses({ (courses, error) in
             if let courses = courses {
+                
+                // Load tableview
                 self.courses = courses
+                self.tableView.reloadData()
             }
         })
+        
+        // Change to not translucent
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
+        self.tabBarController?.tabBar.translucent = false
     }
     
-    override func viewDidAppear(animated: Bool) {
-        // Set up the menu
-        MenuViewController.setupViewController(self, menuButton: menuButton)
+    override func viewWillAppear(animated: Bool) {
+        // Unhighlight the highlighted cell        
+        if let selection: NSIndexPath = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRowAtIndexPath(selection, animated: true)
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning() 
         // Dispose of any resources that can be recreated.
-    }
-    
-    // For TableView
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return courses.count
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let course = courses[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell") as! CourseCell
-        cell.courseTitle.text = course.title
-        cell.instructorName.text = course.instructor
-        //cell.locationLabel.text = course.location
-        cell.datesLabel.text = DateHelper.toShortDate(course.startsOn) + " - " + DateHelper.toShortDate(course.endsOn)
-        //cell.hoursLabel.text = course.hours
-        //cell.peopleLabel.text = course.
-        
-        return cell
     }
     
     // For Segue
@@ -72,12 +55,29 @@ class CoursesViewController: UITableViewController {
         let indexPath = tableView.indexPathForSelectedRow
         let course = courses[indexPath!.row]
         
-        let dictionary: [String: [String]!] = ["Instructor": [course.instructor], "Date": [DateHelper.toFullDate(course.startsOn) + " - " + DateHelper.toFullDate(course.endsOn)], "Hours Per Week": [course.hours], "Location": [course.location], "Objectives": course.objectives, "Description": [course.description], "Anouncements": [""]]
-        let array: [String] = ["Instructor", "Date", "Hours Per Week", "Location", "Objectives", "Description", "Anouncements"]
+        destination.course = course
+    }
+}
+
+extension CoursesViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return courses.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        destination.title = course.title
-        destination.dictionary = dictionary
-        destination.array = array
+        let course = courses[indexPath.row]
         
+        let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell") as! CourseCell
+        cell.courseTitleLabel.text = course.title
+        cell.instructorNameLabel.text = course.instructor
+        cell.dateRangeLabel.text = DateHelper.toShortDate(course.startsOn) + " - " + DateHelper.toShortDate(course.endsOn)
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 100
     }
 }

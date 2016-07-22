@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,18 +18,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Ya3-J0-gvN">
-                                <rect key="frame" x="200" y="250" width="200" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="8Or-KP-pkh"/>
-                                    <constraint firstAttribute="height" constant="100" id="SZB-Vs-AON"/>
-                                </constraints>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Board" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="sSp-k2-OsP">
+                                <rect key="frame" x="40" y="264" width="520" height="72"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="60"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.47843137250000001" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Ya3-J0-gvN" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="QBA-Xs-ktA"/>
-                            <constraint firstItem="Ya3-J0-gvN" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="idv-Qu-3jm"/>
+                            <constraint firstItem="sSp-k2-OsP" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="C8G-4g-vrt"/>
+                            <constraint firstItem="sSp-k2-OsP" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="NWp-Rz-KNB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="sSp-k2-OsP" secondAttribute="trailing" constant="20" id="Wyd-Ad-hRr"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -37,7 +38,4 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="logo" width="329" height="250"/>
-    </resources>
 </document>

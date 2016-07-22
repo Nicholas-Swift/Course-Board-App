@@ -29,11 +29,6 @@ class SettingsViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    override func viewDidAppear(animated: Bool) {
-        // Set up the menu
-        MenuViewController.setupViewController(self, menuButton: menuButton)
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

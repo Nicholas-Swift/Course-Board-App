@@ -16,17 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        LoginHelper.login("nswift", password: "q1w2e3") { (success, error) in
-            if success {
-                print("Succeeded")
-            }
-            else {
-                print("Failed")
-            }
-            if error != nil {
-                print("Errored")
-            }
-        }
+        // Change tab bar and nav bar colors
+        UITabBar.appearance().tintColor = ColorHelper.blueColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: ColorHelper.blueColor]
         
         return true
     }
