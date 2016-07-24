@@ -1,42 +1,47 @@
 //
-//  NewCourseViewController.swift
+//  NewCourse.swift
 //  MakeSchoolCourseBoard
 //
-//  Created by Nicholas Swift on 7/12/16.
+//  Created by Nicholas Swift on 7/23/16.
 //  Copyright © 2016 Nicholas Swift. All rights reserved.
 //
 
 import Foundation
+import UIKit
 
-class NewCourseViewController: UITableViewController {
-    
+class NewCourseViewController: UIViewController {
+
     // Variables
     
-    @IBOutlet weak var menuButton: UIBarButtonItem!
+    let titleArray = ["Title*", "Instructor", "Start Date", "End Date", "Location", "Hours per Week", "Description", "Objectives"]
     
-    let newCourseArray = ["Title*", "Instructor", "Start Date", "End Date", "Location", "Hours per Week", "Desciption", "Objectives"]
+    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
+    @IBOutlet weak var saveBarButton: UIBarButtonItem!
     
-    // For ViewController
+    @IBOutlet weak var tableView: UITableView!
     
+    // Actions
+    @IBAction func cancelBarAction(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    @IBAction func saveBarAction(sender: AnyObject) {
+        print("SAVE PLEASE")
+    }
+    
+    // General View Controller stuff
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Change separator color to clear
+        // Table view remove separator
         tableView.separatorColor = UIColor.clearColor()
-        tableView.editing = false
         
         // Let the cells resize to the correct height based on information
-        tableView.estimatedRowHeight = 100
+        tableView.estimatedRowHeight = 50
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        // Dismiss keyboard on tap!
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewCourseViewController.dismissKeyboard))
+        // For keyboard
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LogInViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        // Set up the menu
-        MenuViewController.setupViewController(self, menuButton: menuButton)
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,47 +49,39 @@ class NewCourseViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // For TableView
+    // For keyboard
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+extension NewCourseViewController: UITableViewDataSource, UITableViewDelegate {
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newCourseArray.count + 1
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return titleArray.count
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // Set up the header cell
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell")
+        headerCell.headerTitleLabel.text = "Create New Course"
+        
+        return headerCell
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell") as! AccountFieldCell
+        
+        cell.infoLabel.text = titleArray[indexPath.row]
         
         return cell
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        // Set up the info cell
-        
-        if indexPath.row == newCourseArray.count {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell")
-            return cell!
-        }
-        else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell", forIndexPath: indexPath) as! NewCourseFieldCell
-            cell.courseTextLabel.text = newCourseArray[indexPath.row]
-            
-            return cell
-        }
-    }
-    
-    // For Keyboard
-    func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
-        
-        view.endEditing(true)
     }
 }

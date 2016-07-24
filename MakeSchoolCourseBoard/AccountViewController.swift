@@ -37,8 +37,8 @@ class AccountViewController: UIViewController {
             self.user = user
             
             self.headerDict["Account Information"] = 3 // Name, username, email
-            self.headerDict["Courses"] = user.courses.count
-            self.headerDict["Products"] = user.products.count
+            self.headerDict["Courses"] = user.courses.count ?? 0
+            self.headerDict["Products"] = user.products.count ?? 0
             self.headerDict["Anouncements"] = user.posts.count ?? 0
             
             self.tableView.reloadData()
@@ -48,6 +48,13 @@ class AccountViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // For Segue
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let destination = segue.destinationViewController as! SettingsViewController
+        destination.user = self.user
     }
     
 }
@@ -70,7 +77,7 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 30
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -105,8 +112,8 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else if mySection == "Products" {
             let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
-            
-            cell.infoButton.setTitle(user.courses[indexPath.row] ?? "", forState: .Normal)
+        
+            cell.infoButton.setTitle(user.products[indexPath.row] ?? "", forState: .Normal)
             
             return cell
         }

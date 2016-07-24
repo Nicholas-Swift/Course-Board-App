@@ -17,6 +17,7 @@ class Product {
     
     var name: String!
     var instructor: String!
+    var instructorName: String! // for instructor fullname
     var course: String!
     var problem: String!
     
@@ -34,4 +35,5 @@ class Product {
     var mvp: String!
 
     var contributors: [String]!
+    var contributorNames: [String] = [] // for contributor full names
 }

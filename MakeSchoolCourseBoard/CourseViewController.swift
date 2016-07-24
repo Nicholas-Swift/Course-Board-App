@@ -12,12 +12,20 @@ import UIKit
 class CourseViewController: UIViewController {
     
     // Variables
+    @IBOutlet weak var enrollBarButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     var course: Course!
     
+    // Actions
+    @IBAction func enrollBarAction(sender: AnyObject) {
+        JSONHelper.enrollCourse(course.id) { (course, error) in
+            self.enrollBarButton.title = "Enrolled :)"
+        }
+    }
+    
     // Set variables so the table view looks good!
-    let headerArray = ["Course Information", "Objectives", "Description", "Participants", "Products", "Anouncements"]
-    var headerDict = ["Course Information": 0, "Objectives": 0, "Description": 0, "Participants": 0, "Anouncements": 0]
+    var headerArray = ["Course Information", "Objectives", "Description", "Participants", "Products", "Anouncements"]
+    var headerDict: [String: Int] = [:] // populated by loadInfo()
     
     // General View Controller stuff
     override func viewDidLoad() {
@@ -25,13 +33,17 @@ class CourseViewController: UIViewController {
         
         // NOTE: Loading the courses is in CoursesViewController.swift
         
+        // Change the bar button to 'enrolled' if student is enrolled in course.
+        if course.students.contains(LoginHelper.id) {
+            enrollBarButton.title = "Enrolled :)"
+            enrollBarButton.enabled = false
+        }
+        
+        // nav bar title
+        self.navigationItem.title = course.title
+        
         // Load up the table view with correct info
-        headerDict[headerArray[0]] = 4 //course info: instructor, dates, hours, location
-        headerDict[headerArray[1]] = course.objectives.count //objectives
-        headerDict[headerArray[2]] = 1 //description: 1
-        headerDict[headerArray[3]] = course.students.count //participants
-        headerDict[headerArray[4]] = course.products.count //products
-        headerDict[headerArray[5]] = course.posts.count //anouncements
+        loadInfo()
         
         // Table view remove separator
         tableView.separatorColor = UIColor.clearColor()
@@ -39,6 +51,58 @@ class CourseViewController: UIViewController {
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 50
         tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    func loadInfo() {
+        // Course Information
+        var courseInfoNum = 0
+        if let _ = course.instructorName { courseInfoNum += 1 } // course.instructor
+        if let _ = course.startsOn { courseInfoNum += 1 }
+        if let _ = course.hours { courseInfoNum += 1 }
+        if let _ = course.location { courseInfoNum += 1 }
+        
+        // Objectives
+        var objectivesNum = 0
+        if let _ = course.objectives { objectivesNum = course.objectives.count }
+        
+        // Description
+        var descriptionNum = 0
+        if let _ = course.description { descriptionNum = 1 }
+        
+        // Participants
+        var participantsNum = 0
+        if let _ = course.students { participantsNum = course.students.count }
+        
+        // Products
+        var productsNum = 0
+        if let _ = course.products { productsNum = course.products.count }
+        
+        // Anouncements
+        var anouncementsNum = 0
+        if let _ = course.posts { anouncementsNum = course.posts.count }
+        
+        // Remove from array and dictionary as needed
+        let tempArray = [courseInfoNum, objectivesNum, descriptionNum, participantsNum, productsNum, anouncementsNum]
+        var removeArray: [Int] = []
+        
+        for i in 0...headerArray.count-1 {
+            if tempArray[i] == 0 {
+                removeArray.append(i)
+            }
+            else {
+                print(headerArray[i])
+                let one = headerArray[i]
+                print(tempArray[i])
+                let two = tempArray[i]
+                
+                headerDict[one] = two
+            }
+        }
+        var temp = 0
+        for i in removeArray {
+            headerArray.removeAtIndex(i - temp)
+            temp += 1
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -59,6 +123,14 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         return myNum
     }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return headerArray[section]
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
         headerCell.headerTitleLabel.text = headerArray[section]
@@ -66,18 +138,13 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         return headerCell
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let tempArray = ["Course Information", "Objectives", "Description", "Participants", "Products", "Anouncements"]
         
-        switch(indexPath.section) {
-        case 0: // Course Information
-            
+        if headerArray[indexPath.section] == tempArray[0] {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
-                cell.infoButton.setTitle(course.instructor ?? "", forState: .Normal)
+                cell.infoButton.setTitle(course.instructorName ?? "", forState: .Normal) // course.instructor
                 return cell
             }
             else {
@@ -91,35 +158,41 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 return cell
             }
-        case 1: // Objectives
+        }
+        else if headerArray[indexPath.section] == tempArray[1] {
             let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! CourseTextCell
             
             cell.infoLabel.text = course.objectives[indexPath.row]
             
             return cell
-        case 2: // Description
+        }
+        else if headerArray[indexPath.section] == tempArray[2] {
             let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! CourseTextCell
             
             cell.infoLabel.text = course.description
             
             return cell
-        case 3: // Participants
+        }
+        else if headerArray[indexPath.section] == tempArray[3] {
             let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
             
-            cell.infoButton.setTitle(course.students[indexPath.row] ?? "", forState: .Normal)
+            cell.infoButton.setTitle(course.studentNames[indexPath.row] ?? "", forState: .Normal) // course.student
             
             return cell
-        case 4: // Products
+        }
+        else if headerArray[indexPath.section] == tempArray[4] {
             let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
             
             cell.infoButton.setTitle(course.products[indexPath.row] ?? "", forState: .Normal)
             
             return cell
-        case 5: // Anouncements
+        }
+        else if headerArray[indexPath.section] == tempArray[5] {
             let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! CourseTextCell
             
             return cell
-        default: // DEFAULT WILL RETURN INFO CELL
+        }
+        else {
             let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! CourseTextCell
             return cell
         }

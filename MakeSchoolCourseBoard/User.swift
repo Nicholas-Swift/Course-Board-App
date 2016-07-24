@@ -16,7 +16,6 @@ class User {
     var updatedAt: String!
     
     var email: String!
-    //var password: String!
 
     var first: String!
     var last: String!

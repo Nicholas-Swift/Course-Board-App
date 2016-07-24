@@ -49,6 +49,7 @@ class JSONHelper {
                         course.duration = json[i]["duration"].stringValue
                         
                         course.instructor = json[i]["instructor"]["_id"].stringValue
+                        course.instructorName = json[i]["instructor"]["fullname"].stringValue // For instructor name
                         course.title = json[i]["title"].stringValue
                         course.description = json[i]["description"].stringValue
                         
@@ -132,6 +133,33 @@ class JSONHelper {
         }
     }
     
+    // enroll in specific course
+    static func enrollCourse(id: String, complete: ( bool: Bool?, error: NSError?) -> Void)
+    {
+        
+        // Call the api
+        let apiToContact = "https://meancourseboard.herokuapp.com/api/courses/" + id + "/enroll"
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from api
+        Alamofire.request(.PUT, apiToContact, headers: headers).validate().responseJSON() { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    //let json = JSON(value)
+                    //print(json)
+                    
+                    complete(bool: true, error: nil)
+                }
+            case .Failure(let error):
+                print(error)
+                complete(bool: nil, error: error)
+            }
+        }
+    }
+    
     // MARK: Products
     
     // Get all products
@@ -165,6 +193,7 @@ class JSONHelper {
                         
                         product.name = json[i]["name"].stringValue
                         product.instructor = json[i]["instructor"]["_id"].stringValue
+                        product.instructorName = json[i]["instructor"]["fullname"].stringValue
                         product.course = json[i]["course"].stringValue
                         product.problem = json[i]["problem"].stringValue
                         
@@ -225,6 +254,7 @@ class JSONHelper {
                         
                     product.name = json["name"].stringValue
                     product.instructor = json["instructor"]["_id"].stringValue
+                    product.instructorName = json["instructor"]["fullname"].stringValue // for instructor
                     product.course = json["course"].stringValue
                     product.problem = json["problem"].stringValue
                         
@@ -254,6 +284,34 @@ class JSONHelper {
         }
     }
     
+    // join in specific product
+    static func joinProduct(id: String, complete: ( bool: Bool?, error: NSError?) -> Void)
+    {
+        
+        // Call the api
+        let apiToContact = "https://meancourseboard.herokuapp.com/api/products/" + id + "/join"
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from api
+        Alamofire.request(.PUT, apiToContact, headers: headers).validate().responseJSON() { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    //let json = JSON(value)
+                    //print(json)
+                    
+                    complete(bool: true, error: nil)
+                    
+                }
+            case .Failure(let error):
+                print(error)
+                complete(bool: nil, error: error)
+            }
+        }
+    }
+    
     // MARK: Users
     
     // Get me
@@ -275,7 +333,7 @@ class JSONHelper {
                 if let value = response.result.value {
                     let json = JSON(value)
                     
-                    print(json)
+                    //print(json)
                     
                     let user = User()
                     
@@ -296,7 +354,7 @@ class JSONHelper {
                     
                     user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
                     user.products = json["products"].arrayValue.map{$0["_id"].stringValue}
-                    user.posts = json["posts"].arrayValue.map{$0.stringValue}
+                    user.posts = json["posts"].arrayValue.map{$0["_id"].stringValue}
                     
                     user.admin = Bool(json["admin"])
                     
@@ -338,7 +396,6 @@ class JSONHelper {
                     user.updatedAt = json["updatedAt"].stringValue
                     
                     user.email = json["email"].stringValue
-                    //user.password =
                     
                     user.first = json["first"].stringValue
                     user.last = json["last"].stringValue

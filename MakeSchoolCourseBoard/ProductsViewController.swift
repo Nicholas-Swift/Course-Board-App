@@ -22,7 +22,20 @@ class ProductsViewController: UIViewController {
         // Get courses and fill tableview
         JSONHelper.getAllProducts({ (products, error) in
             if let products = products {
+                
+                // Load tableView
                 self.products = products
+                
+                // Fill out student names
+                for i in 0...self.products.count-1 {
+                    for j in self.products[i].contributors {
+                        JSONHelper.getUser(j, complete: { (user, error) in
+                            print(user.fullname)
+                            self.products[i].contributorNames.append(user.fullname)
+                        })
+                    }
+                }
+                
                 self.tableView.reloadData()
             }
         })
@@ -31,6 +44,9 @@ class ProductsViewController: UIViewController {
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
         self.tabBarController?.tabBar.translucent = false
+        
+        // remove separator color
+        tableView.separatorColor = UIColor.clearColor()
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,19 +64,39 @@ class ProductsViewController: UIViewController {
     // For Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        let destination = segue.destinationViewController as! ProductViewController
-        
-        let indexPath = tableView.indexPathForSelectedRow
-        let product = products[indexPath!.row]
-        
-        destination.product = product
+        if segue.identifier == "viewProduct" {
+            let destination = segue.destinationViewController as! ProductViewController
+            
+            let indexPath = tableView.indexPathForSelectedRow
+            let product = products[indexPath!.section]
+            
+            destination.product = product
+        }
+        else {
+            //let destination = segue.destinationViewController as! NewProductViewController
+        }
     }
 }
 
 extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // For looks
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    // For information setting
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return products.count
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -69,11 +105,11 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let product = products[indexPath.row]
+        let product = products[indexPath.section]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell") as! CourseCell
         cell.courseTitleLabel.text = product.name
-        cell.instructorNameLabel.text = product.instructor
+        cell.instructorNameLabel.text = product.instructorName // product.instructor
         cell.dateRangeLabel.text = product.problem
         
         return cell

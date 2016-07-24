@@ -15,6 +15,9 @@ class LoginHelper {
     // Token for authentication, populated by login()
     static var token: String!
     
+    static var id: String!
+    static var role: String!
+    
     // Log in to account
     static func login(email: String, password: String, complete: (success: Bool, error: NSError?) -> Void) {
         
@@ -38,7 +41,11 @@ class LoginHelper {
                     // Set the token
                     token = json["token"].stringValue
                     
-                    complete(success: true, error: nil)
+                    JSONHelper.getMe({ (user, error) in
+                        self.id = user.id
+                        self.role = user.role
+                        complete(success: true, error: nil)
+                    })
                 }
                 else {
                     complete(success: false, error: nil)

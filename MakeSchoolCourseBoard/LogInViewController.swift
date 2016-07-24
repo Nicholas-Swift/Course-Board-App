@@ -101,7 +101,7 @@ class LogInViewController: UIViewController {
         })
         
         // For keyboard
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LogInViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
     }

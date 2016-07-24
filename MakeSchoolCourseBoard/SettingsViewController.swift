@@ -11,9 +11,23 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     
+    var user: User!
+    let headerArray = ["Account Settings"]
+    let headerDict = ["Account Settings": 5]
+    
     // Variables
     
-    @IBOutlet weak var menuButton: UIBarButtonItem!
+    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
+    @IBOutlet weak var saveBarButton: UIBarButtonItem!
+    
+    // Actions
+    @IBAction func cancelBarAction(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func saveBarAction(sender: AnyObject) {
+        print("SAVE PLEASE")
+    }
     
     // For ViewController
     
@@ -22,11 +36,18 @@ class SettingsViewController: UITableViewController {
         
         // Change separator color to clear
         tableView.separatorColor = UIColor.clearColor()
-        tableView.editing = false
+        
+        // Change tint color
+        self.navigationController?.navigationBar.translucent = false
+        self.tabBarController?.tabBar.translucent = false
         
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        // For keyboard
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LogInViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,21 +58,23 @@ class SettingsViewController: UITableViewController {
     // For TableView
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return headerArray.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return headerDict[headerArray[section]]!
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 30
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Set up the header cell
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell")
+        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
+        
+        cell.headerTitleLabel.text = headerArray[section]
         
         return cell
     }
@@ -59,9 +82,42 @@ class SettingsViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set up the info cell
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell") as! AccountFieldCell
+        
+        let labelArray = ["First Name", "Last Name", "Username", "Email", "Role"]
+        cell.infoLabel.text = labelArray[indexPath.row]
+        
+        switch indexPath.row {
+        case 0: // first name
+            if cell.edited == false {
+                cell.infoField.text = user.first
+            }
+        case 1: // last name
+            if cell.edited == false {
+                cell.infoField.text = user.last
+            }
+        case 2: // username
+            if cell.edited == false {
+                cell.infoField.text = user.username
+            }
+        case 3: // email
+            if cell.edited == false {
+                cell.infoField.text = user.email
+            }
+        case 4: //role
+            if cell.edited == false {
+                cell.infoField.text = user.role
+            }
+        default:
+            break
+        }
         
         return cell
+    }
+    
+    // For keyboard
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
     
 }

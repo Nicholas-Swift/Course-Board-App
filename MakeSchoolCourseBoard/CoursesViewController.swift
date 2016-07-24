@@ -12,6 +12,7 @@ import UIKit
 class CoursesViewController: UIViewController {
     
     // Variables
+    @IBOutlet weak var addBarButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
     var courses: [Course] = []
@@ -19,12 +20,29 @@ class CoursesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Remove ability to add course if user is a student
+        if LoginHelper.role == "Student" {
+            addBarButton.enabled = false
+        }
+        
         // Get courses and fill tableview
         JSONHelper.getAllCourses({ (courses, error) in
             if let courses = courses {
                 
                 // Load tableview
                 self.courses = courses
+                
+                // Fill out student names
+                for i in 0...self.courses.count-1 {
+                    print(self.courses[i].students[0])
+                    for j in self.courses[i].students {
+                        JSONHelper.getUser(j, complete: { (user, error) in
+                            print(user.fullname)
+                            self.courses[i].studentNames.append(user.fullname)
+                        })
+                    }
+                }
+                
                 self.tableView.reloadData()
             }
         })
@@ -33,6 +51,9 @@ class CoursesViewController: UIViewController {
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
         self.tabBarController?.tabBar.translucent = false
+        
+        // no separator color
+        tableView.separatorColor = UIColor.clearColor()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -50,28 +71,49 @@ class CoursesViewController: UIViewController {
     // For Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        let destination = segue.destinationViewController as! CourseViewController
-        
-        let indexPath = tableView.indexPathForSelectedRow
-        let course = courses[indexPath!.row]
-        
-        destination.course = course
+        if segue.identifier == "viewCourse" {
+            let destination = segue.destinationViewController as! CourseViewController
+            
+            let indexPath = tableView.indexPathForSelectedRow
+            let course = courses[indexPath!.section]
+            
+            destination.course = course
+        }
+        else {
+            let destination = segue.destinationViewController as! NewCourseViewController
+        }
     }
 }
 
 extension CoursesViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // Set up stylistic properties
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    // Table View Information setting
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return courses.count
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let course = courses[indexPath.row]
+        let course = courses[indexPath.section]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell") as! CourseCell
         cell.courseTitleLabel.text = course.title
-        cell.instructorNameLabel.text = course.instructor
+        cell.instructorNameLabel.text = course.instructorName // course.instructor
         cell.dateRangeLabel.text = DateHelper.toShortDate(course.startsOn) + " - " + DateHelper.toShortDate(course.endsOn)
         
         return cell
