@@ -74,7 +74,7 @@ class CoursesViewController: UIViewController {
             destination.id = course.id
         }
         else {
-            let destination = segue.destinationViewController as! NewCourseViewController
+            //let destination = segue.destinationViewController as! NewCourseViewController
         }
     }
 }

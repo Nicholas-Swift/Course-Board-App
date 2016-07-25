@@ -27,6 +27,9 @@ class SettingsViewController: UITableViewController {
     
     @IBAction func saveBarAction(sender: AnyObject) {
         print("SAVE PLEASE")
+        JSONHelper.updateUser { (bool, error) in
+            print("UPDATED")
+        }
     }
     
     // For ViewController

@@ -197,7 +197,7 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.infoButton.setTitle(course.instructorName ?? "", forState: .Normal)
                 
                 // Set up the action to go to instructor
-                cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellInstructor), forControlEvents: .TouchUpInside)
+                //cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellInstructor), forControlEvents: .TouchUpInside)
                 
                 return cell
             }
@@ -268,6 +268,7 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
     func cellInstructor(sender: UIButton) {
         //print(sender.titleLabel?.text)
         
+        print("instructor")
         print("Segue to \(course.instructor) ... \(course.instructorName)")
         
         performSegueWithIdentifier("toAccount", sender: course.instructor) // Segue to account
@@ -285,6 +286,7 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if index >= 0 {
+            print("student")
             print("Segue to \(course.students[index]) ... \(course.studentNames[index])")
             
             performSegueWithIdentifier("toAccount", sender: course.students[index]) // Segue to account

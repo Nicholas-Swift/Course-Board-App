@@ -212,7 +212,7 @@ class JSONHelper {
                 if let value = response.result.value {
                     let json = JSON(value)
                     
-                    print(json)
+                    //print(json)
                         
                     let product = Product()
                         
@@ -390,6 +390,130 @@ class JSONHelper {
             case .Failure(let error):
                 print(error)
                 complete(user: nil, error: error)
+            }
+        }
+    }
+    
+    // update a user
+    static func updateUser(complete: ( bool: Bool?, error: NSError?) -> Void)
+    {
+        
+        // Call the api
+        let apiToContact = "https://meancourseboard.herokuapp.com/api/me"
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from the api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
+            
+            // Add the json info to user
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    var json = JSON(value)
+                    
+                    print(json)
+                    
+                    json["first"] = "TESTING"
+                    
+                    Alamofire.request(.PUT, apiToContact, headers: headers, parameters: json.dictionaryObject).validate().responseJSON() { response in
+                        switch response.result {
+                        case .Success:
+                            if let value = response.result.value {
+                                //let json = JSON(value)
+                                //print(json)
+                                
+                                complete(bool: true, error: nil)
+                                
+                            }
+                        case .Failure(let error):
+                            print(error)
+                            print("FAIL INSIDE ONE")
+                            complete(bool: nil, error: error)
+                        }
+                    }
+                    
+                    //complete(bool: true, error: nil)
+                    
+                }
+            case .Failure(let error):
+                print(error)
+                complete(bool: false, error: error)
+            }
+        }
+    }
+    
+    // MARK: Posts
+    
+    // Get all the posts from a single course
+    static func getCoursePosts(id: String!, complete: (posts: [Post]!, error: NSError?) -> Void) {
+        
+        // Call the api
+        let apiToContact = "https://meancourseboard.herokuapp.com/api/courses/" + id + "/posts"
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from the api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
+            
+            // Add the json info to user
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    
+                    //print(json)
+                    
+                    var posts: [Post] = []
+                    for i in 0...json.count-1 {
+                        let post = Post()
+                        
+                        post.course = json[i]["course"].stringValue
+                        post.body = json[i]["body"].stringValue
+                        post.user = json[i]["user"]["username"].stringValue
+                        post.createdAt = json[i]["createdAt"].stringValue
+                        
+                        posts.append(post)
+                    }
+                    
+                    complete(posts: posts, error: nil)
+                    
+                }
+            case .Failure(let error):
+                print(error)
+                complete(posts: nil, error: error)
+            }
+        }
+    }
+    
+    // Get all the posts from a specific user
+    static func getUserPosts(id: String!, complete: (posts: [Post]!, error: NSError?) -> Void) {
+        
+        // Call the api
+        let apiToContact = "https://meancourseboard.herokuapp.com/api/users/" + id + "/posts"
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from the api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
+            
+            // Add the json info to user
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    
+                    print(json)
+                    
+                    complete(posts: nil, error: nil)
+                    
+                }
+            case .Failure(let error):
+                print(error)
+                complete(posts: nil, error: error)
             }
         }
     }

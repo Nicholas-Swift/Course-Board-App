@@ -19,6 +19,6 @@ class Post {
     var dueDate: String!
     var emailParticipants: Bool = false
     
-    var user: User!
-    var course: Course!
+    var user: String!
+    var course: String!
 }

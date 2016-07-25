@@ -14,6 +14,8 @@ class BoardViewController: UIViewController {
     // Variables
     @IBOutlet weak var tableView: UITableView!
     
+    var posts: [Post] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,6 +23,10 @@ class BoardViewController: UIViewController {
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
         self.tabBarController?.tabBar.translucent = false
+        
+        // Load posts
+        tableView.alpha = 0
+        loadPosts()
         
         // no separator color
         tableView.separatorColor = UIColor.clearColor()
@@ -30,11 +36,48 @@ class BoardViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    override func viewWillAppear(animated: Bool) {
-        // Unhighlight the highlighted cell
-        if let selection: NSIndexPath = self.tableView.indexPathForSelectedRow {
-            self.tableView.deselectRowAtIndexPath(selection, animated: true)
+    func loadPosts() {
+        
+        JSONHelper.getUser(LoginHelper.id) { (user, error) in
+            
+            var temp = 0
+            for i in user.courses {
+                JSONHelper.getCoursePosts(i, complete: { (posts, error) in
+                    
+                    for post in posts {
+                        self.posts.append(post)
+                    }
+                    
+                    // Loaded the last one, now we can sort and refresh data!
+                    if temp == user.courses.count-1 {
+                        
+                        // Sort
+                        self.posts = self.posts.sort({ (post1, post2) -> Bool in
+                            
+                            let post1num = Double(post1.createdAt.stringByReplacingOccurrencesOfString("-", withString: "").stringByReplacingOccurrencesOfString("T", withString: "").stringByReplacingOccurrencesOfString(":", withString: "").stringByReplacingOccurrencesOfString("Z", withString: ""))
+                            
+                            let post2num = Double(post2.createdAt.stringByReplacingOccurrencesOfString("-", withString: "").stringByReplacingOccurrencesOfString("T", withString: "").stringByReplacingOccurrencesOfString(":", withString: "").stringByReplacingOccurrencesOfString("Z", withString: ""))
+                            
+                            if post1num > post2num {
+                                return true
+                            }
+                            else {
+                                return false
+                            }
+                        })
+                        
+                        // Animate in
+                        self.tableView.reloadData()
+                        UIView.animateWithDuration(0.2, animations: {
+                            self.tableView.alpha = 1
+                        })
+                    }
+                    
+                    temp += 1
+                })
+            }
         }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,7 +101,7 @@ extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
     // Table View Information setting
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 10
+        return posts.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,6 +111,11 @@ extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! CoursePostCell
+        
+        cell.titleButton.setTitle(posts[indexPath.section].course, forState: .Normal)
+        cell.infoLabel.text = posts[indexPath.section].body
+        cell.footerLabel.text = "Posted by " + posts[indexPath.section].user + " on " + DateHelper.toShortDate(posts[indexPath.section].createdAt)
+        
         return cell
     }
 }
