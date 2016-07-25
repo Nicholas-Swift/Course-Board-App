@@ -25,7 +25,9 @@ class User {
     var role: String!
     
     var courses: [String]!
+    var courseNames: [String]!
     var products: [String]!
+    var productNames: [String]!
     var posts: [String]!
     
     var admin: Bool = false

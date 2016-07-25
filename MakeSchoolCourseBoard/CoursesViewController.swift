@@ -15,7 +15,7 @@ class CoursesViewController: UIViewController {
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
-    var courses: [Course] = []
+    var courses: [MiniCourse] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,24 +26,18 @@ class CoursesViewController: UIViewController {
         }
         
         // Get courses and fill tableview
+        tableView.alpha = 0
         JSONHelper.getAllCourses({ (courses, error) in
             if let courses = courses {
                 
                 // Load tableview
                 self.courses = courses
                 
-                // Fill out student names
-                for i in 0...self.courses.count-1 {
-                    print(self.courses[i].students[0])
-                    for j in self.courses[i].students {
-                        JSONHelper.getUser(j, complete: { (user, error) in
-                            print(user.fullname)
-                            self.courses[i].studentNames.append(user.fullname)
-                        })
-                    }
-                }
-                
+                // Once loaded, animate in
                 self.tableView.reloadData()
+                UIView.animateWithDuration(0.2, animations: {
+                    self.tableView.alpha = 1
+                })
             }
         })
         
@@ -77,7 +71,7 @@ class CoursesViewController: UIViewController {
             let indexPath = tableView.indexPathForSelectedRow
             let course = courses[indexPath!.section]
             
-            destination.course = course
+            destination.id = course.id
         }
         else {
             let destination = segue.destinationViewController as! NewCourseViewController
@@ -114,7 +108,7 @@ extension CoursesViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell") as! CourseCell
         cell.courseTitleLabel.text = course.title
         cell.instructorNameLabel.text = course.instructorName // course.instructor
-        cell.dateRangeLabel.text = DateHelper.toShortDate(course.startsOn) + " - " + DateHelper.toShortDate(course.endsOn)
+        cell.dateRangeLabel.text = course.dates
         
         return cell
     }

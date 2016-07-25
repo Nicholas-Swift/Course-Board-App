@@ -13,10 +13,13 @@ class AccountViewController: UIViewController {
     
     // Variables
     @IBOutlet weak var tableView: UITableView!
-    
-    let headerArray = ["Account Information", "Courses", "Products", "Anouncements"]
-    var headerDict = ["Account Information": 0, "Courses": 0, "Products": 0, "Anouncements": 0]
+    @IBOutlet weak var settingsBarButton: UIBarButtonItem!
+
+    var id: String!
     var user = User()
+    
+    var headerArray: [String] = []
+    var headerDict: [String: Int] = [:]
     
     // For ViewController
     
@@ -33,15 +36,89 @@ class AccountViewController: UIViewController {
         
         self.tableView.separatorColor = UIColor.clearColor()
         
+        // Load account
+        tableView.alpha = 0
+        loadAccount()
+    }
+    
+    func loadAccount() {
+        
+        if id == nil || id == "" {
+            getSelf()
+        }
+        else {
+            settingsBarButton.enabled = false
+            getOther()
+        }
+    }
+    
+    func getSelf() {
         JSONHelper.getMe { (user, error) in
             self.user = user
-            
-            self.headerDict["Account Information"] = 3 // Name, username, email
-            self.headerDict["Courses"] = user.courses.count ?? 0
-            self.headerDict["Products"] = user.products.count ?? 0
-            self.headerDict["Anouncements"] = user.posts.count ?? 0
+            self.loadInfo()
             
             self.tableView.reloadData()
+            UIView.animateWithDuration(0.2, animations: {
+                self.tableView.alpha = 1
+            })
+        }
+    }
+    
+    func getOther() {
+        JSONHelper.getUser(self.id) { (user, error) in
+            self.user = user
+            self.loadInfo()
+            
+            self.tableView.reloadData()
+            UIView.animateWithDuration(0.2, animations: {
+                self.tableView.alpha = 1
+            })
+        }
+    }
+    
+    func loadInfo() {
+        headerArray = ["Account Information", "Courses", "Products", "Anouncements"]
+        
+        // Account Info - name, username, email
+        var accountInfoNum = 0
+        
+        if let _ = user.fullname { accountInfoNum += 1 }
+        if let _ = user.username { accountInfoNum += 1 }
+        if let _ = user.email { accountInfoNum += 1 }
+        
+        // Courses
+        var coursesNum = 0
+        if let _ = user.courses { coursesNum = user.courses.count }
+        
+        // Products
+        var productsNum = 0
+        if let _ = user.products { productsNum = user.products.count }
+        
+        // Anouncements
+        var anouncementsNum = 0
+        if let _ = user.posts { anouncementsNum = user.posts.count }
+        
+        // Remove from array and dictionary as needed
+        let tempArray = [accountInfoNum, coursesNum, productsNum, anouncementsNum]
+        var removeArray: [Int] = []
+        
+        for i in 0...headerArray.count-1 {
+            if tempArray[i] == 0 {
+                removeArray.append(i)
+            }
+            else {
+                print(headerArray[i])
+                let one = headerArray[i]
+                print(tempArray[i])
+                let two = tempArray[i]
+                
+                headerDict[one] = two
+            }
+        }
+        var temp = 0
+        for i in removeArray {
+            headerArray.removeAtIndex(i - temp)
+            temp += 1
         }
     }
     
@@ -50,11 +127,35 @@ class AccountViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // For Segue
+    // Segue, look down in tableView
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        let destination = segue.destinationViewController as! SettingsViewController
-        destination.user = self.user
+        // If settings
+        if segue.identifier == "toSettings" {
+            let destination = segue.destinationViewController as! SettingsViewController
+            destination.user = self.user
+        }
+        
+        // If going to account
+        if segue.identifier == "toCourse" {
+            let id = sender as! String
+            
+            let destination = segue.destinationViewController as! CourseViewController
+            destination.id = id
+            
+            print(id)
+        }
+            
+            // If going to product
+        else if segue.identifier == "toProduct" {
+            let id = sender as! String
+            
+            let destination = segue.destinationViewController as! ProductViewController
+            destination.id = id
+            
+            print(id)
+        }
     }
     
 }
@@ -106,14 +207,20 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
         else if mySection == "Courses" {
             let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
             
-            cell.infoButton.setTitle(user.courses[indexPath.row] ?? "", forState: .Normal)
+            cell.infoButton.setTitle(user.courseNames[indexPath.row] ?? "", forState: .Normal)
+            
+            // Set up the action to go to course
+            cell.infoButton.addTarget(self, action: #selector(AccountViewController.cellCourse), forControlEvents: .TouchUpInside)
             
             return cell
         }
         else if mySection == "Products" {
             let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
         
-            cell.infoButton.setTitle(user.products[indexPath.row] ?? "", forState: .Normal)
+            cell.infoButton.setTitle(user.productNames[indexPath.row] ?? "", forState: .Normal)
+            
+            // Set up the action to go to product
+            cell.infoButton.addTarget(self, action: #selector(AccountViewController.cellProduct), forControlEvents: .TouchUpInside)
             
             return cell
         }
@@ -130,6 +237,44 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
             cell.infoLabel.text = "DEFAULT BROOOO!"
             
             return cell
+        }
+    }
+    
+    // For cell button touches
+    
+    func cellCourse(sender: UIButton) {
+        //print(sender.titleLabel?.text)
+        
+        var index = -1
+        for i in 0...user.courseNames.count-1 {
+            if sender.titleLabel?.text == user.courseNames[i] {
+                index = i
+                break
+            }
+        }
+        
+        if index >= 0 {
+            print("Segue to \(user.courses[index]) ... \(user.courseNames[index])")
+            
+            performSegueWithIdentifier("toCourse", sender: user.courses[index]) // Segue to account
+        }
+    }
+    
+    func cellProduct(sender: UIButton) {
+        //print(sender.titleLabel?.text)
+        
+        var index = -1
+        for i in 0...user.productNames.count-1 {
+            if sender.titleLabel?.text == user.productNames[i] {
+                index = i
+                break
+            }
+        }
+        
+        if index >= 0 {
+            print("Segue to \(user.products[index]) ... \(user.productNames[index])")
+            
+            performSegueWithIdentifier("toProduct", sender: user.products[index]) // Segue to account
         }
     }
 }

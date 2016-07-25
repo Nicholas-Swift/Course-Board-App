@@ -35,5 +35,5 @@ class Product {
     var mvp: String!
 
     var contributors: [String]!
-    var contributorNames: [String] = [] // for contributor full names
+    var contributorNames: [String]! // for contributor full names
 }

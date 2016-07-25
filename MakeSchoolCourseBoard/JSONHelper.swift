@@ -16,8 +16,8 @@ class JSONHelper {
     
     // MARK: Courses
     
-    // Get all courses
-    static func getAllCourses(complete: ( courses: [Course]?, error: NSError?) -> Void)
+    // Get all courses, through mini courses to save memory
+    static func getAllCourses(complete: ( courses: [MiniCourse]?, error: NSError?) -> Void)
     {
         
         // Url of the api
@@ -34,37 +34,20 @@ class JSONHelper {
                     let json = JSON(value)
                     
                     // Set up courses array and loop through, adding to it
-                    var courses = [Course]()
+                    var courses = [MiniCourse]()
                     for i in 0...(json.count-1) {
                         //print(json)
                         
-                        let course = Course()
+                        let miniCourse = MiniCourse()
                         
-                        course.id = json[i]["_id"].stringValue
+                        miniCourse.id = json[i]["_id"].stringValue
+                        miniCourse.title = json[i]["title"].stringValue
+                        miniCourse.instructorName = json[i]["instructor"]["fullname"].stringValue
+                        let startDate = DateHelper.toShortDate(json[i]["startsOn"].stringValue)
+                        let endDate = DateHelper.toShortDate(json[i]["endsOn"].stringValue)
+                        miniCourse.dates = startDate + " - " + endDate
                         
-                        course.createdAt = json[i]["createdAt"].stringValue
-                        course.updatedAt = json[i]["updatedAt"].stringValue
-                        
-                        course.user = json[i]["user"].stringValue // Note, this holds the user id
-                        course.duration = json[i]["duration"].stringValue
-                        
-                        course.instructor = json[i]["instructor"]["_id"].stringValue
-                        course.instructorName = json[i]["instructor"]["fullname"].stringValue // For instructor name
-                        course.title = json[i]["title"].stringValue
-                        course.description = json[i]["description"].stringValue
-                        
-                        course.startsOn = json[i]["startsOn"].stringValue
-                        course.endsOn = json[i]["endsOn"].stringValue
-                        course.hours = json[i]["hours"].stringValue
-                        
-                        course.location = json[i]["location"].stringValue
-                        
-                        course.objectives = json[i]["objectives"].arrayValue.map{$0.string!}
-                        course.students = json[i]["students"].arrayValue.map{$0.string!}
-                        course.posts = json[i]["posts"].arrayValue.map{$0.string!}
-                        course.products = json[i]["products"].arrayValue.map{$0.string!}
-                        
-                        courses.append(course)
+                        courses.append(miniCourse)
                     }
                     
                     // Complete and return courses array
@@ -84,7 +67,6 @@ class JSONHelper {
         
         // Call the api
         let apiToContact = "https://meancourseboard.herokuapp.com/api/courses/" + id
-        //let apiToContact = "http://meancourseboard.herokuapp.com/api/courses/571fb377df5be503008e3b2b"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -109,6 +91,7 @@ class JSONHelper {
                     course.duration = json["duration"].stringValue
                     
                     course.instructor = json["instructor"]["_id"].stringValue
+                    course.instructorName = json["instructor"]["fullname"].stringValue
                     course.title = json["title"].stringValue
                     course.description = json["description"].stringValue
                     
@@ -120,8 +103,15 @@ class JSONHelper {
                     
                     course.objectives = json["objectives"].arrayValue.map{$0.string!}
                     course.students = json["students"].arrayValue.map{$0["_id"].stringValue}
+                    course.studentNames = json["students"].arrayValue.map{$0["fullname"].stringValue}
+                    
                     course.posts = json["posts"].arrayValue.map{$0["_id"].stringValue}
+                    course.postBodies = json["posts"].arrayValue.map{$0["body"].stringValue}
+                    course.postUser = json["posts"].arrayValue.map{$0["user"].stringValue}
+                    course.postCreated = json["posts"].arrayValue.map{$0["createdAt"].stringValue}
+                    
                     course.products = json["products"].arrayValue.map{$0["_id"].stringValue}
+                    course.productNames = json["products"].arrayValue.map{$0["name"].stringValue}
                     
                     complete(course: course, error: nil)
                     
@@ -162,8 +152,8 @@ class JSONHelper {
     
     // MARK: Products
     
-    // Get all products
-    static func getAllProducts(complete: ( products: [Product]?, error: NSError?) -> Void)
+    // Get all products, in miniProducts to save memory
+    static func getAllProducts(complete: ( products: [MiniProduct]?, error: NSError?) -> Void)
     {
         
         // Call the api
@@ -179,40 +169,19 @@ class JSONHelper {
                 if let value = response.result.value {
                     let json = JSON(value)
                     
-                    var products = [Product]()
+                    var products = [MiniProduct]()
                     
                     for i in 0...(json.count-1) {
                         //print(json[i])
                         
-                        let product = Product()
+                        let miniProduct = MiniProduct()
                         
-                        product.id = json[i]["_id"].stringValue
+                        miniProduct.id = json[i]["_id"].stringValue
+                        miniProduct.title = json[i]["name"].stringValue
+                        miniProduct.instructorName = json[i]["instructor"]["fullname"].stringValue
+                        miniProduct.info = json[i]["problem"].stringValue
                         
-                        product.createdAt = json[i]["createdAt"].stringValue
-                        product.updatedAt = json[i]["updatedAt"].stringValue
-                        
-                        product.name = json[i]["name"].stringValue
-                        product.instructor = json[i]["instructor"]["_id"].stringValue
-                        product.instructorName = json[i]["instructor"]["fullname"].stringValue
-                        product.course = json[i]["course"].stringValue
-                        product.problem = json[i]["problem"].stringValue
-                        
-                        product.valueProp = json[i]["valueProp"].stringValue
-                        product.githubUrl = json[i]["githubUrl"].stringValue
-                        product.agileUrl = json[i]["agileUrl"].stringValue
-                        product.liveurl = json[i]["liveUrl"].stringValue
-                        
-                        product.objectives = json[i]["objectives"].arrayValue.map{$0.string!}
-                        product.posts = json[i]["posts"].arrayValue.map{$0.string!}
-                        
-                        //product.customer = json[i]["customer"].stringValue //???
-                        //product.assumptions = json[i]["assumptions"].stringValue //???
-                        //product.finishedProduct = json[i]["finishedProduct"].stringValue //???
-                        //product.mvp = json[i]["mvp"].stringValue //???
-                        
-                        product.contributors = json[i]["contributors"].arrayValue.map{$0.string!}
-                        
-                        products.append(product)
+                        products.append(miniProduct)
                     }
                     
                     // complete and return products array
@@ -231,7 +200,7 @@ class JSONHelper {
     {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/products" + id
+        let apiToContact = "https://meancourseboard.herokuapp.com/api/products/" + id
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -266,12 +235,13 @@ class JSONHelper {
                     product.objectives = json["objectives"].arrayValue.map{$0.string!}
                     product.posts = json["posts"].arrayValue.map{$0["_id"].stringValue}
                         
-                    //product.customer = json["customer"].stringValue //???
-                    //product.assumptions = json["assumptions"].stringValue //???
-                    //product.finishedProduct = json["finishedProduct"].stringValue //???
-                    //product.mvp = json["mvp"].stringValue //???
+                    product.customer = json["customer"].stringValue //???
+                    product.assumptions = json["assumptions"].stringValue //???
+                    product.finishedProduct = json["finishedProduct"].stringValue //???
+                    product.mvp = json["mvp"].stringValue //???
                         
                     product.contributors = json["contributors"].arrayValue.map{$0["_id"].stringValue}
+                    product.contributorNames = json["contributors"].arrayValue.map{$0["fullname"].stringValue}
                     
                     // complete and return product
                     complete(product: product, error: nil)
@@ -333,7 +303,7 @@ class JSONHelper {
                 if let value = response.result.value {
                     let json = JSON(value)
                     
-                    //print(json)
+                    print(json)
                     
                     let user = User()
                     
@@ -353,7 +323,9 @@ class JSONHelper {
                     user.role = json["role"].stringValue
                     
                     user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
+                    user.courseNames = json["courses"].arrayValue.map{$0["title"].stringValue}
                     user.products = json["products"].arrayValue.map{$0["_id"].stringValue}
+                    user.productNames = json["products"].arrayValue.map{$0["name"].stringValue}
                     user.posts = json["posts"].arrayValue.map{$0["_id"].stringValue}
                     
                     user.admin = Bool(json["admin"])
@@ -405,7 +377,9 @@ class JSONHelper {
                     user.role = json["role"].stringValue
                     
                     user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
+                    user.courseNames = json["courses"].arrayValue.map{$0["title"].stringValue}
                     user.products = json["products"].arrayValue.map{$0["_id"].stringValue}
+                    user.productNames = json["products"].arrayValue.map{$0["name"].stringValue}
                     user.posts = json["posts"].arrayValue.map{$0.stringValue}
                     
                     user.admin = Bool(json["admin"])

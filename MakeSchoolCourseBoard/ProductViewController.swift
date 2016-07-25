@@ -12,37 +12,30 @@ import UIKit
 class ProductViewController: UIViewController {
     
     // Variables
-    var product: Product!
     @IBOutlet weak var joinBarButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
+    var id: String!
+    var product: Product!
+    
     // Actions
     @IBAction func joinBarAction(sender: AnyObject) {
-        JSONHelper.joinProduct(product.id) { (course, error) in
+        JSONHelper.joinProduct(id) { (course, error) in
             self.joinBarButton.title = "Joined :)"
         }
     }
     
-    var headerArray = ["What problem are you solving?", "Unique Value Proposition", "Customer", "Assumptions about the World", "Your Finished Product", "Your MVP", "Advisor", "Course", "Contributors", "External Links"]
+    var headerArray: [String] = []
     var headerDict: [String: Int] = [:]
     
     // General View Controller stuff
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // NOTE: Loading the courses is in CoursesViewController.swift
-        
-        // Change the bar button to 'joined' if student is joined in product.
-        if product.contributors.contains(LoginHelper.id) {
-            joinBarButton.title = "Joined :)"
-            joinBarButton.enabled = false
-        }
-        
-        // Nav bar title
-        self.navigationItem.title = product.name
-        
-        // Load up the table view with correct info
-        loadInfo()
+        // Load product
+        tableView.alpha = 0
+        self.navigationItem.title = ""
+        loadProduct()
         
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 50
@@ -52,7 +45,34 @@ class ProductViewController: UIViewController {
         tableView.separatorColor = UIColor.clearColor()
     }
     
+    func loadProduct() {
+        JSONHelper.getProduct(id) { (product, error) in
+            self.product = product
+            
+            // Change the bar button to 'joined' if student is joined in product.
+            if self.product.contributors.contains(LoginHelper.id) {
+                self.joinBarButton.title = "Joined :)"
+                self.joinBarButton.enabled = false
+            }
+            
+            // Nav bar title
+            self.navigationItem.title = self.product.name
+            
+            // Load info in
+            self.loadInfo()
+            
+            // Show info once everything is loaded
+            self.tableView.reloadData()
+            UIView.animateWithDuration(0.3, animations: { 
+                self.tableView.alpha = 1
+            })
+        }
+    }
+    
     func loadInfo() {
+        
+        // Setup header array
+        headerArray = ["What problem are you solving?", "Unique Value Proposition", "Customer", "Assumptions about the World", "Your Finished Product", "Your MVP", "Advisor", "Course", "Contributors", "External Links"]
         
         // Problem
         var problemNum = 0
@@ -80,7 +100,7 @@ class ProductViewController: UIViewController {
         
         // Advisor
         var advisorNum = 0
-        if let _ = product.instructorName { if product.instructorName != "" { advisorNum = 1 } } // product.instructor
+        if let _ = product.instructor { if product.instructor != "" { advisorNum = 1 } } // product.instructor
         
         // Course
         var courseNum = 0
@@ -124,6 +144,21 @@ class ProductViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // Segue, look down in tableView
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        // If going to account
+        if segue.identifier == "toAccount" {
+            let id = sender as! String
+            
+            let destination = segue.destinationViewController as! AccountViewController
+            destination.id = id
+            
+            print(id)
+        }
+    }
 }
 
 extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
@@ -139,8 +174,11 @@ extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        print("viewForHeader")
         let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
         headerCell.headerTitleLabel.text = headerArray[section]
+        
+        print("EndViewForHeader")
         
         return headerCell
     }
@@ -200,6 +238,9 @@ extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.infoButton.setTitle(product.instructorName ?? "", forState: .Normal) // product.instructor
             
+            // Set up the action to segue
+            cell.infoButton.addTarget(self, action: #selector(ProductViewController.cellAdvisor), forControlEvents: .TouchUpInside)
+            
             return cell
         }
         else if headerArray[indexPath.section] == tempArray[7] {
@@ -214,6 +255,9 @@ extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.infoButton.setTitle(product.contributorNames[indexPath.row] ?? "", forState: .Normal) // product.contributor
             
+            // Set up the action to segue
+            cell.infoButton.addTarget(self, action: #selector(ProductViewController.cellContributor), forControlEvents: .TouchUpInside)
+            
             return cell
         }
         else if headerArray[indexPath.section] == tempArray[9] {
@@ -221,23 +265,75 @@ extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
             cell.infoButton.setTitle("", forState: .Normal)
             
             var tempArray: [String] = []
+            
             if product.githubUrl != "" {
-                tempArray.append(product.githubUrl)
+                //tempArray.append(product.githubUrl)
+                tempArray.append("GitHub")
             }
             if product.agileUrl != "" {
-                tempArray.append(product.agileUrl)
+                //tempArray.append(product.agileUrl)
+                tempArray.append("Scrum Board")
             }
             if product.liveurl != "" {
-                tempArray.append(product.liveurl)
+                //tempArray.append(product.liveurl)
+                tempArray.append("Live Site")
             }
             
             cell.infoButton.setTitle(tempArray[indexPath.row], forState: .Normal)
+            
+            // Set up the action to go to url
+            cell.infoButton.addTarget(self, action: #selector(ProductViewController.cellUrl), forControlEvents: .TouchUpInside)
             
             return cell
         }
         else {
             let cell = tableView.dequeueReusableCellWithIdentifier("InfoCell") as! CourseInfoCell
             return cell
+        }
+    }
+    
+    // For cell button touches
+    
+    func cellAdvisor(sender: UIButton) {
+        //print(sender.titleLabel?.text)
+        
+        print("Segue to \(product.instructor) ... \(product.instructorName)")
+        
+        performSegueWithIdentifier("toAccount", sender: product.instructor) // Segue to account
+    }
+    
+    func cellContributor(sender: UIButton) {
+        //print(sender.titleLabel?.text)
+        
+        var index = -1
+        for i in 0...product.contributorNames.count-1 {
+            if sender.titleLabel?.text == product.contributorNames[i] {
+                index = i
+                break
+            }
+        }
+        
+        if index >= 0 {
+            print("Segue to \(product.contributors[index]) ... \(product.contributorNames[index])")
+            
+            performSegueWithIdentifier("toAccount", sender: product.contributors[index]) // Segue to account
+        }
+    }
+    
+    func cellUrl(sender: UIButton) {
+        //print(sender.titleLabel?.text)
+        
+        if sender.titleLabel!.text == "GitHub" {
+            let url = NSURL(string: product.githubUrl)
+            UIApplication.sharedApplication().openURL(url!)
+        }
+        else if sender.titleLabel!.text == "Scrum Board" {
+            let url = NSURL(string: product.agileUrl)
+            UIApplication.sharedApplication().openURL(url!)
+        }
+        else if sender.titleLabel!.text == "Live Site" {
+            let url = NSURL(string: product.liveurl)
+            UIApplication.sharedApplication().openURL(url!)
         }
     }
 }

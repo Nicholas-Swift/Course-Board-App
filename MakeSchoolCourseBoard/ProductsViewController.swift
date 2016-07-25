@@ -14,29 +14,24 @@ class ProductsViewController: UIViewController {
     // Variables
     @IBOutlet weak var tableView: UITableView!
     
-    var products: [Product] = []
+    var products: [MiniProduct] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Get courses and fill tableview
+        tableView.alpha = 0
         JSONHelper.getAllProducts({ (products, error) in
             if let products = products {
                 
                 // Load tableView
                 self.products = products
                 
-                // Fill out student names
-                for i in 0...self.products.count-1 {
-                    for j in self.products[i].contributors {
-                        JSONHelper.getUser(j, complete: { (user, error) in
-                            print(user.fullname)
-                            self.products[i].contributorNames.append(user.fullname)
-                        })
-                    }
-                }
-                
+                // Animate the tableView in once data is loaded
                 self.tableView.reloadData()
+                UIView.animateWithDuration(0.2, animations: {
+                    self.tableView.alpha = 1
+                })
             }
         })
         
@@ -70,7 +65,7 @@ class ProductsViewController: UIViewController {
             let indexPath = tableView.indexPathForSelectedRow
             let product = products[indexPath!.section]
             
-            destination.product = product
+            destination.id = product.id
         }
         else {
             //let destination = segue.destinationViewController as! NewProductViewController
@@ -108,9 +103,9 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
         let product = products[indexPath.section]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell") as! CourseCell
-        cell.courseTitleLabel.text = product.name
-        cell.instructorNameLabel.text = product.instructorName // product.instructor
-        cell.dateRangeLabel.text = product.problem
+        cell.courseTitleLabel.text = product.title
+        cell.instructorNameLabel.text = product.instructorName
+        cell.dateRangeLabel.text = product.info
         
         return cell
     }

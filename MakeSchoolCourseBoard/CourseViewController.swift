@@ -14,36 +14,29 @@ class CourseViewController: UIViewController {
     // Variables
     @IBOutlet weak var enrollBarButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
+    
+    var id: String!
     var course: Course!
     
     // Actions
     @IBAction func enrollBarAction(sender: AnyObject) {
-        JSONHelper.enrollCourse(course.id) { (course, error) in
+        JSONHelper.enrollCourse(id) { (course, error) in
             self.enrollBarButton.title = "Enrolled :)"
         }
     }
     
     // Set variables so the table view looks good!
-    var headerArray = ["Course Information", "Objectives", "Description", "Participants", "Products", "Anouncements"]
+    var headerArray: [String] = []
     var headerDict: [String: Int] = [:] // populated by loadInfo()
     
     // General View Controller stuff
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // NOTE: Loading the courses is in CoursesViewController.swift
-        
-        // Change the bar button to 'enrolled' if student is enrolled in course.
-        if course.students.contains(LoginHelper.id) {
-            enrollBarButton.title = "Enrolled :)"
-            enrollBarButton.enabled = false
-        }
-        
-        // nav bar title
-        self.navigationItem.title = course.title
-        
-        // Load up the table view with correct info
-        loadInfo()
+        // Load Course
+        tableView.alpha = 0
+        self.navigationItem.title = ""
+        loadCourse()
         
         // Table view remove separator
         tableView.separatorColor = UIColor.clearColor()
@@ -53,10 +46,40 @@ class CourseViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
+    func loadCourse() {
+        JSONHelper.getCourse(id) { (course, error) in
+            print(course?.endsOn)
+            self.course = course
+            
+            // Change the bar button to 'enrolled' if student is enrolled in course.
+            if self.course.students.contains(LoginHelper.id) {
+                self.enrollBarButton.title = "Enrolled :)"
+                self.enrollBarButton.enabled = false
+            }
+            
+            // Change navbar title
+            self.navigationItem.title = self.course.title
+            
+            // Load info in
+            self.loadInfo()
+            
+            // Show info once everything is loaded
+            self.tableView.reloadData()
+            UIView.animateWithDuration(0.2, animations: { 
+                self.tableView.alpha = 1
+            })
+        }
+    }
+    
     func loadInfo() {
+        
+        // Set up headerArray
+        headerArray = ["Course Information", "Objectives", "Description", "Participants", "Products", "Anouncements"]
+        
         // Course Information
         var courseInfoNum = 0
-        if let _ = course.instructorName { courseInfoNum += 1 } // course.instructor
+        
+        if let _ = course.instructor { courseInfoNum += 1 } // course.instructor
         if let _ = course.startsOn { courseInfoNum += 1 }
         if let _ = course.hours { courseInfoNum += 1 }
         if let _ = course.location { courseInfoNum += 1 }
@@ -109,6 +132,32 @@ class CourseViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // Segue, look down in tableView
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        // If going to account
+        if segue.identifier == "toAccount" {
+            let id = sender as! String
+            
+            let destination = segue.destinationViewController as! AccountViewController
+            destination.id = id
+            
+            print(id)
+        }
+        
+        // If going to product
+        else if segue.identifier == "toProduct" {
+            let id = sender as! String
+            
+            let destination = segue.destinationViewController as! ProductViewController
+            destination.id = id
+            
+            print(id)
+        }
+    }
+    
 }
 
 extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
@@ -144,7 +193,12 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         if headerArray[indexPath.section] == tempArray[0] {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
-                cell.infoButton.setTitle(course.instructorName ?? "", forState: .Normal) // course.instructor
+                
+                cell.infoButton.setTitle(course.instructorName ?? "", forState: .Normal)
+                
+                // Set up the action to go to instructor
+                cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellInstructor), forControlEvents: .TouchUpInside)
+                
                 return cell
             }
             else {
@@ -176,25 +230,83 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         else if headerArray[indexPath.section] == tempArray[3] {
             let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
             
-            cell.infoButton.setTitle(course.studentNames[indexPath.row] ?? "", forState: .Normal) // course.student
+            cell.infoButton.setTitle(course.studentNames[indexPath.row] ?? "", forState: .Normal) // course.students
+            
+            // Set up the action to go to student
+            cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellStudent), forControlEvents: .TouchUpInside)
             
             return cell
         }
         else if headerArray[indexPath.section] == tempArray[4] {
             let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
             
-            cell.infoButton.setTitle(course.products[indexPath.row] ?? "", forState: .Normal)
+            cell.infoButton.setTitle(course.productNames[indexPath.row] ?? "", forState: .Normal) // course.products
+            
+            // Set up the action to go to product
+            cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellProduct), forControlEvents: .TouchUpInside)
             
             return cell
         }
         else if headerArray[indexPath.section] == tempArray[5] {
+            let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! CoursePostCell
+            
+            cell.infoLabel.text = course.postBodies[indexPath.row]
+            cell.footerLabel.text = "Posted by " + course.postUser[indexPath.row] + " on " + DateHelper.toShortDate(course.postCreated[indexPath.row])
+            
+            return cell
+
+        }
+        else {
             let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! CourseTextCell
             
             return cell
         }
-        else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! CourseTextCell
-            return cell
+    }
+    
+    // For cell button touches
+    
+    func cellInstructor(sender: UIButton) {
+        //print(sender.titleLabel?.text)
+        
+        print("Segue to \(course.instructor) ... \(course.instructorName)")
+        
+        performSegueWithIdentifier("toAccount", sender: course.instructor) // Segue to account
+    }
+    
+    func cellStudent(sender: UIButton) {
+        //print(sender.titleLabel?.text)
+        
+        var index = -1
+        for i in 0...course.studentNames.count-1 {
+            if sender.titleLabel?.text == course.studentNames[i] {
+                index = i
+                break
+            }
+        }
+        
+        if index >= 0 {
+            print("Segue to \(course.students[index]) ... \(course.studentNames[index])")
+            
+            performSegueWithIdentifier("toAccount", sender: course.students[index]) // Segue to account
         }
     }
+    
+    func cellProduct(sender: UIButton) {
+        //print(sender.titleLabel?.text)
+        
+        var index = -1
+        for i in 0...course.productNames.count-1 {
+            if sender.titleLabel?.text == course.productNames[i] {
+                index = i
+                break
+            }
+        }
+        
+        if index >= 0 {
+            print("Segue to \(course.products[index]) ... \(course.productNames[index])")
+            
+            performSegueWithIdentifier("toProduct", sender: course.products[index]) // Segue to account
+        }
+    }
+    
 }

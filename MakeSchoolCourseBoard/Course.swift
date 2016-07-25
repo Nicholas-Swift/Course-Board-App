@@ -19,7 +19,7 @@ class Course {
     var duration: String!
     
     var instructor: String!
-    var instructorName: String! // Instructor name
+    var instructorName: String! // for instructor fullname
     var title: String!
     var description: String!
     
@@ -31,7 +31,11 @@ class Course {
     
     var objectives: [String]! // NOTE: Anything that should be an object, holds an ID to it instead!!
     var students: [String]!
-    var studentNames: [String] = [] // Student names
+    var studentNames: [String]! // for student names
     var posts: [String]!
+    var postBodies: [String]! // for post info
+    var postUser: [String]! // for post user
+    var postCreated: [String]! // for post date created
     var products: [String]!
+    var productNames: [String]! // for product names
 }

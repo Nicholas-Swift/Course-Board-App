@@ -12,6 +12,8 @@
 		0113B0881D36F3D8003AD618 /* CourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0113B0871D36F3D8003AD618 /* CourseCell.swift */; };
 		0113B08A1D36F62C003AD618 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0113B0891D36F62C003AD618 /* Product.swift */; };
 		01386BF31D40159C00E03374 /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01386BF21D40159C00E03374 /* ColorHelper.swift */; };
+		01460E911D458CA200A5DC38 /* MiniCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01460E901D458CA200A5DC38 /* MiniCourse.swift */; };
+		01460E931D458CD300A5DC38 /* MiniProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01460E921D458CD300A5DC38 /* MiniProduct.swift */; };
 		0148A4871D36BFD3002A8D78 /* CourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0148A4861D36BFD3002A8D78 /* CourseViewController.swift */; };
 		0148A48C1D36D857002A8D78 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0148A48B1D36D857002A8D78 /* Course.swift */; };
 		016761631D4414240059E091 /* NewProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016761621D4414240059E091 /* NewProductViewController.swift */; };
@@ -27,6 +29,7 @@
 		0170D3221D3593BB0008BB0C /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0170D3211D3593BB0008BB0C /* ProductViewController.swift */; };
 		01A2CB7C1D394E1F000EDD2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7B1D394E1F000EDD2B /* User.swift */; };
 		01A2CB7E1D394E2F000EDD2B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7D1D394E2F000EDD2B /* Post.swift */; };
+		01A853701D4495B900046207 /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A8536F1D4495B900046207 /* BoardViewController.swift */; };
 		01C1D22A1D3EE4970011C7FF /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1D2291D3EE4970011C7FF /* LoginHelper.swift */; };
 		01D0EA8E1D41432E000F730E /* CourseHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0EA8D1D41432E000F730E /* CourseHeaderCell.swift */; };
 		01D0EA901D414337000F730E /* CourseInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0EA8F1D414337000F730E /* CourseInfoCell.swift */; };
@@ -45,6 +48,8 @@
 		0113B0871D36F3D8003AD618 /* CourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCell.swift; sourceTree = "<group>"; };
 		0113B0891D36F62C003AD618 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		01386BF21D40159C00E03374 /* ColorHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
+		01460E901D458CA200A5DC38 /* MiniCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniCourse.swift; sourceTree = "<group>"; };
+		01460E921D458CD300A5DC38 /* MiniProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniProduct.swift; sourceTree = "<group>"; };
 		0148A4861D36BFD3002A8D78 /* CourseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewController.swift; sourceTree = "<group>"; };
 		0148A48B1D36D857002A8D78 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		016761621D4414240059E091 /* NewProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProductViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +67,7 @@
 		0170D3211D3593BB0008BB0C /* ProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
 		01A2CB7B1D394E1F000EDD2B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		01A2CB7D1D394E2F000EDD2B /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		01A8536F1D4495B900046207 /* BoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
 		01C1D2291D3EE4970011C7FF /* LoginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
 		01D0EA8D1D41432E000F730E /* CourseHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseHeaderCell.swift; sourceTree = "<group>"; };
 		01D0EA8F1D414337000F730E /* CourseInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseInfoCell.swift; sourceTree = "<group>"; };
@@ -135,7 +141,9 @@
 		0148A48A1D36D846002A8D78 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				01460E901D458CA200A5DC38 /* MiniCourse.swift */,
 				0148A48B1D36D857002A8D78 /* Course.swift */,
+				01460E921D458CD300A5DC38 /* MiniProduct.swift */,
 				0113B0891D36F62C003AD618 /* Product.swift */,
 				01A2CB7B1D394E1F000EDD2B /* User.swift */,
 				01A2CB7D1D394E2F000EDD2B /* Post.swift */,
@@ -182,6 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				01D0EA971D419278000F730E /* LogInViewController.swift */,
+				01A8536E1D44958F00046207 /* Board */,
+				01A853711D44979F00046207 /* Messages */,
 				01386BEF1D40144C00E03374 /* Courses */,
 				01386BF01D40145E00E03374 /* Products */,
 				01D0F8391D4287C3005A94E0 /* Account */,
@@ -196,6 +206,21 @@
 				01386BF11D40156D00E03374 /* Courses */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		01A8536E1D44958F00046207 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				01A8536F1D4495B900046207 /* BoardViewController.swift */,
+			);
+			name = Board;
+			sourceTree = "<group>";
+		};
+		01A853711D44979F00046207 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Messages;
 			sourceTree = "<group>";
 		};
 		01D0F8391D4287C3005A94E0 /* Account */ = {
@@ -369,9 +394,11 @@
 				01D0F83C1D42DCA7005A94E0 /* AccountFieldCell.swift in Sources */,
 				0170D3221D3593BB0008BB0C /* ProductViewController.swift in Sources */,
 				0148A4871D36BFD3002A8D78 /* CourseViewController.swift in Sources */,
+				01460E931D458CD300A5DC38 /* MiniProduct.swift in Sources */,
 				0170D31F1D35700B0008BB0C /* SettingsViewController.swift in Sources */,
 				016761631D4414240059E091 /* NewProductViewController.swift in Sources */,
 				01D0EA941D41434F000F730E /* CoursePostCell.swift in Sources */,
+				01A853701D4495B900046207 /* BoardViewController.swift in Sources */,
 				01D0EA8E1D41432E000F730E /* CourseHeaderCell.swift in Sources */,
 				0113B08A1D36F62C003AD618 /* Product.swift in Sources */,
 				0113B0881D36F3D8003AD618 /* CourseCell.swift in Sources */,
@@ -379,6 +406,7 @@
 				01386BF31D40159C00E03374 /* ColorHelper.swift in Sources */,
 				01A2CB7E1D394E2F000EDD2B /* Post.swift in Sources */,
 				01C1D22A1D3EE4970011C7FF /* LoginHelper.swift in Sources */,
+				01460E911D458CA200A5DC38 /* MiniCourse.swift in Sources */,
 				0170D3151D356FBB0008BB0C /* CoursesViewController.swift in Sources */,
 				0170D31D1D3570000008BB0C /* AccountViewController.swift in Sources */,
 			);
