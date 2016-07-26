@@ -10,8 +10,8 @@ import Foundation
 
 class DateHelper {
     
-    // Set up months
-    static let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    // Set up months     vv is to offset the 0 portion!!
+    static let months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     
     // Turn time into a full date (January 23, 2016).
     static func toFullDate(str: String) -> String {

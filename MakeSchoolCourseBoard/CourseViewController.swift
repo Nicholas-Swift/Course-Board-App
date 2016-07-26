@@ -60,13 +60,18 @@ class CourseViewController: UIViewController {
             // Change navbar title
             self.navigationItem.title = self.course.title
             
-            // Load info in
-            self.loadInfo()
-            
-            // Show info once everything is loaded
-            self.tableView.reloadData()
-            UIView.animateWithDuration(0.2, animations: { 
-                self.tableView.alpha = 1
+            // Load the posts
+            JSONHelper.getCoursePosts(course?.id, complete: { (posts, error) in
+                self.course.postUser = posts.map{$0.user}
+                
+                // Load info in
+                self.loadInfo()
+                
+                // Show info once everything is loaded
+                self.tableView.reloadData()
+                UIView.animateWithDuration(0.2, animations: {
+                    self.tableView.alpha = 1
+                })
             })
         }
     }
