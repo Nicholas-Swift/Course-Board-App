@@ -6,8 +6,6 @@ Courses
 -----------------------
 Add functionality to add course
 
-Change the posts from having just ID to having fullname in footer
-
 Add ability to create a new post for the specific course you are enrolled in
 
 Products
