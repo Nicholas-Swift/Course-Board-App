@@ -254,7 +254,7 @@ class JSONHelper {
         }
     }
     
-    // join in specific product
+    // Join in specific product
     static func joinProduct(id: String, complete: ( bool: Bool?, error: NSError?) -> Void)
     {
         
@@ -282,6 +282,9 @@ class JSONHelper {
         }
     }
     
+    // Add a product
+    
+    
     // MARK: Users
     
     // Get me
@@ -289,7 +292,6 @@ class JSONHelper {
         
         // Call the api
         let apiToContact = "https://meancourseboard.herokuapp.com/api/me"
-        //let apiToContact = "http://meancourseboard.herokuapp.com/api/users/5722a3012c74f90300ed957c"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -313,7 +315,6 @@ class JSONHelper {
                     user.updatedAt = json["updatedAt"].stringValue
                     
                     user.email = json["email"].stringValue
-                    //user.password =
                     
                     user.first = json["first"].stringValue
                     user.last = json["last"].stringValue
@@ -395,7 +396,7 @@ class JSONHelper {
     }
     
     // update a user
-    static func updateUser(complete: ( bool: Bool?, error: NSError?) -> Void)
+    static func updateUser(info: (first: String, last: String, username: String, email: String, role: String), complete: ( bool: Bool?, error: NSError?) -> Void)
     {
         
         // Call the api
@@ -413,11 +414,12 @@ class JSONHelper {
                 if let value = response.result.value {
                     var json = JSON(value)
                     
-                    print(json)
+                    //print(json)
                     
-                    json["first"] = "TESTING"
+                    // Edit json with the updated info
+                    json["first"] = JSON(stringLiteral: info.first)
                     
-                    Alamofire.request(.PUT, apiToContact, headers: headers, parameters: json.dictionaryObject).validate().responseJSON() { response in
+                    Alamofire.request(.PUT, apiToContact, headers: headers, parameters: json.dictionaryObject, encoding: .JSON).validate().responseJSON() { response in
                         switch response.result {
                         case .Success:
                             if let value = response.result.value {
@@ -429,7 +431,6 @@ class JSONHelper {
                             }
                         case .Failure(let error):
                             print(error)
-                            print("FAIL INSIDE ONE")
                             complete(bool: nil, error: error)
                         }
                     }
@@ -464,7 +465,7 @@ class JSONHelper {
                 if let value = response.result.value {
                     let json = JSON(value)
                     
-                    //print(json)
+                    print(json)
                     
                     var posts: [Post] = []
                     for i in 0...json.count-1 {
@@ -506,7 +507,7 @@ class JSONHelper {
                 if let value = response.result.value {
                     let json = JSON(value)
                     
-                    print(json)
+                    //print(json)
                     
                     complete(posts: nil, error: nil)
                     

@@ -32,10 +32,17 @@ class AccountViewController: UIViewController {
         
         // Change to not translucent
         self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
         self.tabBarController?.tabBar.translucent = false
         
         self.tableView.separatorColor = UIColor.clearColor()
         
+        // Update
+        update()
+    }
+    
+    // TO UPDATE!
+    func update() {
         // Load account
         tableView.alpha = 0
         loadAccount()

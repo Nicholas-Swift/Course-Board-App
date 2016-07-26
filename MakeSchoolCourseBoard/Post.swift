@@ -21,4 +21,5 @@ class Post {
     
     var user: String!
     var course: String!
+    var courseName: String!
 }

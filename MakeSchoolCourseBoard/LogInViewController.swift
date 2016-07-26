@@ -82,8 +82,9 @@ class LogInViewController: UIViewController {
         logInButton.alpha = 0
         wrongPasswordLabel.alpha = 0
         
-        noAccountLabel.alpha = 0
+        noAccountLabel.alpha = 0 // Don't enable sign up from app
         signUpButton.alpha = 0
+        signUpButton.enabled = false
         
         UIView.animateWithDuration(0.5, animations: {
             
@@ -96,8 +97,8 @@ class LogInViewController: UIViewController {
             self.logInButton.alpha = 1
             self.wrongPasswordLabel.alpha = 0 // keep wrong password hidden
             
-            self.noAccountLabel.alpha = 1
-            self.signUpButton.alpha = 1
+            //self.noAccountLabel.alpha = 1 // Don't enable sign up from app
+            //self.signUpButton.alpha = 1
         })
         
         // For keyboard

@@ -38,13 +38,14 @@ class BoardViewController: UIViewController {
     
     func loadPosts() {
         
-        JSONHelper.getUser(LoginHelper.id) { (user, error) in
+        JSONHelper.getMe { (user, error) in
             
             var temp = 0
             for i in user.courses {
                 JSONHelper.getCoursePosts(i, complete: { (posts, error) in
                     
                     for post in posts {
+                        post.courseName = user.courseNames[temp]
                         self.posts.append(post)
                     }
                     
@@ -84,6 +85,21 @@ class BoardViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // Segue, look down in tableView
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        // If going to course
+        if segue.identifier == "toCourse" {
+            let id = sender as! String
+            
+            let destination = segue.destinationViewController as! CourseViewController
+            destination.id = id
+            
+            print(id)
+        }
+    }
 }
 
 extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
@@ -112,10 +128,29 @@ extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
 
         let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! CoursePostCell
         
-        cell.titleButton.setTitle(posts[indexPath.section].course, forState: .Normal)
+        cell.titleButton.setTitle(posts[indexPath.section].courseName, forState: .Normal)
+        
+        cell.titleButton.addTarget(self, action: #selector(BoardViewController.cellCourse), forControlEvents: .TouchUpInside)
+        
         cell.infoLabel.text = posts[indexPath.section].body
         cell.footerLabel.text = "Posted by " + posts[indexPath.section].user + " on " + DateHelper.toShortDate(posts[indexPath.section].createdAt)
         
         return cell
+    }
+    
+    func cellCourse(sender: UIButton) {
+        //print(sender.titleLabel?.text)
+        
+        var index = -1
+        for i in 0...posts.count-1 {
+            if sender.titleLabel?.text == posts[i].courseName {
+                index = i
+                break
+            }
+        }
+        
+        if index >= 0 {
+            performSegueWithIdentifier("toCourse", sender: posts[index].course)
+        }
     }
 }

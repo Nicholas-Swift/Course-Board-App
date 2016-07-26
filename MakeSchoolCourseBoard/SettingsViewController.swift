@@ -12,8 +12,10 @@ import UIKit
 class SettingsViewController: UITableViewController {
     
     var user: User!
+    
     let headerArray = ["Account Settings"]
     let headerDict = ["Account Settings": 5]
+    let labelArray = ["First Name", "Last Name", "Username", "Email", "Role"]
     
     // Variables
     
@@ -26,10 +28,18 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func saveBarAction(sender: AnyObject) {
-        print("SAVE PLEASE")
-        JSONHelper.updateUser { (bool, error) in
-            print("UPDATED")
+        // Need to get all the information and fill out the tuple
+        
+        var tempArray: [String] = []
+        for i in 0...labelArray.count-1 {
+            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! AccountFieldCell
+            tempArray.append(cell.infoField.text ?? "")
         }
+        
+        JSONHelper.updateUser((first: tempArray[0], last: tempArray[1], username: tempArray[2], email: tempArray[3], role: tempArray[4])) { (bool, error) in
+            print("Updated user")
+        }
+        
     }
     
     // For ViewController
@@ -87,7 +97,6 @@ class SettingsViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell") as! AccountFieldCell
         
-        let labelArray = ["First Name", "Last Name", "Username", "Email", "Role"]
         cell.infoLabel.text = labelArray[indexPath.row]
         
         switch indexPath.row {

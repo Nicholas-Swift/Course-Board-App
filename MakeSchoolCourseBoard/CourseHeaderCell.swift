@@ -11,7 +11,6 @@ import UIKit
 
 class CourseHeaderCell: UITableViewCell {
     
-    @IBOutlet weak var colorBarImageView: UIImageView!
     @IBOutlet weak var headerTitleLabel: UILabel!
     
     

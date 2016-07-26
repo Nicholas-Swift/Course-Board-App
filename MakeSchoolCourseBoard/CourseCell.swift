@@ -10,7 +10,6 @@ import UIKit
 
 class CourseCell: UITableViewCell {
     
-    @IBOutlet weak var colorBarImageView: UIImageView!
     @IBOutlet weak var courseTitleLabel: UILabel!
     @IBOutlet weak var instructorNameLabel: UILabel!
     @IBOutlet weak var dateRangeLabel: UILabel!
