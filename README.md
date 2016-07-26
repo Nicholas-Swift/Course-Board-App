@@ -20,6 +20,10 @@ Need to polish UI and edit code to fix edge cases
 
 Need to edit it so changes will update the app in board, courses, products, and account.
 
+Account
+-----------------------
+Need to add logout feature
+
 ## Future features
 Chat option
 
