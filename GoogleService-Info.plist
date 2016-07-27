@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>505905521521-tmjv33q70nuftjf2kd2kt7drfunfl93k.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.505905521521-tmjv33q70nuftjf2kd2kt7drfunfl93k</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDp2hnALbCXgO-1ERXiYo1Jqjs2DM1RKVI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>505905521521</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.nicholas-swift.MakeSchoolCourseBoard</string>
+	<key>PROJECT_ID</key>
+	<string>courseboard-a742f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>courseboard-a742f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:505905521521:ios:fc48988346aec48e</string>
+	<key>DATABASE_URL</key>
+	<string>https://courseboard-a742f.firebaseio.com</string>
+</dict>
+</plist>

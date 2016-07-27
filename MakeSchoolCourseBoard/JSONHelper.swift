@@ -14,6 +14,10 @@ import SwiftyJSON
 
 class JSONHelper {
     
+    // Variables
+    
+    static var baseApi = "https://meancourseboard.herokuapp.com/api/"
+    
     // MARK: Courses
     
     // Get all courses, through mini courses to save memory
@@ -21,7 +25,7 @@ class JSONHelper {
     {
         
         // Url of the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/courses"
+        let apiToContact = JSONHelper.baseApi + "courses"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -66,7 +70,7 @@ class JSONHelper {
     {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/courses/" + id
+        let apiToContact = JSONHelper.baseApi + "courses/" + id
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -128,7 +132,7 @@ class JSONHelper {
     {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/courses/" + id + "/enroll"
+        let apiToContact = JSONHelper.baseApi + "courses/" + id + "/enroll"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -157,7 +161,7 @@ class JSONHelper {
     {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/products"
+        let apiToContact = JSONHelper.baseApi + "products"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -200,7 +204,7 @@ class JSONHelper {
     {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/products/" + id
+        let apiToContact = JSONHelper.baseApi + "products/" + id
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -212,7 +216,7 @@ class JSONHelper {
                 if let value = response.result.value {
                     let json = JSON(value)
                     
-                    //print(json)
+                    print(json)
                         
                     let product = Product()
                         
@@ -259,7 +263,7 @@ class JSONHelper {
     {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/products/" + id + "/join"
+        let apiToContact = JSONHelper.baseApi + "products/" + id + "/join"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -283,7 +287,75 @@ class JSONHelper {
     }
     
     // Add a product
-    
+    static func addProduct(complete: ( bool: Bool?, error: NSError?) -> Void)
+    {
+        
+        // Call the api
+        let apiToContact = JSONHelper.baseApi + "products"
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from the api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
+            
+            // Add the json info to user
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    //let json = JSON(value)
+                    //let jsonSingle = json[0]
+                    //var dict = jsonSingle.dictionaryObject
+                    
+                    let name = "Test Product Version 2"
+                    let advisor = "571fe124831e22030010b9bd"
+                    let course = "" // NONE
+                    let problem = "This is solving the problem of setting the correct info into new product! Solving iOS courseboard bugs."
+                    //let contributors = [LoginHelper.id] THIS CRASHES THE SERVER???
+                    
+                    var dict: [String: AnyObject] = [:]
+                    dict["name"] = name
+                    dict["instructor"] = advisor
+                    dict["problem"] = problem
+                    //dict["contributors"] = contributors
+                    
+                    //print(json)
+                    
+                    // Edit json with the updated info
+                    //dict?.removeValueForKey("_id")
+                    //dict?.removeValueForKey(")
+                    
+                    print("\n\n\n\n\n")
+                    print(dict)
+                    print("\n\n\n\n\n")
+                    
+                    // POSTING A PRODUCT CRASHES THE SERVERRRRRRRRRR
+                    /*Alamofire.request(.POST, apiToContact, headers: headers, parameters: dict, encoding: .JSON).validate().responseJSON() { response in
+                        switch response.result {
+                        case .Success:
+                            if let value = response.result.value {
+                                let json = JSON(value)
+                                print(json)
+                                print("complete")
+                                
+                                complete(bool: true, error: nil)
+                                
+                            }
+                        case .Failure(let error):
+                            print(error)
+                            complete(bool: nil, error: error)
+                        }
+                    }*/
+                    
+                    complete(bool: true, error: nil)
+                    
+                }
+            case .Failure(let error):
+                print(error)
+                complete(bool: false, error: error)
+            }
+        }
+    }
     
     // MARK: Users
     
@@ -291,7 +363,7 @@ class JSONHelper {
     static func getMe(complete: (user: User!, error: NSError?) -> Void) {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/me"
+        let apiToContact = JSONHelper.baseApi + "me"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -345,7 +417,7 @@ class JSONHelper {
     static func getUser(id: String!, complete: (user: User!, error: NSError?) -> Void) {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/users/" + id
+        let apiToContact = JSONHelper.baseApi + "users/" + id
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -400,7 +472,7 @@ class JSONHelper {
     {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/me"
+        let apiToContact = JSONHelper.baseApi + "me"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -451,7 +523,7 @@ class JSONHelper {
     static func getCoursePosts(id: String!, complete: (posts: [Post]!, error: NSError?) -> Void) {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/courses/" + id + "/posts"
+        let apiToContact = JSONHelper.baseApi + "courses/" + id + "/posts"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -493,7 +565,7 @@ class JSONHelper {
     static func getUserPosts(id: String!, complete: (posts: [Post]!, error: NSError?) -> Void) {
         
         // Call the api
-        let apiToContact = "https://meancourseboard.herokuapp.com/api/users/" + id + "/posts"
+        let apiToContact = JSONHelper.baseApi + "users/" + id + "/posts"
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]

@@ -20,8 +20,13 @@ class CourseViewController: UIViewController {
     
     // Actions
     @IBAction func enrollBarAction(sender: AnyObject) {
-        JSONHelper.enrollCourse(id) { (course, error) in
-            self.enrollBarButton.title = "Enrolled :)"
+        
+        if self.enrollBarButton.title == "Enroll" { // ENROLL USER!
+            JSONHelper.enrollCourse(id) { (course, error) in
+                
+                // Change title and then update the previous screen to reload??
+                self.enrollBarButton.title = "Enrolled :)"
+            }
         }
     }
     
@@ -36,10 +41,11 @@ class CourseViewController: UIViewController {
         // Load Course
         tableView.alpha = 0
         self.navigationItem.title = ""
+        self.enrollBarButton.title = " "
         loadCourse()
         
         // Table view remove separator
-        tableView.separatorColor = UIColor.clearColor()
+        //tableView.separatorColor = UIColor.clearColor()
         
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 50
@@ -51,14 +57,17 @@ class CourseViewController: UIViewController {
             print(course?.endsOn)
             self.course = course
             
-            // Change the bar button to 'enrolled' if student is enrolled in course.
-            if self.course.students.contains(LoginHelper.id) {
-                self.enrollBarButton.title = "Enrolled :)"
-                self.enrollBarButton.enabled = false
-            }
-            
             // Change navbar title
             self.navigationItem.title = self.course.title
+            
+            // Change the bar button to 'post' if student is enrolled in course.
+            if self.course.students.contains(LoginHelper.id) {
+                self.enrollBarButton.title = "Post"
+                //self.enrollBarButton.tintColor = UIColor.greenColor()
+            }
+            else {
+                self.enrollBarButton.title = "Enroll"
+            }
             
             // Load the posts
             JSONHelper.getCoursePosts(course?.id, complete: { (posts, error) in
@@ -84,10 +93,10 @@ class CourseViewController: UIViewController {
         // Course Information
         var courseInfoNum = 0
         
-        if let _ = course.instructor { courseInfoNum += 1 } // course.instructor
-        if let _ = course.startsOn { courseInfoNum += 1 }
-        if let _ = course.hours { courseInfoNum += 1 }
-        if let _ = course.location { courseInfoNum += 1 }
+        if let _ = course.instructor { if course.instructor != "" { courseInfoNum += 1 }} // course.instructor
+        if let _ = course.startsOn { if course.startsOn != "" { courseInfoNum += 1 }}
+        if let _ = course.hours { if course.hours != "" { courseInfoNum += 1 }}
+        if let _ = course.location { if course.location != "" { courseInfoNum += 1 }}
         
         // Objectives
         var objectivesNum = 0
@@ -95,7 +104,7 @@ class CourseViewController: UIViewController {
         
         // Description
         var descriptionNum = 0
-        if let _ = course.description { descriptionNum = 1 }
+        if let _ = course.description { if course.description != "" { descriptionNum = 1 }}
         
         // Participants
         var participantsNum = 0
@@ -181,16 +190,20 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         return headerArray[section]
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    /*func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
         headerCell.headerTitleLabel.text = headerArray[section]
         
         return headerCell
-    }
+    }*/
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let tempArray = ["Course Information", "Objectives", "Description", "Participants", "Products", "Anouncements"]

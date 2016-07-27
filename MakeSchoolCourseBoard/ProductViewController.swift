@@ -20,8 +20,13 @@ class ProductViewController: UIViewController {
     
     // Actions
     @IBAction func joinBarAction(sender: AnyObject) {
-        JSONHelper.joinProduct(id) { (course, error) in
-            self.joinBarButton.title = "Joined :)"
+        
+        if self.joinBarButton.title == "Join" { // HAVE USER JOIN PRODUCT!
+            JSONHelper.joinProduct(id) { (course, error) in
+                
+                // Change title and reload previous screen!
+                self.joinBarButton.title = "Joined :)"
+            }
         }
     }
     
@@ -35,6 +40,7 @@ class ProductViewController: UIViewController {
         // Load product
         tableView.alpha = 0
         self.navigationItem.title = ""
+        self.joinBarButton.title = " "
         loadProduct()
         
         // Let the cells resize to the correct height based on information
@@ -49,14 +55,17 @@ class ProductViewController: UIViewController {
         JSONHelper.getProduct(id) { (product, error) in
             self.product = product
             
-            // Change the bar button to 'joined' if student is joined in product.
-            if self.product.contributors.contains(LoginHelper.id) {
-                self.joinBarButton.title = "Joined :)"
-                self.joinBarButton.enabled = false
-            }
-            
             // Nav bar title
             self.navigationItem.title = self.product.name
+            
+            // Change the bar button to 'joined' if student is joined in product.
+            if self.product.contributors.contains(LoginHelper.id) {
+                self.joinBarButton.title = "Edit"
+                //self.joinBarButton.tintColor = ()
+            }
+            else {
+                self.joinBarButton.title = "Join"
+            }
             
             // Load info in
             self.loadInfo()

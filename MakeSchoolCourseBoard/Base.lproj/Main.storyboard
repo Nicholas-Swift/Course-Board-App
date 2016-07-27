@@ -151,7 +151,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="cLz-sx-CHk">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCell" rowHeight="143" id="ONh-iK-ZHl" customClass="CoursePostCell" customModule="MakeSchoolCourseBoard" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="600" height="143"/>
@@ -224,17 +224,40 @@
                     <connections>
                         <outlet property="tableView" destination="cLz-sx-CHk" id="vzT-CZ-geF"/>
                         <segue destination="6cQ-VB-QaG" kind="show" identifier="toCourse" id="Lar-ZQ-XcK"/>
+                        <segue destination="KBc-c6-ehZ" kind="show" identifier="newPost" id="DQg-hM-9PC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K1r-va-U7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1359" y="401"/>
         </scene>
+        <!--New Anouncement-->
+        <scene sceneID="zps-j8-ivT">
+            <objects>
+                <viewController title="New Anouncement" id="KBc-c6-ehZ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1zM-X7-mde"/>
+                        <viewControllerLayoutGuide type="bottom" id="UgU-Zz-3b6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sZx-ZL-Ky8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Anouncement" id="pka-a4-dO7">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="3Xk-7e-9ur"/>
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="fzg-In-9Af"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tpM-6E-hKS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2223" y="401"/>
+        </scene>
         <!--Messages-->
         <scene sceneID="hVR-po-b4C">
             <objects>
                 <navigationController id="VFa-HJ-V38" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Messages" image="book-icon--icon-search-engine-6" id="JZo-6n-rL0"/>
+                    <tabBarItem key="tabBarItem" title="Messages" image="menu" id="JZo-6n-rL0"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PI5-Bf-6K2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -250,28 +273,55 @@
         <!--Messages-->
         <scene sceneID="DF3-eP-8TV">
             <objects>
-                <viewController id="Ied-Gz-7HJ" sceneMemberID="viewController">
+                <viewController title="Messages" id="Ied-Gz-7HJ" customClass="MessagesViewController" customModule="MakeSchoolCourseBoard" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tJ9-1a-8lk"/>
                         <viewControllerLayoutGuide type="bottom" id="KMW-dB-fET"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EPD-X3-van">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="174" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="6GS-QK-oNs">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="6GS-QK-oNs">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="174" id="JB6-LG-ang">
-                                        <rect key="frame" x="0.0" y="50" width="600" height="174"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="messageCell" rowHeight="80" id="JB6-LG-ang">
+                                        <rect key="frame" x="0.0" y="50" width="600" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JB6-LG-ang" id="JH4-8C-rmn">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="173"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OKT-N4-XV6">
+                                                    <rect key="frame" x="16" y="13" width="63" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This was the last message that was posted in general chat." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQu-9X-RKb">
+                                                    <rect key="frame" x="16" y="43" width="403" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.39364252645502651" green="0.39364252645502651" blue="0.39364252645502651" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="OKT-N4-XV6" firstAttribute="leading" secondItem="JH4-8C-rmn" secondAttribute="leadingMargin" constant="8" id="BbQ-1K-7ep"/>
+                                                <constraint firstItem="hQu-9X-RKb" firstAttribute="leading" secondItem="JH4-8C-rmn" secondAttribute="leadingMargin" constant="8" id="LhC-fy-lij"/>
+                                                <constraint firstItem="OKT-N4-XV6" firstAttribute="top" secondItem="JH4-8C-rmn" secondAttribute="topMargin" constant="5" id="oce-b3-7NV"/>
+                                                <constraint firstItem="hQu-9X-RKb" firstAttribute="top" secondItem="OKT-N4-XV6" secondAttribute="bottom" constant="8" id="yUU-DZ-dUf"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="wqN-5M-0RB" kind="show" id="8Wb-9n-VHo"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Ied-Gz-7HJ" id="WQS-9D-oF8"/>
+                                    <outlet property="delegate" destination="Ied-Gz-7HJ" id="rqF-0a-hfz"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -283,7 +333,12 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Messages" id="bCb-oa-So2"/>
+                    <navigationItem key="navigationItem" title="Messages" id="bCb-oa-So2">
+                        <barButtonItem key="backBarButtonItem" title=" " id="jUF-7G-mcL"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="6GS-QK-oNs" id="ieN-pW-Cfk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uxl-tR-u1T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -501,10 +556,10 @@
                         <viewControllerLayoutGuide type="bottom" id="WGZ-gs-Oew"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="skY-L9-Hn1">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0JB-wR-8yH">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0JB-wR-8yH">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -689,6 +744,24 @@
             </objects>
             <point key="canvasLocation" x="1359" y="3460"/>
         </scene>
+        <!--Channel-->
+        <scene sceneID="nIK-Td-epy">
+            <objects>
+                <viewController title="Channel" id="wqN-5M-0RB" customClass="ChannelViewController" customModule="MakeSchoolCourseBoard" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wqj-FV-NmJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="cSV-0Y-pe0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1eD-YP-Qqv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bxE-c0-zot" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2223" y="1157"/>
+        </scene>
         <!--Course-->
         <scene sceneID="eMp-PX-fqZ">
             <objects>
@@ -701,12 +774,12 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="boe-tB-eA1">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="boe-tB-eA1">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="30" id="WKc-GD-Plb" customClass="CourseHeaderCell" customModule="MakeSchoolCourseBoard" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="30"/>
+                                        <rect key="frame" x="0.0" y="50" width="600" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WKc-GD-Plb" id="WOr-qx-y1V">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="29"/>
@@ -752,7 +825,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextCell" rowHeight="97" id="bN3-Nc-RlD" customClass="CourseTextCell" customModule="MakeSchoolCourseBoard" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="58" width="600" height="97"/>
+                                        <rect key="frame" x="0.0" y="80" width="600" height="97"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bN3-Nc-RlD" id="qGc-TB-mVv">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="96"/>
@@ -777,7 +850,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ButtonCell" rowHeight="50" id="ITC-Sg-qgC" customClass="CourseButtonCell" customModule="MakeSchoolCourseBoard" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="155" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="177" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ITC-Sg-qgC" id="tST-sD-mDS">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
@@ -802,7 +875,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCell" rowHeight="115" id="N1a-sI-C3u" customClass="CoursePostCell" customModule="MakeSchoolCourseBoard" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="205" width="600" height="115"/>
+                                        <rect key="frame" x="0.0" y="227" width="600" height="115"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N1a-sI-C3u" id="MZ5-dn-eGb">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="114"/>
@@ -1156,10 +1229,10 @@
                         <viewControllerLayoutGuide type="bottom" id="cQa-PN-Snh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Y0S-bQ-6sF">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bks-Pb-OPW">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bks-Pb-OPW">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1412,7 +1485,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="30" id="xXh-SJ-Pag" customClass="CourseHeaderCell" customModule="MakeSchoolCourseBoard" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="30"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="30"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xXh-SJ-Pag" id="z09-CE-APa">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="29"/>
@@ -1458,7 +1531,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FieldCell" id="mxu-5S-SPk" customClass="AccountFieldCell" customModule="MakeSchoolCourseBoard" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="58" width="600" height="99"/>
+                                <rect key="frame" x="0.0" y="122" width="600" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mxu-5S-SPk" id="o8B-kk-XT1">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="98"/>
@@ -1536,6 +1609,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="CmN-4n-02l" kind="relationship" relationship="viewControllers" id="L4h-yY-dOa"/>
+                        <segue destination="VFa-HJ-V38" kind="relationship" relationship="viewControllers" id="mWk-T9-Dym"/>
                         <segue destination="fLW-Ur-csD" kind="relationship" relationship="viewControllers" id="eO4-bX-KET"/>
                         <segue destination="Ffn-19-BbM" kind="relationship" relationship="viewControllers" id="XCJ-4a-FPq"/>
                         <segue destination="tCK-De-O1o" kind="relationship" relationship="viewControllers" id="CYO-El-Lgy"/>
@@ -1552,11 +1626,12 @@
         <image name="board" width="25" height="25"/>
         <image name="book-icon--icon-search-engine-6" width="25" height="23"/>
         <image name="cell-phone-call-icon-04-256" width="14" height="25"/>
+        <image name="menu" width="22" height="22"/>
         <image name="settings" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="W80-In-gsM"/>
         <segue reference="Lar-ZQ-XcK"/>
-        <segue reference="Zx6-CO-5Pb"/>
-        <segue reference="gLl-Ic-sRP"/>
+        <segue reference="gC8-lM-J0O"/>
     </inferredMetricsTieBreakers>
 </document>

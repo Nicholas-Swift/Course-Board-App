@@ -25,7 +25,9 @@ class NewProductViewController: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     @IBAction func saveBarAction(sender: AnyObject) {
-        print("SAVE PLEASE")
+        JSONHelper.addProduct { (bool, error) in
+            print("ADDED PRODUCT")
+        }
     }
     
     // General View Controller stuff

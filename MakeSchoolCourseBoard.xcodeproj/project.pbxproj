@@ -30,6 +30,11 @@
 		01A2CB7C1D394E1F000EDD2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7B1D394E1F000EDD2B /* User.swift */; };
 		01A2CB7E1D394E2F000EDD2B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7D1D394E2F000EDD2B /* Post.swift */; };
 		01A853701D4495B900046207 /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A8536F1D4495B900046207 /* BoardViewController.swift */; };
+		01C1A4481D48109400D0BE5C /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1A4471D48109400D0BE5C /* MessagesViewController.swift */; };
+		01C1A44C1D48178B00D0BE5C /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1A44B1D48178B00D0BE5C /* FirebaseHelper.swift */; };
+		01C1A44E1D481C7500D0BE5C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01C1A44D1D481C7500D0BE5C /* GoogleService-Info.plist */; };
+		01C1A4501D481F5300D0BE5C /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1A44F1D481F5300D0BE5C /* ChannelViewController.swift */; };
+		01C1AF981D482B1F00CDE302 /* UpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1AF971D482B1F00CDE302 /* UpdateHelper.swift */; };
 		01C1D22A1D3EE4970011C7FF /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1D2291D3EE4970011C7FF /* LoginHelper.swift */; };
 		01D0EA8E1D41432E000F730E /* CourseHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0EA8D1D41432E000F730E /* CourseHeaderCell.swift */; };
 		01D0EA901D414337000F730E /* CourseInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0EA8F1D414337000F730E /* CourseInfoCell.swift */; };
@@ -68,6 +73,11 @@
 		01A2CB7B1D394E1F000EDD2B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		01A2CB7D1D394E2F000EDD2B /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		01A8536F1D4495B900046207 /* BoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
+		01C1A4471D48109400D0BE5C /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		01C1A44B1D48178B00D0BE5C /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		01C1A44D1D481C7500D0BE5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		01C1A44F1D481F5300D0BE5C /* ChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
+		01C1AF971D482B1F00CDE302 /* UpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateHelper.swift; sourceTree = "<group>"; };
 		01C1D2291D3EE4970011C7FF /* LoginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
 		01D0EA8D1D41432E000F730E /* CourseHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseHeaderCell.swift; sourceTree = "<group>"; };
 		01D0EA8F1D414337000F730E /* CourseInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseInfoCell.swift; sourceTree = "<group>"; };
@@ -134,6 +144,8 @@
 				010B03E21D383CEE001472F3 /* DateHelper.swift */,
 				0113B0851D36EB93003AD618 /* JSONHelper.swift */,
 				01386BF21D40159C00E03374 /* ColorHelper.swift */,
+				01C1A44B1D48178B00D0BE5C /* FirebaseHelper.swift */,
+				01C1AF971D482B1F00CDE302 /* UpdateHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -182,6 +194,7 @@
 				0170D3011D35690D0008BB0C /* Assets.xcassets */,
 				0170D3031D35690D0008BB0C /* LaunchScreen.storyboard */,
 				0170D3061D35690D0008BB0C /* Info.plist */,
+				01C1A44D1D481C7500D0BE5C /* GoogleService-Info.plist */,
 			);
 			path = MakeSchoolCourseBoard;
 			sourceTree = "<group>";
@@ -219,6 +232,8 @@
 		01A853711D44979F00046207 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				01C1A4471D48109400D0BE5C /* MessagesViewController.swift */,
+				01C1A44F1D481F5300D0BE5C /* ChannelViewController.swift */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -320,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0170D3051D35690D0008BB0C /* LaunchScreen.storyboard in Resources */,
+				01C1A44E1D481C7500D0BE5C /* GoogleService-Info.plist in Resources */,
 				0170D3021D35690D0008BB0C /* Assets.xcassets in Resources */,
 				0170D3001D35690D0008BB0C /* Main.storyboard in Resources */,
 			);
@@ -380,6 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01C1A4481D48109400D0BE5C /* MessagesViewController.swift in Sources */,
 				01A2CB7C1D394E1F000EDD2B /* User.swift in Sources */,
 				010B03E31D383CEE001472F3 /* DateHelper.swift in Sources */,
 				01D0EA961D414414000F730E /* CourseButtonCell.swift in Sources */,
@@ -387,11 +404,14 @@
 				0113B0861D36EB93003AD618 /* JSONHelper.swift in Sources */,
 				0148A48C1D36D857002A8D78 /* Course.swift in Sources */,
 				0170D3171D356FC90008BB0C /* ProductsViewController.swift in Sources */,
+				01C1A44C1D48178B00D0BE5C /* FirebaseHelper.swift in Sources */,
 				01D5EFAA1D440E14008BDB35 /* NewCourseViewController.swift in Sources */,
+				01C1AF981D482B1F00CDE302 /* UpdateHelper.swift in Sources */,
 				01D0EA921D414343000F730E /* CourseTextCell.swift in Sources */,
 				0170D2FD1D35690D0008BB0C /* ViewController.swift in Sources */,
 				01D0EA901D414337000F730E /* CourseInfoCell.swift in Sources */,
 				01D0F83C1D42DCA7005A94E0 /* AccountFieldCell.swift in Sources */,
+				01C1A4501D481F5300D0BE5C /* ChannelViewController.swift in Sources */,
 				0170D3221D3593BB0008BB0C /* ProductViewController.swift in Sources */,
 				0148A4871D36BFD3002A8D78 /* CourseViewController.swift in Sources */,
 				01460E931D458CD300A5DC38 /* MiniProduct.swift in Sources */,

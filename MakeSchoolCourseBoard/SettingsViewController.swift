@@ -30,14 +30,56 @@ class SettingsViewController: UITableViewController {
     @IBAction func saveBarAction(sender: AnyObject) {
         // Need to get all the information and fill out the tuple
         
+        dismissKeyboard()
+        
+        // BUG BUG BUG BUGB UG BUG BUG BUG IT IS TRYING TO ACCESS AT 0 WHEN IT IS NIL BEACUSE OFF SCREEN!!!
+        
+        // Reset red cells
+        for i in 0...4 {
+            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! AccountFieldCell
+            cell.infoLabel.textColor = UIColor.blackColor()
+        }
+        
+        // Fill out the tempArray
         var tempArray: [String] = []
         for i in 0...labelArray.count-1 {
             let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! AccountFieldCell
             tempArray.append(cell.infoField.text ?? "")
         }
         
-        JSONHelper.updateUser((first: tempArray[0], last: tempArray[1], username: tempArray[2], email: tempArray[3], role: tempArray[4])) { (bool, error) in
-            print("Updated user")
+        // Check to see if fields are filled out correctly!!!
+        var update = true
+        
+        for i in 0...tempArray.count-1 { // if anything is empty
+            if tempArray[i] == "" {
+                update = false
+                let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! AccountFieldCell
+                cell.infoLabel.textColor = UIColor.redColor()
+            }
+        }
+        
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}" // check if valid email
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        print(emailTest.evaluateWithObject(tempArray[3]))
+        if emailTest.evaluateWithObject(tempArray[3]) == false {
+            update = false
+            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! AccountFieldCell
+            cell.infoLabel.textColor = UIColor.redColor()
+        }
+        
+        if tempArray[4] != "Student" && tempArray[4] != "Instructor" && tempArray[4] != "Staff" { // check if valid role
+            update = false
+            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 0)) as! AccountFieldCell
+            cell.infoLabel.textColor = UIColor.redColor()
+        }
+        
+        // Update the user with the information
+        if update == true {
+            
+            JSONHelper.updateUser((first: tempArray[0], last: tempArray[1], username: tempArray[2], email: tempArray[3], role: tempArray[4])) { (bool, error) in
+                
+                // UPDATE VIEWS
+            }
         }
         
     }
