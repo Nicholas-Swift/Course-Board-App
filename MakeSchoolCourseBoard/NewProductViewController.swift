@@ -13,7 +13,6 @@ class NewProductViewController: UITableViewController {
     
     // Variables
     
-    
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var advisorLabel: UILabel!
     @IBOutlet weak var courseLabel: UILabel!
@@ -33,10 +32,38 @@ class NewProductViewController: UITableViewController {
         
         dismissKeyboard()
         
-        print(productNameField.text)
-        print(advisorField.text)
-        print(courseField.text)
-        print(problemField.text)
+        productNameLabel.textColor = UIColor.blackColor(); advisorLabel.textColor = UIColor.blackColor(); courseLabel.textColor = UIColor.blackColor(); problemLabel.textColor = UIColor.blackColor();
+        
+        let name = productNameField.text
+        let instructor = advisorField.text
+        let course = courseField.text
+        let problem = problemField.text
+        
+        var save = true
+        
+        if name == "" {
+            productNameLabel.textColor = UIColor.redColor()
+            save = false
+        }
+        if instructor == "" {
+            advisorLabel.textColor = UIColor.redColor()
+            save = false
+        }
+        if course == "" {
+            courseLabel.textColor = UIColor.redColor()
+            save = false
+        }
+        if problem == "" {
+            problemLabel.textColor = UIColor.redColor()
+            save = false
+        }
+        
+        if save == true {
+            JSONHelper.addProduct((name: name!, instructor: instructor!, course: course!, problem: problem!), complete: { (bool, error) in
+                UpdateHelper.coursesUpdated = false
+                self.navigationController?.popViewControllerAnimated(true)
+            })
+        }
     }
     
     // View Controller

@@ -287,7 +287,7 @@ class JSONHelper {
     }
     
     // Add a product
-    static func addProduct(complete: ( bool: Bool?, error: NSError?) -> Void)
+    static func addProduct(tuple: (name: String, instructor: String, course: String, problem: String), complete: ( bool: Bool?, error: NSError?) -> Void)
     {
         
         // Call the api
@@ -296,63 +296,30 @@ class JSONHelper {
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
         
-        // Request the data from the api
-        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
-            
-            // Add the json info to user
+        // Set up info
+        var tempDict: [String: AnyObject] = [:]
+        
+        tempDict["name"] = tuple.name
+        tempDict["instructor"] = "571fe124831e22030010b9bd"
+        tempDict["course"] = "5730fd6b769290030048aafa" // NEED TO HAVE COURSE IN PRODUCT RIGHT NOW!!!
+        tempDict["problem"] = tuple.problem
+        
+        // Must include course or the server crashes
+        Alamofire.request(.POST, apiToContact, headers: headers, parameters: tempDict, encoding: .JSON).validate().responseJSON() { response in
+            print(response)
             switch response.result {
             case .Success:
                 if let value = response.result.value {
-                    //let json = JSON(value)
-                    //let jsonSingle = json[0]
-                    //var dict = jsonSingle.dictionaryObject
-                    
-                    let name = "Test Product Version 2"
-                    let advisor = "571fe124831e22030010b9bd"
-                    let course = "" // NONE
-                    let problem = "This is solving the problem of setting the correct info into new product! Solving iOS courseboard bugs."
-                    //let contributors = [LoginHelper.id] THIS CRASHES THE SERVER???
-                    
-                    var dict: [String: AnyObject] = [:]
-                    dict["name"] = name
-                    dict["instructor"] = advisor
-                    dict["problem"] = problem
-                    //dict["contributors"] = contributors
-                    
-                    //print(json)
-                    
-                    // Edit json with the updated info
-                    //dict?.removeValueForKey("_id")
-                    //dict?.removeValueForKey(")
-                    
-                    print("\n\n\n\n\n")
-                    print(dict)
-                    print("\n\n\n\n\n")
-                    
-                    // POSTING A PRODUCT CRASHES THE SERVERRRRRRRRRR
-                    /*Alamofire.request(.POST, apiToContact, headers: headers, parameters: dict, encoding: .JSON).validate().responseJSON() { response in
-                        switch response.result {
-                        case .Success:
-                            if let value = response.result.value {
-                                let json = JSON(value)
-                                print(json)
-                                print("complete")
-                                
-                                complete(bool: true, error: nil)
-                                
-                            }
-                        case .Failure(let error):
-                            print(error)
-                            complete(bool: nil, error: error)
-                        }
-                    }*/
+                    let json = JSON(value)
+                    print(json)
+                    print("complete")
                     
                     complete(bool: true, error: nil)
                     
                 }
             case .Failure(let error):
                 print(error)
-                complete(bool: false, error: error)
+                complete(bool: nil, error: error)
             }
         }
     }
