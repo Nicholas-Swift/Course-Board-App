@@ -1,8 +1,8 @@
 //
-//  SettingsViewController.swift
+//  SettingsViewController2.swift
 //  MakeSchoolCourseBoard
 //
-//  Created by Nicholas Swift on 7/12/16.
+//  Created by Nicholas Swift on 7/27/16.
 //  Copyright © 2016 Nicholas Swift. All rights reserved.
 //
 
@@ -11,16 +11,21 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     
-    var user: User!
-    
-    let headerArray = ["Account Settings"]
-    let headerDict = ["Account Settings": 5]
-    let labelArray = ["First Name", "Last Name", "Username", "Email", "Role"]
-    
     // Variables
     
-    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
-    @IBOutlet weak var saveBarButton: UIBarButtonItem!
+    var user: User!
+    
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var roleLabel: UILabel!
+    
+    @IBOutlet weak var firstNameField: UITextField!
+    @IBOutlet weak var lastNameField: UITextField!
+    @IBOutlet weak var userNameField: UITextField!
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var roleField: UITextField!
     
     // Actions
     @IBAction func cancelBarAction(sender: AnyObject) {
@@ -28,80 +33,66 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func saveBarAction(sender: AnyObject) {
-        // Need to get all the information and fill out the tuple
         
         dismissKeyboard()
         
-        // BUG BUG BUG BUGB UG BUG BUG BUG IT IS TRYING TO ACCESS AT 0 WHEN IT IS NIL BEACUSE OFF SCREEN!!!
+        let first = firstNameField.text
+        let last = lastNameField.text
+        let username = userNameField.text
+        let email = emailField.text
+        let role = roleField.text
         
-        // Reset red cells
-        for i in 0...4 {
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! AccountFieldCell
-            cell.infoLabel.textColor = UIColor.blackColor()
-        }
-        
-        // Fill out the tempArray
-        var tempArray: [String] = []
-        for i in 0...labelArray.count-1 {
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! AccountFieldCell
-            tempArray.append(cell.infoField.text ?? "")
-        }
-        
-        // Check to see if fields are filled out correctly!!!
+        // Check to see if the fields have good information
         var update = true
         
+        let tempArray = [first, last, username, email, role]
+        let tempArray2 = [firstNameLabel, lastNameLabel, userNameLabel, emailLabel, roleLabel]
         for i in 0...tempArray.count-1 { // if anything is empty
             if tempArray[i] == "" {
                 update = false
-                let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! AccountFieldCell
-                cell.infoLabel.textColor = UIColor.redColor()
+                tempArray2[i].textColor = UIColor.redColor()
             }
         }
         
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}" // check if valid email
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        print(emailTest.evaluateWithObject(tempArray[3]))
-        if emailTest.evaluateWithObject(tempArray[3]) == false {
+        //print(emailTest.evaluateWithObject(email))
+        if emailTest.evaluateWithObject(email) == false {
             update = false
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! AccountFieldCell
-            cell.infoLabel.textColor = UIColor.redColor()
+            emailLabel.textColor = UIColor.redColor()
         }
         
-        if tempArray[4] != "Student" && tempArray[4] != "Instructor" && tempArray[4] != "Staff" { // check if valid role
+        if role != "Student" && role != "Instructor" && role != "Staff" { // check if valid role
             update = false
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 0)) as! AccountFieldCell
-            cell.infoLabel.textColor = UIColor.redColor()
+            roleLabel.textColor = UIColor.redColor()
         }
         
-        // Update the user with the information
         if update == true {
+            UpdateHelper.accountUpdated = false
             
-            JSONHelper.updateUser((first: tempArray[0], last: tempArray[1], username: tempArray[2], email: tempArray[3], role: tempArray[4])) { (bool, error) in
-                
-                // UPDATE VIEWS
+            JSONHelper.updateUser((first: first!, last: last!, username: username!, email: email!, role: role!)) { (bool, error) in
+                self.navigationController?.popViewControllerAnimated(true)
             }
+            
         }
-        
     }
     
-    // For ViewController
+    // View Controller
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Change separator color to clear
         tableView.separatorColor = UIColor.clearColor()
         
-        // Change tint color
-        self.navigationController?.navigationBar.translucent = false
-        self.tabBarController?.tabBar.translucent = false
-        
-        // Let the cells resize to the correct height based on information
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+        // Fill out the fields
+        firstNameField.text = user.first ?? ""
+        lastNameField.text = user.last ?? ""
+        userNameField.text = user.username ?? ""
+        emailField.text = user.email ?? ""
+        roleField.text = user.role ?? ""
         
         // For keyboard
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LogInViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
@@ -110,68 +101,17 @@ class SettingsViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // For TableView
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return headerArray.count
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return headerDict[headerArray[section]]!
-    }
-    
+    // No headers!
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return 0
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // Set up the header cell
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
-        
-        cell.headerTitleLabel.text = headerArray[section]
-        
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        // Set up the info cell
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell") as! AccountFieldCell
-        
-        cell.infoLabel.text = labelArray[indexPath.row]
-        
-        switch indexPath.row {
-        case 0: // first name
-            if cell.edited == false {
-                cell.infoField.text = user.first
-            }
-        case 1: // last name
-            if cell.edited == false {
-                cell.infoField.text = user.last
-            }
-        case 2: // username
-            if cell.edited == false {
-                cell.infoField.text = user.username
-            }
-        case 3: // email
-            if cell.edited == false {
-                cell.infoField.text = user.email
-            }
-        case 4: //role
-            if cell.edited == false {
-                cell.infoField.text = user.role
-            }
-        default:
-            break
-        }
-        
-        return cell
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return ""
     }
     
     // For keyboard
     func dismissKeyboard() {
         view.endEditing(true)
     }
-    
 }

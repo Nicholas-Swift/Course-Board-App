@@ -20,6 +20,18 @@ class CoursesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        update()
+        
+        // Change to not translucent
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
+        self.tabBarController?.tabBar.translucent = false
+        
+        // no separator color
+        tableView.separatorColor = UIColor.clearColor()
+    }
+    
+    func update() {
         // Remove ability to add course if user is a student
         if LoginHelper.role == "Student" {
             addBarButton.enabled = false
@@ -40,17 +52,15 @@ class CoursesViewController: UIViewController {
                 })
             }
         })
-        
-        // Change to not translucent
-        self.navigationController?.navigationBar.translucent = false
-        self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
-        self.tabBarController?.tabBar.translucent = false
-        
-        // no separator color
-        tableView.separatorColor = UIColor.clearColor()
     }
     
     override func viewWillAppear(animated: Bool) {
+        // Update
+        if UpdateHelper.coursesUpdated == false {
+            update()
+            UpdateHelper.coursesUpdated = true
+        }
+        
         // Unhighlight the highlighted cell        
         if let selection: NSIndexPath = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRowAtIndexPath(selection, animated: true)

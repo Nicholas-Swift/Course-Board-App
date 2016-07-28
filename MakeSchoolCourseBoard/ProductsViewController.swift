@@ -19,6 +19,30 @@ class ProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        update()
+        
+        // Change to not translucent
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
+        self.tabBarController?.tabBar.translucent = false
+        
+        // remove separator color
+        tableView.separatorColor = UIColor.clearColor()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if UpdateHelper.productsUpdated == false {
+            update()
+            UpdateHelper.productsUpdated = true
+        }
+        
+        // Unhighlight the highlighted cell
+        if let selection: NSIndexPath = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRowAtIndexPath(selection, animated: true)
+        }
+    }
+    
+    func update() {
         // Get courses and fill tableview
         tableView.alpha = 0
         JSONHelper.getAllProducts({ (products, error) in
@@ -34,26 +58,11 @@ class ProductsViewController: UIViewController {
                 })
             }
         })
-        
-        // Change to not translucent
-        self.navigationController?.navigationBar.translucent = false
-        self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
-        self.tabBarController?.tabBar.translucent = false
-        
-        // remove separator color
-        tableView.separatorColor = UIColor.clearColor()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        // Unhighlight the highlighted cell
-        if let selection: NSIndexPath = self.tableView.indexPathForSelectedRow {
-            self.tableView.deselectRowAtIndexPath(selection, animated: true)
-        }
     }
     
     // For Segue

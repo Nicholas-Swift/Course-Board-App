@@ -41,6 +41,13 @@ class AccountViewController: UIViewController {
         update()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        if UpdateHelper.accountUpdated == false {
+            update()
+            UpdateHelper.accountUpdated = true
+        }
+    }
+    
     // TO UPDATE!
     func update() {
         // Load account

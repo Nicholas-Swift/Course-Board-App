@@ -9,40 +9,45 @@
 import Foundation
 import UIKit
 
-class NewProductViewController: UIViewController {
+class NewProductViewController: UITableViewController {
     
     // Variables
     
-    let titleArray = ["Product Name", "Advisor", "Course", "What problem are you solving?"]
     
-    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
-    @IBOutlet weak var saveBarButton: UIBarButtonItem!
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var advisorLabel: UILabel!
+    @IBOutlet weak var courseLabel: UILabel!
+    @IBOutlet weak var problemLabel: UILabel!
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var productNameField: UITextField!
+    @IBOutlet weak var advisorField: UITextField!
+    @IBOutlet weak var courseField: UITextField!
+    @IBOutlet weak var problemField: UITextField!
     
     // Actions
     @IBAction func cancelBarAction(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
     @IBAction func saveBarAction(sender: AnyObject) {
-        JSONHelper.addProduct { (bool, error) in
-            print("ADDED PRODUCT")
-        }
+        
+        dismissKeyboard()
+        
+        print(productNameField.text)
+        print(advisorField.text)
+        print(courseField.text)
+        print(problemField.text)
     }
     
-    // General View Controller stuff
+    // View Controller
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Table view remove separator
         tableView.separatorColor = UIColor.clearColor()
         
-        // Let the cells resize to the correct height based on information
-        tableView.estimatedRowHeight = 50
-        tableView.rowHeight = UITableViewAutomaticDimension
-        
         // For keyboard
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LogInViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewProductViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
@@ -51,39 +56,17 @@ class NewProductViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // No headers!
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return ""
+    }
+    
     // For keyboard
     func dismissKeyboard() {
         view.endEditing(true)
-    }
-}
-
-extension NewProductViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titleArray.count
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
-        
-        headerCell.headerTitleLabel.text = "Create New Product"
-        
-        return headerCell
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FieldCell") as! AccountFieldCell
-        
-        cell.infoLabel.text = titleArray[indexPath.row]
-        
-        return cell
     }
 }

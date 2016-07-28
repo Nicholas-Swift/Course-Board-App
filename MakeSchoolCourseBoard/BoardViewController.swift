@@ -25,8 +25,7 @@ class BoardViewController: UIViewController {
         self.tabBarController?.tabBar.translucent = false
         
         // Load posts
-        tableView.alpha = 0
-        loadPosts()
+        update()
         
         // no separator color
         tableView.separatorColor = UIColor.clearColor()
@@ -34,6 +33,18 @@ class BoardViewController: UIViewController {
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 150
         tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if UpdateHelper.boardUpdated == false {
+            update()
+            UpdateHelper.boardUpdated = true
+        }
+    }
+    
+    func update() {
+        tableView.alpha = 0
+        loadPosts()
     }
     
     func loadPosts() {

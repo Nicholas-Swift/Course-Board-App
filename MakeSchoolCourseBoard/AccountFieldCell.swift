@@ -15,6 +15,8 @@ class AccountFieldCell: UITableViewCell {
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var infoField: UITextField!
     
+    var num: Int!
+    
     var edited = false
     
     @IBAction func fieldAction(sender: AnyObject) {
