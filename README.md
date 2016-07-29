@@ -1,27 +1,17 @@
-# Course-Board-App
+# TODO:
+ * Add ability to create posts
+ * Add ability to edit products you are joined in
+ * Add logout feature and stay logged in based on token
+ * Add ability to edit courses if you are instructor/user
+ * Need to Polish UI
+ * Need to clean up adding new courses and products
 
-## TODO:
+#Other:
+ * Chat
+ * Mastery tracking
 
-Courses
------------------------
-Add functionality to add course
-
-Add ability to create a new post for the specific course you are enrolled in
-
-Products
------------------------
-Add functionality to add product
-
-Add the ability to edit the products you are joined in
-
-General
------------------------
-Need to polish UI and edit code to fix edge cases
-
-Account
------------------------
-Need to add logout feature
-
-## Future features
-Chat option
+# Issues:
+ * Cannot add product unless course is attached
+ * Need to make sure app will not crash if loses connection to internet
+ * Edge cases
 
