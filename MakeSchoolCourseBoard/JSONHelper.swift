@@ -154,6 +154,49 @@ class JSONHelper {
         }
     }
     
+    // Add a course
+    static func addCourse(tuple: (instructor: String, title: String, description: String, startsOn: String, endsOn: String, location: String, hours: String, objectives: [String]), complete: ( bool: Bool?, error: NSError?) -> Void)
+    {
+        
+        // Call the api
+        let apiToContact = JSONHelper.baseApi + "courses"
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Set up info
+        var tempDict: [String: AnyObject] = [:]
+        
+        tempDict["instructor"] = "572a21580608f80300f95714" //tuple.instructor
+        tempDict["title"] = tuple.title
+        tempDict["description"] = tuple.description
+        tempDict["startsOn"] = "2017-01-16T08:00:00.000Z" //tuple.startsOn
+        tempDict["endsOn"] = "2017-03-24T07:00:00.000Z" //tuple.endsOn
+        tempDict["location"] = tuple.location
+        tempDict["hours"] = tuple.hours
+        tempDict["objectives"] = tuple.objectives
+        
+        print(tempDict)
+        
+        // Must include course or the server crashes
+        Alamofire.request(.POST, apiToContact, headers: headers, parameters: tempDict, encoding: .JSON).validate().responseJSON() { response in
+            print(response)
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    print(json)
+                    print("complete")
+                    
+                    complete(bool: true, error: nil)
+                }
+            case .Failure(let error):
+                print(error)
+                complete(bool: nil, error: error)
+            }
+        }
+    }
+    
     // MARK: Products
     
     // Get all products, in miniProducts to save memory

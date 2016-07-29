@@ -120,11 +120,11 @@
             </objects>
             <point key="canvasLocation" x="-1121" y="1911"/>
         </scene>
-        <!--The Board-->
+        <!--Anouncements-->
         <scene sceneID="bql-oh-KgE">
             <objects>
                 <navigationController id="CmN-4n-02l" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="The Board" image="board" id="ByI-5Y-sW4"/>
+                    <tabBarItem key="tabBarItem" title="Anouncements" image="board" id="ByI-5Y-sW4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5ch-OE-lpb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -137,7 +137,7 @@
             </objects>
             <point key="canvasLocation" x="478" y="401"/>
         </scene>
-        <!--The Board-->
+        <!--Anouncements-->
         <scene sceneID="ICj-rL-JYK">
             <objects>
                 <viewController id="LLl-NU-yrJ" customClass="BoardViewController" customModule="MakeSchoolCourseBoard" customModuleProvider="target" sceneMemberID="viewController">
@@ -218,7 +218,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="The Board" id="LhR-dS-OcF">
+                    <navigationItem key="navigationItem" title="Anouncements" id="LhR-dS-OcF">
                         <barButtonItem key="backBarButtonItem" title=" " id="mDh-EV-ZcF"/>
                     </navigationItem>
                     <connections>
@@ -2266,7 +2266,7 @@
         <image name="settings" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DiU-ey-HM6"/>
+        <segue reference="Lar-ZQ-XcK"/>
         <segue reference="s7O-Rv-7Qi"/>
         <segue reference="Zx6-CO-5Pb"/>
     </inferredMetricsTieBreakers>

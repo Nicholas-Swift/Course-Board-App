@@ -51,6 +51,7 @@ class BoardViewController: UIViewController {
         
         JSONHelper.getMe { (user, error) in
             
+            self.posts = []
             var temp = 0
             for i in user.courses {
                 JSONHelper.getCoursePosts(i, complete: { (posts, error) in

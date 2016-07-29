@@ -70,7 +70,69 @@ class NewCourseViewController: UITableViewController {
     
     @IBAction func saveBarAction(sender: AnyObject) {
         
+        // Reset colors
+        titleLabel.textColor = UIColor.blackColor(); instructorLabel.textColor = UIColor.blackColor(); descriptionLabel.textColor = UIColor.blackColor(); startDateLabel.textColor = UIColor.blackColor(); endDateLabel.textColor = UIColor.blackColor(); locationLabel.textColor = UIColor.blackColor(); hoursLabel.textColor = UIColor.blackColor(); objectivesLabel.textColor = UIColor.blackColor()
+        
         dismissKeyboard()
+        
+        // Set up
+        let title = titleField.text
+        let instructor = instructorField.text
+        let description = descriptionTextView.text
+        let startsOn = startDateField.text
+        let endsOn = endDateField.text
+        let location = locationField.text
+        let hours = hoursField.text
+        var objectives: [String] = []
+        for obj in [objective9Field, objective10Field, objective11Field, objective12Field, objective13Field, objective14Field] {
+            if obj.text != nil && obj.text != "" {
+                objectives.append(obj.text!)
+            }
+        }
+        
+        // Make sure everything is valid
+        var update = true
+        
+        if title == "" {
+            update = false
+            titleLabel.textColor = UIColor.redColor()
+        }
+        if instructor == "" {
+            update = false
+            instructorLabel.textColor = UIColor.redColor()
+        }
+        if description == "" {
+            update = false
+            descriptionLabel.textColor = UIColor.redColor()
+        }
+        if startsOn == "" {
+            update = false
+            startDateLabel.textColor = UIColor.redColor()
+        }
+        if endsOn == "" {
+            update = false
+            endDateLabel.textColor = UIColor.redColor()
+        }
+        if location == "" {
+            update = false
+            locationLabel.textColor = UIColor.redColor()
+        }
+        if hours == "" {
+            update = false
+            hoursLabel.textColor = UIColor.redColor()
+        }
+        if objectives.count == 0 {
+            update = false
+            objectivesLabel.textColor = UIColor.redColor()
+        }
+        
+        if update == true {
+            JSONHelper.addCourse((instructor: instructor!, title: title!, description: description, startsOn: startsOn!, endsOn: endsOn!, location: location!, hours: hours!, objectives: objectives)) { (bool, error) in
+                print("added")
+                self.navigationController?.popViewControllerAnimated(true)
+                UpdateHelper.coursesUpdated = false
+            }
+        }
     }
     
     @IBAction func addObjectiveAction(sender: AnyObject) {
