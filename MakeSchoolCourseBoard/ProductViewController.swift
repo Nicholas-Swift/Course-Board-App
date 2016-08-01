@@ -55,7 +55,7 @@ class ProductViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         
         // Make table view have no separator
-        tableView.separatorColor = UIColor.clearColor()
+        //tableView.separatorColor = UIColor.clearColor()
     }
     
     func loadProduct() {
@@ -193,18 +193,30 @@ extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
         return myNum
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        print("viewForHeader")
-        let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
-        headerCell.headerTitleLabel.text = headerArray[section]
-        
-        print("EndViewForHeader")
-        
-        return headerCell
+//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        print("viewForHeader")
+//        let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
+//        headerCell.headerTitleLabel.text = headerArray[section]
+//        
+//        print("EndViewForHeader")
+//        
+//        return headerCell
+//    }
+//    
+//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 30
+//    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return headerArray[section]
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return 40
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

@@ -227,6 +227,7 @@ class JSONHelper {
                         miniProduct.title = json[i]["name"].stringValue
                         miniProduct.instructorName = json[i]["instructor"]["fullname"].stringValue
                         miniProduct.info = json[i]["problem"].stringValue
+                        miniProduct.contributorCount = json[i]["contributors"].arrayObject!.count
                         
                         products.append(miniProduct)
                     }
@@ -368,22 +369,36 @@ class JSONHelper {
     }
     
     // Edit a product
-    static func editProduct(tuple: (name: String, advisor: String, course: String, problem: String, github: String, agile: String, live: String, valueProp: String, customer: String, assumption: String, finishedProduct: String, mvp: String), complete: ( bool: Bool?, error: NSError?) -> Void)
+    static func editProduct(tuple: (id: String, name: String, advisor: String, course: String, problem: String, github: String, agile: String, live: String, valueProp: String, customer: String, assumption: String, finishedProduct: String, mvp: String), complete: ( bool: Bool?, error: NSError?) -> Void)
     {
         
         // Call the api
-        let apiToContact = JSONHelper.baseApi + "products/579ea5c57fc82e0300f611c7"
+        let apiToContact = JSONHelper.baseApi + "products/" + tuple.id
+        print("\n\n\n\n" + apiToContact + "\n\n\n\n")
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
         
-        print(tuple);
-        
-        // Set up info
-        //var tempDict: [String: AnyObject] = [:]
-        
+//        // Set up info
+//        var tempDict: [String: AnyObject] = [:]
+//        
+//        tempDict["name"] = tuple.name
+//        tempDict["instructor"] = "571fe124831e22030010b9bd" //tuple.advisor
+//        tempDict["course"] = "5730fd6b769290030048aafa" //tuple.course
+//        tempDict["problem"] = tuple.problem
+//        tempDict["githubUrl"] = tuple.github
+//        tempDict["agileUrl"] = tuple.agile
+//        tempDict["liveUrl"] = tuple.live
+//        tempDict["valueProp"] = tuple.valueProp
+//        tempDict["customer"] = tuple.customer
+//        tempDict["assumptions"] = tuple.assumption
+//        tempDict["finishedProduct"] = tuple.finishedProduct
+//        tempDict["mvp"] = tuple.mvp
+//        
+//        print(tempDict)
+//        
 //        // Must include course or the server crashes
-//        Alamofire.request(.POST, apiToContact, headers: headers, parameters: tempDict, encoding: .JSON).validate().responseJSON() { response in
+//        Alamofire.request(.PUT, apiToContact, headers: headers, parameters: tempDict, encoding: .JSON).validate().responseJSON() { response in
 //            print(response)
 //            switch response.result {
 //            case .Success:
@@ -400,6 +415,55 @@ class JSONHelper {
 //                complete(bool: nil, error: error)
 //            }
 //        }
+        
+        // Request the data from the api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
+            
+            // Add the json info to user
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    var json = JSON(value)
+                    
+                    //print(json)
+                    
+                    json["name"] = JSON(stringLiteral: tuple.name)
+                    json["instructor"] = "571fe124831e22030010b9bd" //tuple.advisor
+                    json["course"] = "5730fd6b769290030048aafa" //tuple.course
+                    json["problem"] = JSON(stringLiteral: tuple.problem)
+                    json["githubUrl"] = JSON(stringLiteral: tuple.github)
+                    json["agileUrl"] = JSON(stringLiteral: tuple.agile)
+                    json["liveUrl"] = JSON(stringLiteral: tuple.live)
+                    json["valueProp"] = JSON(stringLiteral: tuple.valueProp)
+                    json["customer"] = JSON(stringLiteral: tuple.customer)
+                    json["assumptions"] = JSON(stringLiteral: tuple.assumption)
+                    json["finishedProduct"] = JSON(stringLiteral: tuple.finishedProduct)
+                    json["mvp"] = JSON(stringLiteral: tuple.mvp)
+                    
+                    Alamofire.request(.PUT, apiToContact, headers: headers, parameters: json.dictionaryObject, encoding: .JSON).validate().responseJSON() { response in
+                        switch response.result {
+                        case .Success:
+                            if let value = response.result.value {
+                                //let json = JSON(value)
+                                //print(json)
+                                
+                                complete(bool: true, error: nil)
+                                
+                            }
+                        case .Failure(let error):
+                            print(error)
+                            complete(bool: nil, error: error)
+                        }
+                    }
+                    
+                    //complete(bool: true, error: nil)
+                    
+                }
+            case .Failure(let error):
+                print(error)
+                complete(bool: false, error: error)
+            }
+        }
     }
     
     // MARK: Users
@@ -535,6 +599,10 @@ class JSONHelper {
                     
                     // Edit json with the updated info
                     json["first"] = JSON(stringLiteral: info.first)
+                    json["last"] = JSON(stringLiteral: info.last)
+                    json["username"] = JSON(stringLiteral: info.username)
+                    json["email"] = JSON(stringLiteral: info.email)
+                    json["role"] = JSON(stringLiteral: info.role)
                     
                     Alamofire.request(.PUT, apiToContact, headers: headers, parameters: json.dictionaryObject, encoding: .JSON).validate().responseJSON() { response in
                         switch response.result {
@@ -585,7 +653,7 @@ class JSONHelper {
                     print(json)
                     
                     var posts: [Post] = []
-                    for i in 0...json.count-1 {
+                    for i in 0..<json.count {
                         let post = Post()
                         
                         post.course = json[i]["course"].stringValue

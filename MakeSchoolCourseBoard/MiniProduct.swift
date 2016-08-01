@@ -13,4 +13,5 @@ class MiniProduct {
     var title: String!
     var instructorName: String!
     var info: String!
+    var contributorCount: Int!
 }

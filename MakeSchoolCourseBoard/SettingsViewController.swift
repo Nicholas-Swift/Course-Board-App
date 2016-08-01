@@ -27,6 +27,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var roleField: UITextField!
     
+    let roles = ["Student", "Instructor", "Staff"]
+    
     // Actions
     @IBAction func cancelBarAction(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
@@ -70,6 +72,9 @@ class SettingsViewController: UITableViewController {
         if update == true {
             UpdateHelper.accountUpdated = false
             
+            print(role!)
+            print("HELLO")
+            
             JSONHelper.updateUser((first: first!, last: last!, username: username!, email: email!, role: role!)) { (bool, error) in
                 self.navigationController?.popViewControllerAnimated(true)
             }
@@ -90,6 +95,13 @@ class SettingsViewController: UITableViewController {
         userNameField.text = user.username ?? ""
         emailField.text = user.email ?? ""
         roleField.text = user.role ?? ""
+        
+        // Set up pickerview
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.backgroundColor = UIColor.whiteColor()
+        
+        roleField.inputView = pickerView
         
         // For keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.dismissKeyboard))
@@ -113,5 +125,24 @@ class SettingsViewController: UITableViewController {
     // For keyboard
     func dismissKeyboard() {
         view.endEditing(true)
+    }
+}
+
+extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return roles.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return roles[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        roleField.text = roles[row]
     }
 }

@@ -35,7 +35,7 @@ class AccountViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
         self.tabBarController?.tabBar.translucent = false
         
-        self.tableView.separatorColor = UIColor.clearColor()
+        //self.tableView.separatorColor = UIColor.clearColor()
         
         // Update
         update()
@@ -183,17 +183,29 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
         return headerDict[headerArray[section]]!
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
-        
-        cell.headerTitleLabel.text = headerArray[section]
-        
-        return cell
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return headerArray[section]
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return 40
     }
+    
+//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
+//        
+//        cell.headerTitleLabel.text = headerArray[section]
+//        
+//        return cell
+//    }
+//    
+//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 30
+//    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set up the info cell

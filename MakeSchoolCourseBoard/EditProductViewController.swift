@@ -94,8 +94,8 @@ class EditProductViewController: UITableViewController {
         }
         
         if update {
-            JSONHelper.editProduct((name: name, advisor: advisor, course: course, problem: problem, github: github, agile: agile, live: live, valueProp: valueProp, customer: customer, assumption: assumption, finishedProduct: finishedProduct, mvp: mvp), complete: { (bool, error) in
-                print("YEAH BABY")
+            JSONHelper.editProduct((id: product.id, name: name, advisor: advisor, course: course, problem: problem, github: github, agile: agile, live: live, valueProp: valueProp, customer: customer, assumption: assumption, finishedProduct: finishedProduct, mvp: mvp), complete: { (bool, error) in
+                self.navigationController?.popViewControllerAnimated(true)
             })
         }
     }

@@ -52,8 +52,11 @@ class LogInViewController: UIViewController {
                 
                 if error != nil {
                     // Failed with error! Change text
-                    //self.wrongPasswordLabel.text = "An error occured. Are you connected to the internet?"
+                    //self.wrongPasswordLabel.text = "A networking error occured."
                 }
+//                else {
+//                    self.wrongPasswordLabel.text = "Wrong email or password."
+//                }
                 
                 UIView.animateWithDuration(1.0, animations: { 
                     self.wrongPasswordLabel.alpha = 1.0
