@@ -367,6 +367,41 @@ class JSONHelper {
         }
     }
     
+    // Edit a product
+    static func editProduct(tuple: (name: String, advisor: String, course: String, problem: String, github: String, agile: String, live: String, valueProp: String, customer: String, assumption: String, finishedProduct: String, mvp: String), complete: ( bool: Bool?, error: NSError?) -> Void)
+    {
+        
+        // Call the api
+        let apiToContact = JSONHelper.baseApi + "products/579ea5c57fc82e0300f611c7"
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        print(tuple);
+        
+        // Set up info
+        //var tempDict: [String: AnyObject] = [:]
+        
+//        // Must include course or the server crashes
+//        Alamofire.request(.POST, apiToContact, headers: headers, parameters: tempDict, encoding: .JSON).validate().responseJSON() { response in
+//            print(response)
+//            switch response.result {
+//            case .Success:
+//                if let value = response.result.value {
+//                    let json = JSON(value)
+//                    print(json)
+//                    print("complete")
+//                    
+//                    complete(bool: true, error: nil)
+//                    
+//                }
+//            case .Failure(let error):
+//                print(error)
+//                complete(bool: nil, error: error)
+//            }
+//        }
+    }
+    
     // MARK: Users
     
     // Get me

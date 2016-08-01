@@ -59,7 +59,45 @@ class EditProductViewController: UITableViewController {
         
         dismissKeyboard()
         
-        // Save the stuff
+        let name = productNameField.text ?? ""
+        let advisor = advisorField.text ?? ""
+        let course = courseField.text ?? ""
+        let problem = problemField.text ?? ""
+        let github = githubField.text ?? ""
+        let agile = agileField.text ?? ""
+        let live = liveField.text ?? ""
+        let valueProp = valuePropField.text ?? ""
+        let customer = customerField.text ?? ""
+        let assumption = assumptionsField.text ?? ""
+        let finishedProduct = finishedProductField.text ?? ""
+        let mvp = mvpField.text ?? ""
+        
+        var update = true
+        
+        productNameLabel.textColor = UIColor.blackColor(); advisorLabel.textColor = UIColor.blackColor(); courseLabel.textColor = UIColor.blackColor(); problemLabel.textColor = UIColor.blackColor();
+        
+        if name == "" {
+            productNameLabel.textColor = UIColor.redColor()
+            update = false
+        }
+        if advisor == "" {
+            advisorLabel.textColor = UIColor.redColor()
+            update = false
+        }
+        if course == "" {
+            courseLabel.textColor = UIColor.redColor()
+            update = false
+        }
+        if problem == "" {
+            problemLabel.textColor = UIColor.redColor()
+            update = false
+        }
+        
+        if update {
+            JSONHelper.editProduct((name: name, advisor: advisor, course: course, problem: problem, github: github, agile: agile, live: live, valueProp: valueProp, customer: customer, assumption: assumption, finishedProduct: finishedProduct, mvp: mvp), complete: { (bool, error) in
+                print("YEAH BABY")
+            })
+        }
     }
     
     // View Controller

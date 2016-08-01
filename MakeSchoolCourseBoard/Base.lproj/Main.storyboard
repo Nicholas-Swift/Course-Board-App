@@ -242,7 +242,43 @@
                     <view key="view" contentMode="scaleToFill" id="sZx-ZL-Ky8">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0QQ-do-vGi">
+                                <rect key="frame" x="28" y="496" width="544" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="0YU-qW-F8k"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Anounce to what course..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIi-NW-20L">
+                                <rect key="frame" x="28" y="467" width="245" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nicholas Swift" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHN-I1-g7t">
+                                <rect key="frame" x="28" y="79" width="544" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Make an anouncement" translatesAutoresizingMaskIntoConstraints="NO" id="PnS-ab-dTv">
+                                <rect key="frame" x="20" y="108" width="560" height="149"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="VHN-I1-g7t" secondAttribute="trailing" constant="8" id="6gx-XP-zdx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0QQ-do-vGi" secondAttribute="trailing" constant="8" id="Ank-kp-iA8"/>
+                            <constraint firstItem="UgU-Zz-3b6" firstAttribute="top" secondItem="0QQ-do-vGi" secondAttribute="bottom" constant="15" id="La6-JP-sOx"/>
+                            <constraint firstItem="VHN-I1-g7t" firstAttribute="top" secondItem="1zM-X7-mde" secondAttribute="bottom" constant="15" id="VOi-3K-F8a"/>
+                            <constraint firstItem="0QQ-do-vGi" firstAttribute="leading" secondItem="sZx-ZL-Ky8" secondAttribute="leadingMargin" constant="8" id="oJP-kf-APl"/>
+                            <constraint firstItem="VHN-I1-g7t" firstAttribute="leading" secondItem="sZx-ZL-Ky8" secondAttribute="leadingMargin" constant="8" id="qBY-ec-6e9"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Anouncement" id="pka-a4-dO7">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="3Xk-7e-9ur"/>
@@ -2693,7 +2729,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In contrast, describe your absolute (absolute!) minimum viable product." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EbB-ja-nyI">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In contrast, describe your absolute (absolute!) minimum viable product." textAlignment="natural" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EbB-ja-nyI">
                                                     <rect key="frame" x="16" y="13" width="568" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2770,7 +2806,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iCH-OH-TnH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3893" y="2670"/>
+            <point key="canvasLocation" x="3893" y="2661"/>
         </scene>
         <!--Products-->
         <scene sceneID="B1K-Ar-iA1">
