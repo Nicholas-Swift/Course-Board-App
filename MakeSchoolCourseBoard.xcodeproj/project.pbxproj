@@ -44,6 +44,7 @@
 		01D0EA981D419278000F730E /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0EA971D419278000F730E /* LogInViewController.swift */; };
 		01D0F83C1D42DCA7005A94E0 /* AccountFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F83B1D42DCA7005A94E0 /* AccountFieldCell.swift */; };
 		01D5EFAA1D440E14008BDB35 /* NewCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D5EFA91D440E14008BDB35 /* NewCourseViewController.swift */; };
+		01DDE8CD1D4BF68D00CDCA7A /* EditProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDE8CC1D4BF68D00CDCA7A /* EditProductViewController.swift */; };
 		16E0890B392B59E29BB32378 /* Pods_MakeSchoolCourseBoard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783BC9D4F3BF09749A0CBC29 /* Pods_MakeSchoolCourseBoard.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		01D0EA971D419278000F730E /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		01D0F83B1D42DCA7005A94E0 /* AccountFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountFieldCell.swift; sourceTree = "<group>"; };
 		01D5EFA91D440E14008BDB35 /* NewCourseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCourseViewController.swift; sourceTree = "<group>"; };
+		01DDE8CC1D4BF68D00CDCA7A /* EditProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProductViewController.swift; sourceTree = "<group>"; };
 		4C8892FB9CD80C05AC2A1A24 /* Pods-MakeSchoolCourseBoard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeSchoolCourseBoard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MakeSchoolCourseBoard/Pods-MakeSchoolCourseBoard.debug.xcconfig"; sourceTree = "<group>"; };
 		783BC9D4F3BF09749A0CBC29 /* Pods_MakeSchoolCourseBoard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeSchoolCourseBoard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF6CF268DE42CF6FFD1C939D /* Pods-MakeSchoolCourseBoard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeSchoolCourseBoard.release.xcconfig"; path = "Pods/Target Support Files/Pods-MakeSchoolCourseBoard/Pods-MakeSchoolCourseBoard.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				0170D3161D356FC90008BB0C /* ProductsViewController.swift */,
 				0170D3211D3593BB0008BB0C /* ProductViewController.swift */,
 				016761621D4414240059E091 /* NewProductViewController.swift */,
+				01DDE8CC1D4BF68D00CDCA7A /* EditProductViewController.swift */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				01D0EA961D414414000F730E /* CourseButtonCell.swift in Sources */,
 				01D0EA981D419278000F730E /* LogInViewController.swift in Sources */,
 				0113B0861D36EB93003AD618 /* JSONHelper.swift in Sources */,
+				01DDE8CD1D4BF68D00CDCA7A /* EditProductViewController.swift in Sources */,
 				014181451D497CF7005381C2 /* SettingsViewController.swift in Sources */,
 				0148A48C1D36D857002A8D78 /* Course.swift in Sources */,
 				0170D3171D356FC90008BB0C /* ProductsViewController.swift in Sources */,

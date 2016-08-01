@@ -25,8 +25,15 @@ class ProductViewController: UIViewController {
             JSONHelper.joinProduct(id) { (course, error) in
                 
                 // Change title and reload previous screen!
-                self.joinBarButton.title = "Joined :)"
+                self.joinBarButton.title = "Edit"
+                UpdateHelper.productsUpdated = false
+                UpdateHelper.accountUpdated = false
+                UpdateHelper.coursesUpdated = false
+                UpdateHelper.boardUpdated = false
             }
+        }
+        else if self.joinBarButton.title == "Edit" { // EDIT PRODUCT
+            performSegueWithIdentifier("editProduct", sender: self)
         }
     }
     
@@ -166,6 +173,10 @@ class ProductViewController: UIViewController {
             destination.id = id
             
             print(id)
+        }
+        else if segue.identifier == "editProduct" {
+            let destination = segue.destinationViewController as! EditProductViewController
+            destination.product = self.product
         }
     }
 }
