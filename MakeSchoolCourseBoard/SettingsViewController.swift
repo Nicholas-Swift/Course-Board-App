@@ -27,9 +27,16 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var roleField: UITextField!
     
+    @IBOutlet weak var logoutButton: UIButton!
+    
+    
     let roles = ["Student", "Instructor", "Staff"]
     
     // Actions
+    @IBAction func logoutAction(sender: AnyObject) {
+        print("Logout")
+    }
+    
     @IBAction func cancelBarAction(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -95,6 +102,9 @@ class SettingsViewController: UITableViewController {
         userNameField.text = user.username ?? ""
         emailField.text = user.email ?? ""
         roleField.text = user.role ?? ""
+        
+        // Set up logout button
+        logoutButton.layer.cornerRadius = 5
         
         // Set up pickerview
         let pickerView = UIPickerView()

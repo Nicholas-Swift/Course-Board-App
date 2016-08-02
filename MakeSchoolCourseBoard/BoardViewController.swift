@@ -13,8 +13,9 @@ class BoardViewController: UIViewController {
     
     // Variables
     @IBOutlet weak var tableView: UITableView!
-    
     var posts: [Post] = []
+    
+    // Actions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,7 @@ class BoardViewController: UIViewController {
         self.tabBarController?.tabBar.translucent = false
         
         // Load posts
+        tableView.alpha = 0
         update()
         
         // no separator color
@@ -43,52 +45,19 @@ class BoardViewController: UIViewController {
     }
     
     func update() {
-        tableView.alpha = 0
         loadPosts()
     }
     
     func loadPosts() {
         
-        JSONHelper.getMe { (user, error) in
+        JSONHelper.getUserPosts(LoginHelper.id) { (posts, error) in
+            self.posts = posts
             
-            self.posts = []
-            var temp = 0
-            for i in user.courses {
-                JSONHelper.getCoursePosts(i, complete: { (posts, error) in
-                    
-                    for post in posts {
-                        post.courseName = user.courseNames[temp]
-                        self.posts.append(post)
-                    }
-                    
-                    // Loaded the last one, now we can sort and refresh data!
-                    if temp == user.courses.count-1 {
-                        
-                        // Sort
-                        self.posts = self.posts.sort({ (post1, post2) -> Bool in
-                            
-                            let post1num = Double(post1.createdAt.stringByReplacingOccurrencesOfString("-", withString: "").stringByReplacingOccurrencesOfString("T", withString: "").stringByReplacingOccurrencesOfString(":", withString: "").stringByReplacingOccurrencesOfString("Z", withString: ""))
-                            
-                            let post2num = Double(post2.createdAt.stringByReplacingOccurrencesOfString("-", withString: "").stringByReplacingOccurrencesOfString("T", withString: "").stringByReplacingOccurrencesOfString(":", withString: "").stringByReplacingOccurrencesOfString("Z", withString: ""))
-                            
-                            if post1num > post2num {
-                                return true
-                            }
-                            else {
-                                return false
-                            }
-                        })
-                        
-                        // Animate in
-                        self.tableView.reloadData()
-                        UIView.animateWithDuration(0.2, animations: {
-                            self.tableView.alpha = 1
-                        })
-                    }
-                    
-                    temp += 1
-                })
-            }
+            // Animate in
+            self.tableView.reloadData()
+            UIView.animateWithDuration(0.2, animations: {
+                self.tableView.alpha = 1
+            })
         }
         
     }
@@ -137,15 +106,16 @@ extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! CoursePostCell
+        cell.setupCard()
         
-        cell.titleButton.setTitle(posts[indexPath.section].courseName, forState: .Normal)
+        let section = indexPath.section
         
+        cell.titleButton.setTitle(posts[section].courseName, forState: .Normal)
         cell.titleButton.addTarget(self, action: #selector(BoardViewController.cellCourse), forControlEvents: .TouchUpInside)
-        
-        cell.infoLabel.text = posts[indexPath.section].body
-        cell.footerLabel.text = "Posted by " + posts[indexPath.section].user + " on " + DateHelper.toShortDate(posts[indexPath.section].createdAt)
+        cell.infoLabel.text = posts[section].body
+        cell.footerLabel.text = "Posted by " + posts[section].user + " on " + DateHelper.toShortDate(posts[section].createdAt)
         
         return cell
     }

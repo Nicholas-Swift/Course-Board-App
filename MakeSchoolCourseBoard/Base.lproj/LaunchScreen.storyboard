@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,18 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Board" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="sSp-k2-OsP">
-                                <rect key="frame" x="40" y="264" width="520" height="72"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="60"/>
-                                <color key="textColor" red="0.20000000000000001" green="0.47843137250000001" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logonew" translatesAutoresizingMaskIntoConstraints="NO" id="rlp-b4-fgb">
+                                <rect key="frame" x="260" y="260" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="3wI-L2-Y9M"/>
+                                    <constraint firstAttribute="width" constant="80" id="Cca-Vh-12O"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="sSp-k2-OsP" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="C8G-4g-vrt"/>
-                            <constraint firstItem="sSp-k2-OsP" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="NWp-Rz-KNB"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="sSp-k2-OsP" secondAttribute="trailing" constant="20" id="Wyd-Ad-hRr"/>
+                            <constraint firstItem="rlp-b4-fgb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="BAP-YV-DGN"/>
+                            <constraint firstItem="rlp-b4-fgb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="XAi-tr-LeM"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,4 +37,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logonew" width="800" height="741"/>
+    </resources>
 </document>

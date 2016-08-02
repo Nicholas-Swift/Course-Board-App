@@ -1,92 +1,60 @@
 //
-//  LogInViewController.swift
+//  NewPostViewController.swift
 //  MakeSchoolCourseBoard
 //
-//  Created by Nicholas Swift on 7/21/16.
+//  Created by Nicholas Swift on 8/2/16.
 //  Copyright © 2016 Nicholas Swift. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class LogInViewController: UIViewController {
+class NewPostViewController: UIViewController {
     
-    // For Animations
+    // For animation
     @IBOutlet weak var bottomLayoutConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var signUpConstraint: NSLayoutConstraint!
-    @IBOutlet weak var logInConstraint: NSLayoutConstraint!
+    // Variables
+    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     
-    // Outlets
-    
-    @IBOutlet weak var usernameField: UITextField!
-    @IBOutlet weak var passwordField: UITextField!
-    
-    @IBOutlet weak var logInButton: UIButton!
+    @IBOutlet weak var toCourseField: UITextField!
     
     // Actions
-    @IBAction func logInAction(sender: AnyObject) {
-        
-        // Log In
-        logInButton.enabled = false
-        dismissKeyboard()
-        
-        let username = usernameField.text ?? ""
-        let password = passwordField.text ?? ""
-        
-        LoginHelper.login(username, password: password) { (success, error) in
-            
-            if success {
-                // Success! Go to next view
-                self.performSegueWithIdentifier("LogInSegue", sender: self)
-            }
-            else {
-                // Failed
-                self.logInButton.enabled = true
-                
-                var title = "Incorrect email or password"
-                var message = "The email or password you entered is incorrect. Please try again."
-                var click = "OK"
-                
-                if error!.code != -6003 {
-                    title = "Cannot connect to server"
-                    message = "Make sure you are connected to the internet."
-                    click = "OK"
-                }
-                
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: click, style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        }
+    @IBAction func cancelBarAction(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
-    // For ViewController
+    @IBAction func postBarAction(sender: AnyObject) {
+        
+        JSONHelper.newPost((courseId: "5730fd6b769290030048aafa", body: "A new post! Happy to be here, again!")) { (bool, error) in
+            print("\n\n\n\n DONE BABY \n\n\n\n")
+            UpdateHelper.boardUpdated = false
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+        
+    }
     
+    // View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initial animations
-        usernameField.alpha = 0
-        passwordField.alpha = 0
-        logInButton.alpha = 0
+        // To Course Field
+        toCourseField.layer.cornerRadius = 0
         
-        UIView.animateWithDuration(0.5, animations: {
-            self.usernameField.alpha = 1
-            self.passwordField.alpha = 1
-            
-            self.logInButton.alpha = 1
-        })
+        // Set up pickerview
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.backgroundColor = UIColor.whiteColor()
+        
+        toCourseField.inputView = pickerView
         
         // For keyboard
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LogInViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
-        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // For keyboard
@@ -110,14 +78,10 @@ class LogInViewController: UIViewController {
     }
     
     func keyboardWillShowNotification(notification: NSNotification) {
-        signUpConstraint.constant = 5
-        logInConstraint.constant = 15
         updateBottomLayoutConstraintWithNotification(notification)
     }
     
     func keyboardWillHideNotification(notification: NSNotification) {
-        signUpConstraint.constant = 90
-        logInConstraint.constant = 100
         updateBottomLayoutConstraintWithNotification(notification)
     }
     
@@ -137,7 +101,26 @@ class LogInViewController: UIViewController {
         
         UIView.animateWithDuration(animationDuration, delay: 0.0, options: .BeginFromCurrentState, animations: {
             self.view.layoutIfNeeded()
-        }, completion: nil)
+            }, completion: nil)
     }
+    
+}
 
+extension NewPostViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 5
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "Hello"
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        //do stuff
+    }
 }

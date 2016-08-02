@@ -46,6 +46,7 @@ class CourseViewController: UIViewController {
         
         // Table view remove separator
         //tableView.separatorColor = UIColor.clearColor()
+        //navigationController?.hidesBarsOnSwipe = true
         
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 50

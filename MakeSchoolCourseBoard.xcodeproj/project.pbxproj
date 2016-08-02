@@ -43,8 +43,10 @@
 		01D0EA961D414414000F730E /* CourseButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0EA951D414414000F730E /* CourseButtonCell.swift */; };
 		01D0EA981D419278000F730E /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0EA971D419278000F730E /* LogInViewController.swift */; };
 		01D0F83C1D42DCA7005A94E0 /* AccountFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F83B1D42DCA7005A94E0 /* AccountFieldCell.swift */; };
+		01D20C581D5137FE0075A076 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D20C571D5137FE0075A076 /* NewPostViewController.swift */; };
 		01D5EFAA1D440E14008BDB35 /* NewCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D5EFA91D440E14008BDB35 /* NewCourseViewController.swift */; };
 		01DDE8CD1D4BF68D00CDCA7A /* EditProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDE8CC1D4BF68D00CDCA7A /* EditProductViewController.swift */; };
+		01F2FC421D500AD7007C7B0A /* CourseNewPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F2FC411D500AD7007C7B0A /* CourseNewPostCell.swift */; };
 		16E0890B392B59E29BB32378 /* Pods_MakeSchoolCourseBoard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783BC9D4F3BF09749A0CBC29 /* Pods_MakeSchoolCourseBoard.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,8 +89,10 @@
 		01D0EA951D414414000F730E /* CourseButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseButtonCell.swift; sourceTree = "<group>"; };
 		01D0EA971D419278000F730E /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		01D0F83B1D42DCA7005A94E0 /* AccountFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountFieldCell.swift; sourceTree = "<group>"; };
+		01D20C571D5137FE0075A076 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		01D5EFA91D440E14008BDB35 /* NewCourseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCourseViewController.swift; sourceTree = "<group>"; };
 		01DDE8CC1D4BF68D00CDCA7A /* EditProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProductViewController.swift; sourceTree = "<group>"; };
+		01F2FC411D500AD7007C7B0A /* CourseNewPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseNewPostCell.swift; sourceTree = "<group>"; };
 		4C8892FB9CD80C05AC2A1A24 /* Pods-MakeSchoolCourseBoard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeSchoolCourseBoard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MakeSchoolCourseBoard/Pods-MakeSchoolCourseBoard.debug.xcconfig"; sourceTree = "<group>"; };
 		783BC9D4F3BF09749A0CBC29 /* Pods_MakeSchoolCourseBoard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeSchoolCourseBoard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF6CF268DE42CF6FFD1C939D /* Pods-MakeSchoolCourseBoard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeSchoolCourseBoard.release.xcconfig"; path = "Pods/Target Support Files/Pods-MakeSchoolCourseBoard/Pods-MakeSchoolCourseBoard.release.xcconfig"; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 				01D0EA911D414343000F730E /* CourseTextCell.swift */,
 				01D0EA951D414414000F730E /* CourseButtonCell.swift */,
 				01D0EA931D41434F000F730E /* CoursePostCell.swift */,
+				01F2FC411D500AD7007C7B0A /* CourseNewPostCell.swift */,
 			);
 			name = Courses;
 			sourceTree = "<group>";
@@ -228,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				01A8536F1D4495B900046207 /* BoardViewController.swift */,
+				01D20C571D5137FE0075A076 /* NewPostViewController.swift */,
 			);
 			name = Board;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 				010B03E31D383CEE001472F3 /* DateHelper.swift in Sources */,
 				01D0EA961D414414000F730E /* CourseButtonCell.swift in Sources */,
 				01D0EA981D419278000F730E /* LogInViewController.swift in Sources */,
+				01D20C581D5137FE0075A076 /* NewPostViewController.swift in Sources */,
 				0113B0861D36EB93003AD618 /* JSONHelper.swift in Sources */,
 				01DDE8CD1D4BF68D00CDCA7A /* EditProductViewController.swift in Sources */,
 				014181451D497CF7005381C2 /* SettingsViewController.swift in Sources */,
@@ -417,6 +424,7 @@
 				01D0EA901D414337000F730E /* CourseInfoCell.swift in Sources */,
 				01D0F83C1D42DCA7005A94E0 /* AccountFieldCell.swift in Sources */,
 				01C1A4501D481F5300D0BE5C /* ChannelViewController.swift in Sources */,
+				01F2FC421D500AD7007C7B0A /* CourseNewPostCell.swift in Sources */,
 				0170D3221D3593BB0008BB0C /* ProductViewController.swift in Sources */,
 				0148A4871D36BFD3002A8D78 /* CourseViewController.swift in Sources */,
 				01460E931D458CD300A5DC38 /* MiniProduct.swift in Sources */,

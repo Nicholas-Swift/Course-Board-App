@@ -50,7 +50,17 @@ class EditProductViewController: UITableViewController {
     @IBOutlet weak var mvpLabel: UILabel!
     @IBOutlet weak var mvpField: UITextField!
     
+    @IBOutlet weak var deleteProductButton: UIButton!
+    
     // Actions
+    @IBAction func deleteProductAction(sender: AnyObject) {
+        JSONHelper.deleteProduct(product.id) { (bool, error) in
+            print("DELETED PRODUCT")
+            UpdateHelper.productsUpdated = false
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+    }
+    
     @IBAction func cancelBarAction(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -109,6 +119,9 @@ class EditProductViewController: UITableViewController {
         
         // Load the correct information
         load()
+        
+        // Set up delete product
+        deleteProductButton.layer.cornerRadius = 5
         
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 100

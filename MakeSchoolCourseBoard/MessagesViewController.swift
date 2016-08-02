@@ -32,10 +32,10 @@ class MessagesViewController: ViewController {
     
     override func viewWillAppear(animated: Bool) {
         // Update
-        if UpdateHelper.messagesUpdated == false {
-            update()
-            UpdateHelper.messagesUpdated = true
-        }
+//        if UpdateHelper.messagesUpdated == false {
+//            update()
+//            UpdateHelper.messagesUpdated = true
+//        }
         
         // Unhighlight the highlighted cell
         if let selection: NSIndexPath = self.tableView.indexPathForSelectedRow {

@@ -104,7 +104,7 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100
+        return 120
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -112,6 +112,7 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
         let product = products[indexPath.section]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell") as! CourseCell
+        cell.setupCard()
         cell.courseTitleLabel.text = product.title
         cell.instructorNameLabel.text = product.instructorName
         cell.dateRangeLabel.text = product.info
