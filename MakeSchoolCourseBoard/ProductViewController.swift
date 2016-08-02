@@ -60,28 +60,34 @@ class ProductViewController: UIViewController {
     
     func loadProduct() {
         JSONHelper.getProduct(id) { (product, error) in
-            self.product = product
             
-            // Nav bar title
-            self.navigationItem.title = self.product.name
-            
-            // Change the bar button to 'joined' if student is joined in product.
-            if self.product.contributors.contains(LoginHelper.id) {
-                self.joinBarButton.title = "Edit"
-                //self.joinBarButton.tintColor = ()
+            if error == nil {
+                self.product = product
+                
+                // Nav bar title
+                self.navigationItem.title = self.product.name
+                
+                // Change the bar button to 'joined' if student is joined in product.
+                if self.product.contributors.contains(LoginHelper.id) {
+                    self.joinBarButton.title = "Edit"
+                    //self.joinBarButton.tintColor = ()
+                }
+                else {
+                    self.joinBarButton.title = "Join"
+                }
+                
+                // Load info in
+                self.loadInfo()
+                
+                // Show info once everything is loaded
+                self.tableView.reloadData()
+                UIView.animateWithDuration(0.3, animations: {
+                    self.tableView.alpha = 1
+                })
             }
             else {
-                self.joinBarButton.title = "Join"
+                
             }
-            
-            // Load info in
-            self.loadInfo()
-            
-            // Show info once everything is loaded
-            self.tableView.reloadData()
-            UIView.animateWithDuration(0.3, animations: { 
-                self.tableView.alpha = 1
-            })
         }
     }
     

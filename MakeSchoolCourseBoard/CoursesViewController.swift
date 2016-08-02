@@ -40,16 +40,22 @@ class CoursesViewController: UIViewController {
         // Get courses and fill tableview
         tableView.alpha = 0
         JSONHelper.getAllCourses({ (courses, error) in
-            if let courses = courses {
-                
-                // Load tableview
-                self.courses = courses
-                
-                // Once loaded, animate in
-                self.tableView.reloadData()
-                UIView.animateWithDuration(0.2, animations: {
-                    self.tableView.alpha = 1
-                })
+            
+            if error == nil {
+                if let courses = courses {
+                    
+                    // Load tableview
+                    self.courses = courses
+                    
+                    // Once loaded, animate in
+                    self.tableView.reloadData()
+                    UIView.animateWithDuration(0.2, animations: {
+                        self.tableView.alpha = 1
+                    })
+                }
+            }
+            else {
+                UpdateHelper.coursesUpdated = false
             }
         })
     }

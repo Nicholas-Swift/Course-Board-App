@@ -46,16 +46,22 @@ class ProductsViewController: UIViewController {
         // Get courses and fill tableview
         tableView.alpha = 0
         JSONHelper.getAllProducts({ (products, error) in
-            if let products = products {
-                
-                // Load tableView
-                self.products = products
-                
-                // Animate the tableView in once data is loaded
-                self.tableView.reloadData()
-                UIView.animateWithDuration(0.2, animations: {
-                    self.tableView.alpha = 1
-                })
+            
+            if error == nil {
+                if let products = products {
+                    
+                    // Load tableView
+                    self.products = products
+                    
+                    // Animate the tableView in once data is loaded
+                    self.tableView.reloadData()
+                    UIView.animateWithDuration(0.2, animations: {
+                        self.tableView.alpha = 1
+                    })
+                }
+            }
+            else {
+                UpdateHelper.productsUpdated = false
             }
         })
     }
@@ -116,6 +122,7 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.courseTitleLabel.text = product.title
         cell.instructorNameLabel.text = product.instructorName
         cell.dateRangeLabel.text = product.info
+        cell.contributorLabel.text = String(product.contributorCount) + " contributors"
         
         return cell
     }

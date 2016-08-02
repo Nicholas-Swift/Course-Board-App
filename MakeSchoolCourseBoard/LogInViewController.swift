@@ -61,6 +61,19 @@ class LogInViewController: UIViewController {
         }
     }
     
+    @IBAction func SignUpAction(sender: AnyObject) {
+        
+        let title = "To sign up..."
+        let message = "Course Board is currently only available to Make School students, instructors, and staff. To create an account please talk to or message your instructor."
+        let click = "OK"
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: click, style: .Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    
     // For ViewController
     
     override func viewDidLoad() {

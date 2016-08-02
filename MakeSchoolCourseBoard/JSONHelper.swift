@@ -344,11 +344,13 @@ class JSONHelper {
         var tempDict: [String: AnyObject] = [:]
         
         tempDict["name"] = tuple.name
-        tempDict["instructor"] = "571fe124831e22030010b9bd"
-        tempDict["course"] = "5730fd6b769290030048aafa" // NEED TO HAVE COURSE IN PRODUCT RIGHT NOW!!!
+        tempDict["instructor"] = tuple.instructor
+        if tuple.course != "" {
+            tempDict["course"] = tuple.course
+        }
         tempDict["problem"] = tuple.problem
         
-        // Must include course or the server crashes
+        // Make the request
         Alamofire.request(.POST, apiToContact, headers: headers, parameters: tempDict, encoding: .JSON).validate().responseJSON() { response in
             print(response)
             switch response.result {
@@ -501,6 +503,7 @@ class JSONHelper {
                     user.role = json["role"].stringValue
                     
                     user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
+                    
                     user.courseNames = json["courses"].arrayValue.map{$0["title"].stringValue}
                     user.products = json["products"].arrayValue.map{$0["_id"].stringValue}
                     user.productNames = json["products"].arrayValue.map{$0["name"].stringValue}
@@ -568,6 +571,46 @@ class JSONHelper {
             case .Failure(let error):
                 print(error)
                 complete(user: nil, error: error)
+            }
+        }
+    }
+    
+    // get instructors
+    static func getInstructors(complete: (users: [User]!, error: NSError?) -> Void) {
+        
+        // Call the api
+        let apiToContact = JSONHelper.baseApi + "instructors"
+        
+        // Set up headers
+        let headers = ["Authorization": "Basic " + LoginHelper.token]
+        
+        // Request the data from the api
+        Alamofire.request(.GET, apiToContact, headers: headers).validate().responseJSON() { response in
+            
+            // Add the json info to user
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    
+                    //print(json)
+                    
+                    var users: [User] = []
+                    for i in 0..<json.count {
+                        
+                        let user = User()
+                        user.id = json[i]["_id"].stringValue
+                        user.fullname = json[i]["fullname"].stringValue
+                        
+                        users.append(user)
+                    }
+                    
+                    complete(users: users, error: nil)
+                    
+                }
+            case .Failure(let error):
+                print(error)
+                complete(users: nil, error: error)
             }
         }
     }

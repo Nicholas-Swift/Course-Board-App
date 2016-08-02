@@ -68,25 +68,37 @@ class AccountViewController: UIViewController {
     
     func getSelf() {
         JSONHelper.getMe { (user, error) in
-            self.user = user
-            self.loadInfo()
             
-            self.tableView.reloadData()
-            UIView.animateWithDuration(0.2, animations: {
-                self.tableView.alpha = 1
-            })
+            if error == nil {
+                self.user = user
+                self.loadInfo()
+                
+                self.tableView.reloadData()
+                UIView.animateWithDuration(0.2, animations: {
+                    self.tableView.alpha = 1
+                })
+            }
+            else {
+                
+            }
         }
     }
     
     func getOther() {
         JSONHelper.getUser(self.id) { (user, error) in
-            self.user = user
-            self.loadInfo()
             
-            self.tableView.reloadData()
-            UIView.animateWithDuration(0.2, animations: {
-                self.tableView.alpha = 1
-            })
+            if error == nil {
+                self.user = user
+                self.loadInfo()
+                
+                self.tableView.reloadData()
+                UIView.animateWithDuration(0.2, animations: {
+                    self.tableView.alpha = 1
+                })
+            }
+            else {
+                UpdateHelper.accountUpdated = false
+            }
         }
     }
     
@@ -102,6 +114,7 @@ class AccountViewController: UIViewController {
         
         // Courses
         var coursesNum = 0
+        print("\n\n\n\n\n \(user.courses.count)")
         if let _ = user.courses { coursesNum = user.courses.count }
         
         // Products

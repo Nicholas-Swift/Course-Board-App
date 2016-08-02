@@ -13,6 +13,7 @@ class CourseCell: UITableViewCell {
     @IBOutlet weak var courseTitleLabel: UILabel!
     @IBOutlet weak var instructorNameLabel: UILabel!
     @IBOutlet weak var dateRangeLabel: UILabel!
+    @IBOutlet weak var contributorLabel: UILabel!
     
     @IBOutlet weak var cardView: UIView!
     

@@ -51,13 +51,19 @@ class BoardViewController: UIViewController {
     func loadPosts() {
         
         JSONHelper.getUserPosts(LoginHelper.id) { (posts, error) in
-            self.posts = posts
             
-            // Animate in
-            self.tableView.reloadData()
-            UIView.animateWithDuration(0.2, animations: {
-                self.tableView.alpha = 1
-            })
+            if error == nil {
+                self.posts = posts
+                
+                // Animate in
+                self.tableView.reloadData()
+                UIView.animateWithDuration(0.2, animations: {
+                    self.tableView.alpha = 1
+                })
+            }
+            else {
+                UpdateHelper.boardUpdated = false
+            }
         }
         
     }

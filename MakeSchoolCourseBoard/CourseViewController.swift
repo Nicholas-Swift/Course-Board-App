@@ -25,8 +25,11 @@ class CourseViewController: UIViewController {
             JSONHelper.enrollCourse(id) { (course, error) in
                 
                 // Change title and then update the previous screen to reload??
-                self.enrollBarButton.title = "Enrolled :)"
+                self.enrollBarButton.title = "Post"
             }
+        }
+        else if self.enrollBarButton.title == "Post" { // POST
+            performSegueWithIdentifier("newPost", sender: self)
         }
     }
     
@@ -55,34 +58,40 @@ class CourseViewController: UIViewController {
     
     func loadCourse() {
         JSONHelper.getCourse(id) { (course, error) in
-            print(course?.endsOn)
-            self.course = course
             
-            // Change navbar title
-            self.navigationItem.title = self.course.title
-            
-            // Change the bar button to 'post' if student is enrolled in course.
-            if self.course.students.contains(LoginHelper.id) {
-                self.enrollBarButton.title = "Post"
-                //self.enrollBarButton.tintColor = UIColor.greenColor()
+            if error == nil {
+                print(course?.endsOn)
+                self.course = course
+                
+                // Change navbar title
+                self.navigationItem.title = self.course.title
+                
+                // Change the bar button to 'post' if student is enrolled in course.
+                if self.course.students.contains(LoginHelper.id) {
+                    self.enrollBarButton.title = "Post"
+                    //self.enrollBarButton.tintColor = UIColor.greenColor()
+                }
+                else {
+                    self.enrollBarButton.title = "Enroll"
+                }
+                
+                // Load the posts
+                JSONHelper.getCoursePosts(course?.id, complete: { (posts, error) in
+                    self.course.postUser = posts.map{$0.user}
+                    
+                    // Load info in
+                    self.loadInfo()
+                    
+                    // Show info once everything is loaded
+                    self.tableView.reloadData()
+                    UIView.animateWithDuration(0.2, animations: {
+                        self.tableView.alpha = 1
+                    })
+                })
             }
             else {
-                self.enrollBarButton.title = "Enroll"
+                print("COURSE ERROR")
             }
-            
-            // Load the posts
-            JSONHelper.getCoursePosts(course?.id, complete: { (posts, error) in
-                self.course.postUser = posts.map{$0.user}
-                
-                // Load info in
-                self.loadInfo()
-                
-                // Show info once everything is loaded
-                self.tableView.reloadData()
-                UIView.animateWithDuration(0.2, animations: {
-                    self.tableView.alpha = 1
-                })
-            })
         }
     }
     
@@ -216,7 +225,7 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.infoButton.setTitle(course.instructorName ?? "", forState: .Normal)
                 
                 // Set up the action to go to instructor
-                //cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellInstructor), forControlEvents: .TouchUpInside)
+                cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellInstructor), forControlEvents: .TouchUpInside)
                 
                 return cell
             }
@@ -252,7 +261,10 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
             cell.infoButton.setTitle(course.studentNames[indexPath.row] ?? "", forState: .Normal) // course.students
             
             // Set up the action to go to student
-            cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellStudent), forControlEvents: .TouchUpInside)
+            
+            if course.studentNames[indexPath.row] != course.instructorName {
+                cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellStudent), forControlEvents: .TouchUpInside)
+            }
             
             return cell
         }
