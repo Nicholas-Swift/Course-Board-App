@@ -59,4 +59,12 @@ class LoginHelper {
         }
     }
     
+    static func logout() {
+        token = nil
+        id = nil
+        role = nil
+        
+        UpdateHelper.updateAll()
+    }
+    
 }

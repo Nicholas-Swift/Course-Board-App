@@ -16,8 +16,15 @@ class NewPostViewController: UIViewController {
     
     // Variables
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
+    @IBOutlet weak var postBarButton: UIBarButtonItem!
     
     @IBOutlet weak var toCourseField: UITextField!
+    @IBOutlet weak var bodyTextField: UITextView!
+    
+    // For picker view
+    var courses: [MiniCourse] = []
+    var pickerView = UIPickerView()
+    var selectedCourse = ""
     
     // Actions
     @IBAction func cancelBarAction(sender: AnyObject) {
@@ -26,8 +33,23 @@ class NewPostViewController: UIViewController {
     
     @IBAction func postBarAction(sender: AnyObject) {
         
-        JSONHelper.newPost((courseId: "5730fd6b769290030048aafa", body: "A new post! Happy to be here, again!")) { (bool, error) in
-            print("\n\n\n\n DONE BABY \n\n\n\n")
+        let course = selectedCourse ?? ""
+        let body = bodyTextField.text ?? ""
+        
+        if course == "" {
+            //throw error
+            print("ERROR IN COURSE")
+        }
+        if body == "" {
+            //throw error
+            print("ERROR IN BODY")
+        }
+        
+        print(course)
+        print(body)
+        
+        JSONHelper.newPost((courseId: course, body: body)) { (bool, error) in
+            print("DONE")
             UpdateHelper.boardUpdated = false
             self.navigationController?.popViewControllerAnimated(true)
         }
@@ -38,7 +60,11 @@ class NewPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Load courses
+        load()
+        
         // To Course Field
+        toCourseField.delegate = self
         toCourseField.layer.cornerRadius = 0
         
         // Set up pickerview
@@ -55,6 +81,13 @@ class NewPostViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func load() {
+        JSONHelper.getAllCourses({ (courses, error) in
+            self.courses = courses!
+            self.pickerView.reloadAllComponents()
+        })
     }
     
     // For keyboard
@@ -106,6 +139,17 @@ class NewPostViewController: UIViewController {
     
 }
 
+extension NewPostViewController: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        
+        pickerView.reloadAllComponents()
+        
+        return true
+    }
+    
+}
+
 extension NewPostViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -113,14 +157,17 @@ extension NewPostViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 5
+        return courses.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "Hello"
+        return courses[row].title
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //do stuff
+        toCourseField.text = "     " + courses[row].title
+        // SET UP THE ID
+        selectedCourse = courses[row].id
     }
+    
 }

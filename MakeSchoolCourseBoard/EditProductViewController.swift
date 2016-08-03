@@ -52,6 +52,14 @@ class EditProductViewController: UITableViewController {
     
     @IBOutlet weak var deleteProductButton: UIButton!
     
+    // For picker view
+    var instructors: [User] = []
+    var courses: [MiniCourse] = []
+    var textFieldSelected = ""
+    var pickerView = UIPickerView()
+    var selectedInstructor = ""
+    var selectedCourse = ""
+    
     // Actions
     @IBAction func deleteProductAction(sender: AnyObject) {
         JSONHelper.deleteProduct(product.id) { (bool, error) in
@@ -70,8 +78,8 @@ class EditProductViewController: UITableViewController {
         dismissKeyboard()
         
         let name = productNameField.text ?? ""
-        let advisor = advisorField.text ?? ""
-        let course = courseField.text ?? ""
+        let advisor = selectedInstructor
+        let course = selectedCourse
         let problem = problemField.text ?? ""
         let github = githubField.text ?? ""
         let agile = agileField.text ?? ""
@@ -120,6 +128,16 @@ class EditProductViewController: UITableViewController {
         // Load the correct information
         load()
         
+        // Fill out the pickerview
+        advisorField.delegate = self
+        courseField.delegate = self
+        
+        pickerView.delegate = self
+        pickerView.backgroundColor = UIColor.whiteColor()
+        
+        advisorField.inputView = pickerView
+        courseField.inputView = pickerView
+        
         // Set up delete product
         deleteProductButton.layer.cornerRadius = 5
         
@@ -139,7 +157,7 @@ class EditProductViewController: UITableViewController {
     
     func load() {
         productNameField.text = product.name ?? ""
-        advisorField.text = product.instructor ?? ""
+        advisorField.text = product.instructorName
         courseField.text = product.course ?? ""
         problemField.text = product.problem ?? ""
         githubField.text = product.githubUrl ?? ""
@@ -150,6 +168,17 @@ class EditProductViewController: UITableViewController {
         assumptionsField.text = product.assumptions ?? ""
         finishedProductField.text = product.finishedProduct ?? ""
         mvpField.text = product.mvp ?? ""
+        
+        JSONHelper.getAllCourses { (courses, error) in
+            self.courses = courses!
+            self.pickerView.reloadAllComponents()
+        }
+        
+        JSONHelper.getInstructors { (users, error) in
+            self.instructors = users
+            self.pickerView.reloadAllComponents()
+        }
+       
     }
     
     // No headers!
@@ -165,4 +194,70 @@ class EditProductViewController: UITableViewController {
     func dismissKeyboard() {
         view.endEditing(true)
     }
+}
+
+extension EditProductViewController: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if textField == advisorField {
+            textFieldSelected = "advisor"
+            pickerView.reloadAllComponents()
+        }
+        else if textField == courseField {
+            textFieldSelected = "course"
+            pickerView.reloadAllComponents()
+        }
+        else {
+            textFieldSelected = ""
+            pickerView.reloadAllComponents()
+        }
+        
+        return true
+    }
+    
+}
+
+extension EditProductViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if textFieldSelected == "advisor" {
+            return instructors.count
+        }
+        else if textFieldSelected == "course" {
+            return courses.count
+        }
+        else {
+            return 0
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if textFieldSelected == "advisor" {
+            return instructors[row].fullname
+        }
+        else if textFieldSelected == "course" {
+            return courses[row].title
+        }
+        else {
+            return "BUG"
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if textFieldSelected == "advisor" {
+            advisorField.text = instructors[row].fullname
+            selectedInstructor = instructors[row].id
+            print(selectedInstructor)
+        }
+        else if textFieldSelected == "course" {
+            courseField.text = courses[row].title
+            selectedCourse = courses[row].id
+            print(selectedCourse)
+        }
+    }
+    
 }

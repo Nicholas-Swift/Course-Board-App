@@ -167,11 +167,11 @@ class JSONHelper {
         // Set up info
         var tempDict: [String: AnyObject] = [:]
         
-        tempDict["instructor"] = "572a21580608f80300f95714" //tuple.instructor
+        tempDict["instructor"] = tuple.instructor
         tempDict["title"] = tuple.title
         tempDict["description"] = tuple.description
-        tempDict["startsOn"] = "2017-01-16T08:00:00.000Z" //tuple.startsOn
-        tempDict["endsOn"] = "2017-03-24T07:00:00.000Z" //tuple.endsOn
+        tempDict["startsOn"] = tuple.startsOn
+        tempDict["endsOn"] = tuple.endsOn
         tempDict["location"] = tuple.location
         tempDict["hours"] = tuple.hours
         tempDict["objectives"] = tuple.objectives
@@ -502,9 +502,39 @@ class JSONHelper {
                     
                     user.role = json["role"].stringValue
                     
+//                    user.courses = []
+//                    let jCourses = json["courses"].arrayValue.map{$0["_id"].stringValue}
+//                    let jEnrolledCourses = json["enrolledCourses"].arrayValue.map{$0["_id"].stringValue}
+//                    for i in jCourses {
+//                        user.courses.append(i)
+//                    }
+//                    for i in jEnrolledCourses {
+//                        user.courses.append(i)
+//                    }
+//                    
+//                    let jCourseNames = json["courses"].arrayValue.map{$0["title"].stringValue}
+//                    let jEnrolledCourseNames = json["enrolledCourses"].arrayValue.map{$0["title"].stringValue}
+//                    for i in jCourseNames {
+//                        user.courseNames.append(i)
+//                    }
+//                    for i in jEnrolledCourseNames {
+//                        user.courseNames.append(i)
+//                    }
+                    
                     user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
+                    let temp = json["enrolledCourses"].arrayValue.map{$0["_id"].stringValue}
+                    print(temp)
+                    for thing in temp {
+                        user.courses.append(thing)
+                    }
                     
                     user.courseNames = json["courses"].arrayValue.map{$0["title"].stringValue}
+                    let temp2 = json["enrolledCourses"].arrayValue.map{$0["title"].stringValue};
+                    print(temp2)
+                    for thing in temp2 {
+                        user.courseNames.append(thing)
+                    }
+                    
                     user.products = json["products"].arrayValue.map{$0["_id"].stringValue}
                     user.productNames = json["products"].arrayValue.map{$0["name"].stringValue}
                     user.posts = json["posts"].arrayValue.map{$0["_id"].stringValue}

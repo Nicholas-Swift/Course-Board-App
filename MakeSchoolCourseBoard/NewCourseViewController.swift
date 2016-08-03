@@ -63,6 +63,17 @@ class NewCourseViewController: UITableViewController {
     var show13 = false
     var show14 = false
     
+    // For picker view
+    var instructors: [User] = []
+    var textFieldSelected = ""
+    var pickerView = UIPickerView()
+    var selectedInstructor = ""
+    
+    // For date picker view
+    var datePickerView = UIDatePicker()
+    var selectedStart = ""
+    var selectedEnd = ""
+    
     // Actions
     @IBAction func cancelBarAction(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
@@ -76,13 +87,13 @@ class NewCourseViewController: UITableViewController {
         dismissKeyboard()
         
         // Set up
-        let title = titleField.text
-        let instructor = instructorField.text
-        let description = descriptionTextView.text
-        let startsOn = startDateField.text
-        let endsOn = endDateField.text
-        let location = locationField.text
-        let hours = hoursField.text
+        let title = titleField.text ?? ""
+        let instructor = selectedInstructor ?? ""
+        let description = descriptionTextView.text ?? ""
+        let startsOn = selectedStart ?? ""
+        let endsOn = selectedEnd ?? ""
+        let location = locationField.text ?? ""
+        let hours = hoursField.text ?? ""
         var objectives: [String] = []
         for obj in [objective9Field, objective10Field, objective11Field, objective12Field, objective13Field, objective14Field] {
             if obj.text != nil && obj.text != "" {
@@ -113,10 +124,6 @@ class NewCourseViewController: UITableViewController {
             update = false
             endDateLabel.textColor = UIColor.redColor()
         }
-        if location == "" {
-            update = false
-            locationLabel.textColor = UIColor.redColor()
-        }
         if hours == "" {
             update = false
             hoursLabel.textColor = UIColor.redColor()
@@ -127,17 +134,17 @@ class NewCourseViewController: UITableViewController {
         }
         
         if update == true {
-            JSONHelper.addCourse((instructor: instructor!, title: title!, description: description, startsOn: startsOn!, endsOn: endsOn!, location: location!, hours: hours!, objectives: objectives)) { (bool, error) in
+            JSONHelper.addCourse((instructor: instructor, title: title, description: description, startsOn: startsOn, endsOn: endsOn, location: location, hours: hours, objectives: objectives)) { (bool, error) in
                 print("added")
-                self.navigationController?.popViewControllerAnimated(true)
                 UpdateHelper.coursesUpdated = false
+                self.navigationController?.popViewControllerAnimated(true)
             }
         }
     }
     
     @IBAction func addObjectiveAction(sender: AnyObject) {
         
-        for i in 0...6 {
+        for _ in 0...6 {
             if show9 == false { show9 = true; break }
             if show10 == false { show10 = true; break }
             if show11 == false { show11 = true; break }
@@ -313,12 +320,72 @@ class NewCourseViewController: UITableViewController {
         
         // Set up description view properly
         descriptionTextView.layer.borderWidth = 1
-        descriptionTextView.layer.borderColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1).CGColor
+        descriptionTextView.layer.borderColor = UIColor(red: 180/255, green: 180/255, blue: 180/255, alpha: 1).CGColor
         descriptionTextView.layer.cornerRadius = 5
+        
+        // Load all the instructors and stuff
+        load()
+        
+        // Fill out the pickerview
+        instructorField.delegate = self
+        
+        pickerView.delegate = self
+        pickerView.backgroundColor = UIColor.whiteColor()
+        
+        instructorField.inputView = pickerView
+        
+        // Set up date picker
+        startDateField.delegate = self
+        startDateField.inputView = datePickerView
+        endDateField.delegate = self
+        endDateField.inputView = datePickerView
+        
+        datePickerView.backgroundColor = UIColor.whiteColor()
+        datePickerView.datePickerMode = .Date
+        datePickerView.addTarget(self, action: #selector(self.onDatePickerValueChanged), forControlEvents: .ValueChanged)
+        
+        datePickerView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        datePickerView.layer.borderWidth = 1
         
         // For keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewCourseViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
+    }
+    
+    func onDatePickerValueChanged(datePicker: UIDatePicker) {
+        
+        if textFieldSelected == "start" {
+            
+            // Convert date to readable string
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
+            let dateString = formatter.stringFromDate(datePicker.date)
+            startDateField.text = dateString
+            
+            // Set up selected start in correct format for website
+            print(DateHelper.toWebDate(String(datePicker.date)))
+            selectedStart = DateHelper.toWebDate(String(datePicker.date))
+        }
+        else if textFieldSelected == "end" {
+            // Convert date to readable string
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
+            let dateString = formatter.stringFromDate(datePicker.date)
+            endDateField.text = dateString
+            
+            // Set up selected end in correct format for website
+            print(DateHelper.toWebDate(String(datePicker.date)))
+            selectedEnd = DateHelper.toWebDate(String(datePicker.date))
+        }
+    }
+    
+    func load() {
+        JSONHelper.getInstructors { (users, error) in
+            self.instructors = users
+            self.pickerView.reloadAllComponents()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -384,6 +451,67 @@ class NewCourseViewController: UITableViewController {
     // For keyboard
     func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+}
+
+extension NewCourseViewController: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if textField == instructorField {
+            textFieldSelected = "instructor"
+            pickerView.reloadAllComponents()
+        }
+        else if textField == startDateField {
+            textFieldSelected = "start"
+            print("START")
+            pickerView.reloadAllComponents()
+        }
+        else if textField == endDateField {
+            textFieldSelected = "end"
+            print("END")
+            pickerView.reloadAllComponents()
+        }
+        else {
+            textFieldSelected = ""
+            pickerView.reloadAllComponents()
+        }
+        
+        return true
+    }
+    
+}
+
+extension NewCourseViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if textFieldSelected == "instructor" {
+            return instructors.count
+        }
+        else {
+            return 0
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if textFieldSelected == "instructor" {
+            return instructors[row].fullname
+        }
+        else {
+            return "BUG"
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if textFieldSelected == "instructor" {
+            instructorField.text = instructors[row].fullname
+            selectedInstructor = instructors[row].id
+            print(selectedInstructor)
+        }
     }
     
 }

@@ -32,6 +32,14 @@ class DateHelper {
         
         return(returnStr)
     }
+    
+    // Turn date into a coursebaord date
+    static func toWebDate(str: String) -> String {
+        
+        let ymd = str[0...9] //2016-05-25
+        return(ymd + "T07:00:00.000Z")
+        
+    }
 }
 
 extension String {

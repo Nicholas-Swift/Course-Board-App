@@ -29,12 +29,12 @@ class SettingsViewController: UITableViewController {
     
     @IBOutlet weak var logoutButton: UIButton!
     
-    
     let roles = ["Student", "Instructor", "Staff"]
     
     // Actions
     @IBAction func logoutAction(sender: AnyObject) {
-        print("Logout")
+        LoginHelper.logout()
+        performSegueWithIdentifier("toLogin", sender: self)
     }
     
     @IBAction func cancelBarAction(sender: AnyObject) {

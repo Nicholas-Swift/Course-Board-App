@@ -225,7 +225,8 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.infoButton.setTitle(course.instructorName ?? "", forState: .Normal)
                 
                 // Set up the action to go to instructor
-                cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellInstructor), forControlEvents: .TouchUpInside)
+                cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellStudent), forControlEvents: .TouchUpInside)
+                
                 
                 return cell
             }
@@ -262,9 +263,7 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
             
             // Set up the action to go to student
             
-            if course.studentNames[indexPath.row] != course.instructorName {
-                cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellStudent), forControlEvents: .TouchUpInside)
-            }
+            cell.infoButton.addTarget(self, action: #selector(CourseViewController.cellStudent), forControlEvents: .TouchUpInside)
             
             return cell
         }
