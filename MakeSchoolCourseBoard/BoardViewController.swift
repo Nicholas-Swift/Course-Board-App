@@ -15,6 +15,8 @@ class BoardViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var posts: [Post] = []
     
+    var refreshControl: UIRefreshControl!
+    
     // Actions
     
     override func viewDidLoad() {
@@ -29,12 +31,21 @@ class BoardViewController: UIViewController {
         tableView.alpha = 0
         update()
         
+        // Pull to refresh to put everything in
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(BoardViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
+        
         // no separator color
         tableView.separatorColor = UIColor.clearColor()
         
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 150
         tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    func refresh() {
+        update()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -44,6 +55,10 @@ class BoardViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        refreshControl.endRefreshing()
+    }
+    
     func update() {
         loadPosts()
     }
@@ -51,6 +66,9 @@ class BoardViewController: UIViewController {
     func loadPosts() {
         
         JSONHelper.getUserPosts(LoginHelper.id) { (posts, error) in
+            
+            // End refresh
+            self.refreshControl.endRefreshing()
             
             if error == nil {
                 self.posts = posts
@@ -118,10 +136,13 @@ extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
         
         let section = indexPath.section
         
+        // Set up info
         cell.titleButton.setTitle(posts[section].courseName, forState: .Normal)
         cell.titleButton.addTarget(self, action: #selector(BoardViewController.cellCourse), forControlEvents: .TouchUpInside)
         cell.infoLabel.text = posts[section].body
-        cell.footerLabel.text = "Posted by " + posts[section].user + " on " + DateHelper.toShortDate(posts[section].createdAt)
+        //cell.footerLabel.text = "Posted by " + posts[section].user + " on " + DateHelper.toShortDate(posts[section].createdAt)
+        cell.footerLabel.text = DateHelper.toShortDate(posts[section].createdAt)
+        cell.nameLabel.text = posts[section].user
         
         return cell
     }

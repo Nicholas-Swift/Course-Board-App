@@ -200,6 +200,16 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         return headerArray[section]
     }
     
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let title = UILabel()
+        title.font = UIFont(name: "Helvetica Neue", size: 12)!
+        title.textColor = UIColor.lightGrayColor()
+        
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.font=title.font
+        header.textLabel?.textColor=title.textColor
+    }
+    
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 10
     }
@@ -207,13 +217,6 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
-    
-    /*func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CourseHeaderCell
-        headerCell.headerTitleLabel.text = headerArray[section]
-        
-        return headerCell
-    }*/
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let tempArray = ["Course Information", "Objectives", "Description", "Participants", "Products", "Anouncements"]
@@ -280,8 +283,10 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         else if headerArray[indexPath.section] == tempArray[5] {
             let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! CoursePostCell
             
+            cell.setupProfile()
+            
             cell.infoLabel.text = course.postBodies[indexPath.row]
-            cell.footerLabel.text = "Posted by " + course.postUser[indexPath.row] + " on " + DateHelper.toShortDate(course.postCreated[indexPath.row])
+            cell.footerLabel.text = DateHelper.toShortDate(course.postCreated[indexPath.row])
             
             return cell
 

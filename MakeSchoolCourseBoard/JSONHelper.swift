@@ -141,12 +141,13 @@ class JSONHelper {
         Alamofire.request(.PUT, apiToContact, headers: headers).validate().responseJSON() { response in
             switch response.result {
             case .Success:
-                if let value = response.result.value {
-                    //let json = JSON(value)
-                    //print(json)
-                    
-                    complete(bool: true, error: nil)
-                }
+//                if let value = response.result.value {
+//                    let json = JSON(value)
+//                    print(json)
+//                    
+//                    complete(bool: true, error: nil)
+//                }
+                complete(bool: true, error: nil)
             case .Failure(let error):
                 print(error)
                 complete(bool: nil, error: error)
@@ -316,13 +317,14 @@ class JSONHelper {
         Alamofire.request(.PUT, apiToContact, headers: headers).validate().responseJSON() { response in
             switch response.result {
             case .Success:
-                if let value = response.result.value {
-                    //let json = JSON(value)
-                    //print(json)
-                    
-                    complete(bool: true, error: nil)
-                    
-                }
+//                if let value = response.result.value {
+//                    let json = JSON(value)
+//                    print(json)
+//                    
+//                    complete(bool: true, error: nil)
+//                    
+//                }
+                complete(bool: true, error: nil)
             case .Failure(let error):
                 print(error)
                 complete(bool: nil, error: error)
@@ -408,13 +410,14 @@ class JSONHelper {
                     Alamofire.request(.PUT, apiToContact, headers: headers, parameters: json.dictionaryObject, encoding: .JSON).validate().responseJSON() { response in
                         switch response.result {
                         case .Success:
-                            if let value = response.result.value {
-                                //let json = JSON(value)
-                                //print(json)
-                                
-                                complete(bool: true, error: nil)
-                                
-                            }
+//                            if let value = response.result.value {
+//                                let json = JSON(value)
+//                                print(json)
+//                                
+//                                complete(bool: true, error: nil)
+//                                
+//                            }
+                            complete(bool: true, error: nil)
                         case .Failure(let error):
                             print(error)
                             complete(bool: nil, error: error)
@@ -440,9 +443,6 @@ class JSONHelper {
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
-        
-        // Set up info
-        var tempDict: [String: AnyObject] = [:]
 
         // Must include course or the server crashes
         Alamofire.request(.DELETE, apiToContact, headers: headers, encoding: .JSON).validate().responseJSON() { response in
@@ -676,13 +676,13 @@ class JSONHelper {
                     Alamofire.request(.PUT, apiToContact, headers: headers, parameters: json.dictionaryObject, encoding: .JSON).validate().responseJSON() { response in
                         switch response.result {
                         case .Success:
-                            if let value = response.result.value {
-                                //let json = JSON(value)
-                                //print(json)
-                                
-                                complete(bool: true, error: nil)
-                                
-                            }
+//                            if let value = response.result.value {
+//                                let json = JSON(value)
+//                                print(json)
+//                                
+//                                complete(bool: true, error: nil)
+//                            }
+                            complete(bool: true, error: nil)
                         case .Failure(let error):
                             print(error)
                             complete(bool: nil, error: error)
@@ -728,6 +728,7 @@ class JSONHelper {
                         post.course = json[i]["course"].stringValue
                         post.body = json[i]["body"].stringValue
                         post.user = json[i]["user"]["username"].stringValue
+                        post.userName = json[i]["user"]["fullname"].stringValue
                         post.createdAt = json[i]["createdAt"].stringValue
                         
                         posts.append(post)
@@ -771,6 +772,7 @@ class JSONHelper {
                         post.courseName = json[i]["course"]["title"].stringValue
                         post.body = json[i]["body"].stringValue
                         post.user = json[i]["user"]["username"].stringValue
+                        post.userName = json[i]["user"]["fullname"].stringValue
                         post.createdAt = json[i]["createdAt"].stringValue
                         
                         posts.append(post)

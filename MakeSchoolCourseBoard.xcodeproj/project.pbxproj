@@ -12,6 +12,7 @@
 		0113B0881D36F3D8003AD618 /* CourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0113B0871D36F3D8003AD618 /* CourseCell.swift */; };
 		0113B08A1D36F62C003AD618 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0113B0891D36F62C003AD618 /* Product.swift */; };
 		01386BF31D40159C00E03374 /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01386BF21D40159C00E03374 /* ColorHelper.swift */; };
+		013D96E11D53BC710075493D /* AccountInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013D96E01D53BC710075493D /* AccountInfoCell.swift */; };
 		014181451D497CF7005381C2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014181441D497CF7005381C2 /* SettingsViewController.swift */; };
 		01460E911D458CA200A5DC38 /* MiniCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01460E901D458CA200A5DC38 /* MiniCourse.swift */; };
 		01460E931D458CD300A5DC38 /* MiniProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01460E921D458CD300A5DC38 /* MiniProduct.swift */; };
@@ -30,10 +31,8 @@
 		01A2CB7C1D394E1F000EDD2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7B1D394E1F000EDD2B /* User.swift */; };
 		01A2CB7E1D394E2F000EDD2B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7D1D394E2F000EDD2B /* Post.swift */; };
 		01A853701D4495B900046207 /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A8536F1D4495B900046207 /* BoardViewController.swift */; };
-		01C1A4481D48109400D0BE5C /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1A4471D48109400D0BE5C /* MessagesViewController.swift */; };
 		01C1A44C1D48178B00D0BE5C /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1A44B1D48178B00D0BE5C /* FirebaseHelper.swift */; };
 		01C1A44E1D481C7500D0BE5C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01C1A44D1D481C7500D0BE5C /* GoogleService-Info.plist */; };
-		01C1A4501D481F5300D0BE5C /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1A44F1D481F5300D0BE5C /* ChannelViewController.swift */; };
 		01C1AF981D482B1F00CDE302 /* UpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1AF971D482B1F00CDE302 /* UpdateHelper.swift */; };
 		01C1D22A1D3EE4970011C7FF /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1D2291D3EE4970011C7FF /* LoginHelper.swift */; };
 		01D0EA8E1D41432E000F730E /* CourseHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0EA8D1D41432E000F730E /* CourseHeaderCell.swift */; };
@@ -56,6 +55,7 @@
 		0113B0871D36F3D8003AD618 /* CourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCell.swift; sourceTree = "<group>"; };
 		0113B0891D36F62C003AD618 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		01386BF21D40159C00E03374 /* ColorHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
+		013D96E01D53BC710075493D /* AccountInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoCell.swift; sourceTree = "<group>"; };
 		014181441D497CF7005381C2 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		01460E901D458CA200A5DC38 /* MiniCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniCourse.swift; sourceTree = "<group>"; };
 		01460E921D458CD300A5DC38 /* MiniProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniProduct.swift; sourceTree = "<group>"; };
@@ -76,10 +76,8 @@
 		01A2CB7B1D394E1F000EDD2B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		01A2CB7D1D394E2F000EDD2B /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		01A8536F1D4495B900046207 /* BoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
-		01C1A4471D48109400D0BE5C /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		01C1A44B1D48178B00D0BE5C /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		01C1A44D1D481C7500D0BE5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
-		01C1A44F1D481F5300D0BE5C /* ChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
 		01C1AF971D482B1F00CDE302 /* UpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateHelper.swift; sourceTree = "<group>"; };
 		01C1D2291D3EE4970011C7FF /* LoginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
 		01D0EA8D1D41432E000F730E /* CourseHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseHeaderCell.swift; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 			children = (
 				01D0EA971D419278000F730E /* LogInViewController.swift */,
 				01A8536E1D44958F00046207 /* Board */,
-				01A853711D44979F00046207 /* Messages */,
 				01386BEF1D40144C00E03374 /* Courses */,
 				01386BF01D40145E00E03374 /* Products */,
 				01D0F8391D4287C3005A94E0 /* Account */,
@@ -238,15 +235,6 @@
 			name = Board;
 			sourceTree = "<group>";
 		};
-		01A853711D44979F00046207 /* Messages */ = {
-			isa = PBXGroup;
-			children = (
-				01C1A4471D48109400D0BE5C /* MessagesViewController.swift */,
-				01C1A44F1D481F5300D0BE5C /* ChannelViewController.swift */,
-			);
-			name = Messages;
-			sourceTree = "<group>";
-		};
 		01D0F8391D4287C3005A94E0 /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				01D0F83B1D42DCA7005A94E0 /* AccountFieldCell.swift */,
+				013D96E01D53BC710075493D /* AccountInfoCell.swift */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -405,7 +394,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01C1A4481D48109400D0BE5C /* MessagesViewController.swift in Sources */,
 				01A2CB7C1D394E1F000EDD2B /* User.swift in Sources */,
 				010B03E31D383CEE001472F3 /* DateHelper.swift in Sources */,
 				01D0EA961D414414000F730E /* CourseButtonCell.swift in Sources */,
@@ -423,7 +411,6 @@
 				0170D2FD1D35690D0008BB0C /* ViewController.swift in Sources */,
 				01D0EA901D414337000F730E /* CourseInfoCell.swift in Sources */,
 				01D0F83C1D42DCA7005A94E0 /* AccountFieldCell.swift in Sources */,
-				01C1A4501D481F5300D0BE5C /* ChannelViewController.swift in Sources */,
 				01F2FC421D500AD7007C7B0A /* CourseNewPostCell.swift in Sources */,
 				0170D3221D3593BB0008BB0C /* ProductViewController.swift in Sources */,
 				0148A4871D36BFD3002A8D78 /* CourseViewController.swift in Sources */,
@@ -438,6 +425,7 @@
 				01386BF31D40159C00E03374 /* ColorHelper.swift in Sources */,
 				01A2CB7E1D394E2F000EDD2B /* Post.swift in Sources */,
 				01C1D22A1D3EE4970011C7FF /* LoginHelper.swift in Sources */,
+				013D96E11D53BC710075493D /* AccountInfoCell.swift in Sources */,
 				01460E911D458CA200A5DC38 /* MiniCourse.swift in Sources */,
 				0170D3151D356FBB0008BB0C /* CoursesViewController.swift in Sources */,
 				0170D31D1D3570000008BB0C /* AccountViewController.swift in Sources */,
@@ -557,10 +545,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MakeSchoolCourseBoard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nicholas-swift.MakeSchoolCourseBoard";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nicholas-swift.CourseBoard1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "fa5ba1ca-3215-49a0-9385-727a925f212b";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -572,10 +563,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MakeSchoolCourseBoard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nicholas-swift.MakeSchoolCourseBoard";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nicholas-swift.CourseBoard1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "fa5ba1ca-3215-49a0-9385-727a925f212b";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
 			};
 			name = Release;

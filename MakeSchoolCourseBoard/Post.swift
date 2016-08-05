@@ -20,6 +20,7 @@ class Post {
     var emailParticipants: Bool = false
     
     var user: String!
+    var userName: String!
     var course: String!
     var courseName: String!
 }

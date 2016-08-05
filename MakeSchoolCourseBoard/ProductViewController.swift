@@ -217,6 +217,16 @@ extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
         return headerArray[section]
     }
     
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let title = UILabel()
+        title.font = UIFont(name: "Helvetica Neue", size: 12)!
+        title.textColor = UIColor.lightGrayColor()
+        
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.font=title.font
+        header.textLabel?.textColor=title.textColor
+    }
+    
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5
     }

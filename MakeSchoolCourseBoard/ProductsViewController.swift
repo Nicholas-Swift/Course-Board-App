@@ -14,12 +14,19 @@ class ProductsViewController: UIViewController {
     // Variables
     @IBOutlet weak var tableView: UITableView!
     
+    var refreshControl: UIRefreshControl!
+    
     var products: [MiniProduct] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         update()
+        
+        // Pull to refresh to put everything in
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(ProductsViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
         
         // Change to not translucent
         self.navigationController?.navigationBar.translucent = false
@@ -28,6 +35,10 @@ class ProductsViewController: UIViewController {
         
         // remove separator color
         tableView.separatorColor = UIColor.clearColor()
+    }
+    
+    func refresh() {
+        update()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,6 +57,9 @@ class ProductsViewController: UIViewController {
         // Get courses and fill tableview
         tableView.alpha = 0
         JSONHelper.getAllProducts({ (products, error) in
+            
+            // End refreshing
+            self.refreshControl.endRefreshing()
             
             if error == nil {
                 if let products = products {

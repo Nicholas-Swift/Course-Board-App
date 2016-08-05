@@ -62,6 +62,7 @@ class AccountViewController: UIViewController {
         }
         else {
             settingsBarButton.enabled = false
+            settingsBarButton.image = nil
             getOther()
         }
     }
@@ -193,11 +194,24 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
         return headerDict[headerArray[section]]!
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return headerArray[section]
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let title = UILabel()
+        title.font = UIFont(name: "Helvetica Neue", size: 12)!
+        title.textColor = UIColor.lightGrayColor()
+        
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.font=title.font
+        header.textLabel?.textColor=title.textColor
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -222,6 +236,17 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set up the info cell
+        
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("testCell") as! AccountInfoCell
+            cell.setup()
+            
+            cell.fullnameLabel.text = user.fullname ?? ""
+            cell.usernameLabel.text = user.username ?? ""
+            cell.emailLabel.text = user.email ?? ""
+            
+            return cell
+        }
         
         let mySection = headerArray[indexPath.section]
         

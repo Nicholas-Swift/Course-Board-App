@@ -15,31 +15,44 @@ class CoursesViewController: UIViewController {
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
+    var refreshControl: UIRefreshControl!
+    
     var courses: [MiniCourse] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Update
         update()
+        
+        // Pull to refresh to put everything in
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(CoursesViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
         
         // Change to not translucent
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
         self.tabBarController?.tabBar.translucent = false
-        
-        // no separator color
-        tableView.separatorColor = UIColor.clearColor()
+    }
+    
+    func refresh() {
+        update()
     }
     
     func update() {
         // Remove ability to add course if user is a student
         if LoginHelper.role == "Student" {
             addBarButton.enabled = false
+            addBarButton.image = nil
         }
         
         // Get courses and fill tableview
         tableView.alpha = 0
         JSONHelper.getAllCourses({ (courses, error) in
+            
+            // End refreshing
+            self.refreshControl.endRefreshing()
             
             if error == nil {
                 if let courses = courses {
@@ -71,6 +84,10 @@ class CoursesViewController: UIViewController {
         if let selection: NSIndexPath = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRowAtIndexPath(selection, animated: true)
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        refreshControl.endRefreshing()
     }
     
     override func didReceiveMemoryWarning() {
