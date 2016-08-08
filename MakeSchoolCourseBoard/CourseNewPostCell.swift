@@ -16,4 +16,5 @@ class CourseNewPostCell: UITableViewCell {
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
+    
 }

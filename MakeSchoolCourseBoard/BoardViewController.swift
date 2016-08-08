@@ -143,7 +143,6 @@ extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
         let section = indexPath.section
         
         cell.setupCard()
-        print(posts[section].user)
         cell.setupProfile(posts[section].user)
         
         // Set up info
@@ -152,7 +151,7 @@ extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
         cell.infoLabel.text = posts[section].body
         //cell.footerLabel.text = "Posted by " + posts[section].user + " on " + DateHelper.toShortDate(posts[section].createdAt)
         cell.footerLabel.text = DateHelper.toShortDate(posts[section].createdAt)
-        cell.nameLabel.text = posts[section].user
+        cell.nameLabel.text = posts[section].userName
         
         return cell
     }

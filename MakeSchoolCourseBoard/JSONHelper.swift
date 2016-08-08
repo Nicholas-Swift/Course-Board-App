@@ -727,8 +727,8 @@ class JSONHelper {
                         
                         post.course = json[i]["course"].stringValue
                         post.body = json[i]["body"].stringValue
-                        post.user = json[i]["user"]["username"].stringValue
-                        post.userName = json[i]["user"]["fullname"].stringValue
+                        post.user = json[i]["user"]["_id"].stringValue
+                        post.userName = json[i]["user"]["username"].stringValue
                         post.createdAt = json[i]["createdAt"].stringValue
                         
                         posts.append(post)
@@ -771,8 +771,8 @@ class JSONHelper {
                         post.course = json[i]["course"]["_id"].stringValue
                         post.courseName = json[i]["course"]["title"].stringValue
                         post.body = json[i]["body"].stringValue
-                        post.user = json[i]["user"]["username"].stringValue
-                        post.userName = json[i]["user"]["fullname"].stringValue
+                        post.user = json[i]["user"]["_id"].stringValue
+                        post.userName = json[i]["user"]["username"].stringValue
                         post.createdAt = json[i]["createdAt"].stringValue
                         
                         posts.append(post)

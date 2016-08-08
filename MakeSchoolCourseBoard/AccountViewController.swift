@@ -246,7 +246,13 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             let cell = tableView.dequeueReusableCellWithIdentifier(idStr) as! AccountInfoCell
-            cell.setup()
+            
+            if id == nil || id == "" {
+                cell.setup(LoginHelper.id)
+            }
+            else {
+                cell.setup(user.id)
+            }
             
             cell.fullnameLabel.text = user.fullname ?? ""
             cell.usernameLabel.text = user.username ?? ""

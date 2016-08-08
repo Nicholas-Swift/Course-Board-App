@@ -19,9 +19,19 @@ class AccountInfoCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
-    func setup() {
+    func setup(id: String) {
         profilePic.layer.cornerRadius = 4
         profilePic.layer.masksToBounds = true
+
+        FirebaseHelper.getPicUrl(id) { (url, error) in
+            
+            if error == nil {
+                let urlString = url
+                print(urlString!)
+                
+                self.profilePic.af_setImageWithURL(NSURL(string: url!)!)
+            }
+        }
     }
     
 }

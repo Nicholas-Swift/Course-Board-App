@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import Alamofire
+import AlamofireImage
 
 class CoursePostCell: UITableViewCell {
     
@@ -34,11 +36,15 @@ class CoursePostCell: UITableViewCell {
         profileImageView.layer.cornerRadius = 5
         profileImageView.layer.masksToBounds = true
         
-//        FirebaseHelper.getProfilePic(id) { (image, error) in
-//            if image != nil {
-//                self.profileImageView.image = image!
-//            }
-//        }
+        FirebaseHelper.getPicUrl(id) { (url, error) in
+            
+            if error == nil {
+                let urlString = url
+                print(urlString!)
+                
+                self.profileImageView.af_setImageWithURL(NSURL(string: url!)!)
+            }
+        }
     }
     
 }

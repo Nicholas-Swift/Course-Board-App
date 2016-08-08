@@ -7,9 +7,11 @@ target 'MakeSchoolCourseBoard' do
 
   # Pods for MakeSchoolCourseBoard
   pod 'Alamofire', ‘~> 3.4’
+  pod ‘AlamofireImage’
   pod 'SwiftyJSON'
   pod 'Firebase'
-  pod 'Firebase/Database'
+  pod 'Firebase/Database’
+  pod ‘Firebase/Storage’
   pod 'Firebase/Auth'
 
 end

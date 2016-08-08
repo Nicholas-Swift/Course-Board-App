@@ -12,47 +12,137 @@ import Firebase
 
 class FirebaseHelper {
     
-    static var ref = FIRDatabase.database().reference()
+    static var datRef = FIRDatabase.database().reference()
+    static var storRef = FIRStorage.storage().reference()
     
     static func FirebaseLogin() {
         
+    }
+    
+    // Uploading Pictures
+    
+    static func uploadPic(image: UIImage) {
         
+        // Create a reference to the path where you want to upload the file
+        let storageRef: FIRStorageReference = storRef.child("ProfileImages/\(LoginHelper.id).png")
+        let profileImageData = UIImagePNGRepresentation(image)
+        
+        // Upload the file to the path defined above
+        storageRef.putData(profileImageData!, metadata: nil) { metadata, error in
+            if (error != nil)
+            {
+                print("Image not stored: ", error?.localizedDescription)
+            }
+            else
+            {
+                //Stores the profile image URL and sends it to the next function
+                let downloadURL = metadata!.downloadURL()
+                self.uploadPicUrl(downloadURL!)
+            }
+        }
+        
+    }
+    
+    static func uploadPicUrl(url: NSURL) {
+        let picsRef = datRef.child("profilePictures")
+        
+        let itemRef = picsRef.child(LoginHelper.id)
+        itemRef.setValue(url.URLString)
+    }
+    
+    static func getPicUrl(id: String, complete: (url: String?, error: NSError?) -> Void) {
+        
+        let picsRef = datRef.child("profilePictures/\(id)")
+        
+        picsRef.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            
+            let urlString = snapshot.value as? String
+            
+            if urlString == "" || urlString == nil {
+                complete(url: nil, error: NSError(domain: "Error", code: 404, userInfo: nil))
+            }
+            else {
+                complete(url: urlString, error: nil)
+            }
+            
+        }, withCancelBlock: {
+            (error) in
+            complete(url: nil, error: error)
+        })
         
     }
     
     // MARK: Pictures
     
-    static func getProfilePic(id: String, complete: (image: UIImage!, error: NSError?) -> Void) {
-        print(id)
-        let picturesRef = ref.child("profilePictures").child("571fe124831e22030010b9bd")
-
-        picturesRef.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            
-            print(snapshot)
-            
-            let base64String = snapshot.value as! String
-            let decodedData = NSData(base64EncodedString: base64String, options: NSDataBase64DecodingOptions(rawValue: 0))
-            if let image = UIImage(data: decodedData!) {
-                complete(image: image, error: nil)
-            }
-            else {
-                complete(image: nil, error: nil)
-            }
-        }, withCancelBlock: { (snapshot) in
-            complete(image: nil, error: nil)
-        })
-    }
+//    static func uploadProfilePic(image: UIImage) {
+//        
+//        let picsRef = ref.child("profilePic")
+//        
+//        // Create a root reference
+//        let storageRef = picsRef
+//        // Create a reference to "mountains.jpg"
+//        let mountainsRef = storageRef.child("mountains.jpg")
+//        
+//        // Create a reference to 'images/mountains.jpg'
+//        let mountainImagesRef = storageRef.child("images/mountains.jpg")
+//        
+//        // While the file names are the same, the references point to different files
+//        mountainsRef.name == mountainImagesRef.name            // true
+//        mountainsRef.fullPath == mountainImagesRef.fullPath    // false
+//        
+//        // Data in memory
+//        let data: NSData = ...
+//        // Create a reference to the file you want to upload
+//        let riversRef = storageRef.child("images/rivers.jpg")
+//        
+//        // Upload the file to the path "images/rivers.jpg"
+//        let uploadTask = riversRef.putData(data, metadata: nil) { metadata, error in
+//            if (error != nil) {
+//                // Uh-oh, an error occurred!
+//            } else {
+//                // Metadata contains file metadata such as size, content-type, and download URL.
+//                let downloadURL = metadata!.downloadURL
+//            }
+//        }
+//        
+//    }
     
-    static func uploadProfilePic(image: UIImage) {
-        
-        let picturesRef = ref.child("profilePictures")
-        
-        let imageData: NSData = UIImagePNGRepresentation(image)!
-        let base64String = imageData.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
-        
-//        let itemRef = picturesRef.child(LoginHelper.id)
-//        itemRef.setValue(base64String)
-    }
+//    static func getProfilePic(id: String, complete: (image: UIImage!, error: NSError?) -> Void) {
+//        print(id)
+//        let picturesRef = ref.child("profilePictures").child("571fe124831e22030010b9bd")
+//
+//        picturesRef.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+//            
+//            //print(snapshot)
+//            
+//            let base64String = snapshot.value as! String
+//            print(base64String)
+//            let decodedData = NSData(base64EncodedString: base64String, options: NSDataBase64DecodingOptions(rawValue: 0))
+//            let image: UIImage = (UIImage(data: decodedData!) ?? nil)!
+//            
+//            complete(image: image, error: nil)
+//            
+////            if let image = UIImage(data: decodedData!) {
+////                complete(image: image, error: nil)
+////            }
+////            else {
+////                complete(image: nil, error: nil)
+////            }
+//        }, withCancelBlock: { (snapshot) in
+//            complete(image: nil, error: nil)
+//        })
+//    }
+//
+//    static func uploadProfilePic(image: UIImage) {
+//        
+//        let picturesRef = ref.child("profilePictures")
+//        
+//        let imageData: NSData = UIImagePNGRepresentation(image)!
+//        let base64String = imageData.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+//        
+////        let itemRef = picturesRef.child(LoginHelper.id)
+////        itemRef.setValue(base64String)
+//    }
     
 //    // MESSAGES
 //    static func sendMessage(message: String, id: String) {

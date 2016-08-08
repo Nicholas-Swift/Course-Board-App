@@ -79,6 +79,7 @@ class CourseViewController: UIViewController {
                 // Load the posts
                 JSONHelper.getCoursePosts(course?.id, complete: { (posts, error) in
                     self.course.postUser = posts.map{$0.user}
+                    self.course.postUserName = posts.map{$0.userName}
                     
                     // Load info in
                     self.loadInfo()
@@ -293,6 +294,9 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! CoursePostCell
             
             //cell.setupProfile(course.postUser[indexPath.row])
+            
+            cell.setupProfile(course.postUser[indexPath.row])
+            cell.nameLabel.text = course.postUserName[indexPath.row]
             
             cell.infoLabel.text = course.postBodies[indexPath.row]
             cell.footerLabel.text = DateHelper.toShortDate(course.postCreated[indexPath.row])

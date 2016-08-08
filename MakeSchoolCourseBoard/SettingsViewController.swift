@@ -15,12 +15,15 @@ class SettingsViewController: UITableViewController {
     
     var user: User!
     
+    @IBOutlet weak var profilePictureLabel: UILabel!
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var roleLabel: UILabel!
     
+    @IBOutlet weak var profilePicture: UIImageView!
+    @IBOutlet weak var changePictureButton: UIButton!
     @IBOutlet weak var firstNameField: UITextField!
     @IBOutlet weak var lastNameField: UITextField!
     @IBOutlet weak var userNameField: UITextField!
@@ -32,6 +35,12 @@ class SettingsViewController: UITableViewController {
     let roles = ["Student", "Instructor", "Staff"]
     
     // Actions
+    @IBAction func changePictureAction(sender: AnyObject) {
+        
+        print("CHANGE PICTURE PLEASE")
+        
+    }
+    
     @IBAction func logoutAction(sender: AnyObject) {
         LoginHelper.logout()
         performSegueWithIdentifier("toLogin", sender: self)
@@ -101,6 +110,10 @@ class SettingsViewController: UITableViewController {
         userNameField.text = user.username ?? ""
         emailField.text = user.email ?? ""
         roleField.text = user.role ?? ""
+        
+        // Set up profile picture image
+        profilePicture.layer.cornerRadius = 5
+        profilePicture.layer.masksToBounds = true
         
         // Set up logout button
         logoutButton.layer.cornerRadius = 5

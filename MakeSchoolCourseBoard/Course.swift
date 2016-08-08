@@ -35,6 +35,7 @@ class Course {
     var posts: [String]!
     var postBodies: [String]! // for post info
     var postUser: [String]! // for post user
+    var postUserName: [String]! // for post user names
     var postCreated: [String]! // for post date created
     var products: [String]!
     var productNames: [String]! // for product names

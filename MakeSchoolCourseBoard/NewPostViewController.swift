@@ -115,6 +115,13 @@ class NewPostViewController: UIViewController {
         profilePic.layer.cornerRadius = 5
         profilePic.layer.masksToBounds = true
         
+        FirebaseHelper.getPicUrl(LoginHelper.id) { (url, error) in
+            
+            if error == nil {
+                self.profilePic.af_setImageWithURL(NSURL(string: url!)!)
+            }
+        }
+        
         // Set up username
         username.text = LoginHelper.fullname
     }
