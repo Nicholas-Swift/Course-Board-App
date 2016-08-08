@@ -319,8 +319,8 @@ class NewCourseViewController: UITableViewController {
         tableView.separatorColor = UIColor.clearColor()
         
         // Set up description view properly
-        descriptionTextView.layer.borderWidth = 1
-        descriptionTextView.layer.borderColor = UIColor(red: 180/255, green: 180/255, blue: 180/255, alpha: 1).CGColor
+        descriptionTextView.layer.borderWidth = 0.5
+        descriptionTextView.layer.borderColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1).CGColor
         descriptionTextView.layer.cornerRadius = 5
         
         // Load all the instructors and stuff

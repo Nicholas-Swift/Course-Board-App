@@ -77,10 +77,9 @@ class SettingsViewController: UITableViewController {
         }
         
         if update == true {
-            UpdateHelper.accountUpdated = false
-            
-            print(role!)
-            print("HELLO")
+            UpdateHelper.updateAll()
+            LoginHelper.role = role!
+            print("updateAll In Settings")
             
             JSONHelper.updateUser((first: first!, last: last!, username: username!, email: email!, role: role!)) { (bool, error) in
                 self.navigationController?.popViewControllerAnimated(true)

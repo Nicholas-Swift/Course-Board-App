@@ -29,6 +29,7 @@ class CourseViewController: UIViewController {
             }
         }
         else if self.enrollBarButton.title == "Post" { // POST
+            
             performSegueWithIdentifier("newPost", sender: self)
         }
     }
@@ -180,6 +181,14 @@ class CourseViewController: UIViewController {
             
             print(id)
         }
+        
+        // If going to post
+        else if segue.identifier == "newPost" {
+            
+            let destination = segue.destinationViewController as! NewPostViewController
+            destination.course = course
+            
+        }
     }
     
 }
@@ -283,7 +292,7 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         else if headerArray[indexPath.section] == tempArray[5] {
             let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! CoursePostCell
             
-            cell.setupProfile()
+            //cell.setupProfile(course.postUser[indexPath.row])
             
             cell.infoLabel.text = course.postBodies[indexPath.row]
             cell.footerLabel.text = DateHelper.toShortDate(course.postCreated[indexPath.row])

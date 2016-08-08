@@ -11,15 +11,24 @@ import UIKit
 
 class NewPostViewController: UIViewController {
     
-    // For animation
-    @IBOutlet weak var bottomLayoutConstraint: NSLayoutConstraint!
-    
     // Variables
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     @IBOutlet weak var postBarButton: UIBarButtonItem!
     
-    @IBOutlet weak var toCourseField: UITextField!
-    @IBOutlet weak var bodyTextField: UITextView!
+    @IBOutlet weak var courseField: UITextField!
+    
+    @IBOutlet weak var profilePic: UIImageView!
+    @IBOutlet weak var username: UILabel!
+    
+    @IBOutlet weak var bodyText: UITextView!
+    var bodyDefaultText = true
+    
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewConstraint: NSLayoutConstraint!
+    
+    
+    var course: Course!
     
     // For picker view
     var courses: [MiniCourse] = []
@@ -34,49 +43,60 @@ class NewPostViewController: UIViewController {
     @IBAction func postBarAction(sender: AnyObject) {
         
         let course = selectedCourse ?? ""
-        let body = bodyTextField.text ?? ""
+        let body = bodyText.text ?? ""
         
-        if course == "" {
-            //throw error
-            print("ERROR IN COURSE")
+        if course == "" && body == ""{
+            let alert = UIAlertController(title: "Missing Fields", message: "Please pick a course to post to and add a message to post", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        else if course == "" {
+            let alert = UIAlertController(title: "Missing Field", message: "Please pick a course to post to", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         if body == "" {
-            //throw error
-            print("ERROR IN BODY")
+            let alert = UIAlertController(title: "Missing Field", message: "Please add a message to your post", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         print(course)
         print(body)
         
-        JSONHelper.newPost((courseId: course, body: body)) { (bool, error) in
-            print("DONE")
-            UpdateHelper.boardUpdated = false
-            self.navigationController?.popViewControllerAnimated(true)
-        }
+//        JSONHelper.newPost((courseId: course, body: body)) { (bool, error) in
+//            print("DONE")
+//            UpdateHelper.boardUpdated = false
+//            self.navigationController?.popViewControllerAnimated(true)
+//        }
         
     }
     
-    // View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Load courses
         load()
         
-        // To Course Field
-        toCourseField.delegate = self
-        toCourseField.layer.cornerRadius = 0
+        // Set up body text
+        setupBodyDefaultText(bodyDefaultText)
         
-        // Set up pickerview
-        let pickerView = UIPickerView()
+        // If came from post, set it up automatically
+        if course != nil {
+            courseField.text = course.title
+            selectedCourse = course.id
+        }
+        
+        bodyText.delegate = self
+        
+        courseField.delegate = self
+        courseField.inputView = pickerView
+        
         pickerView.delegate = self
         pickerView.backgroundColor = UIColor.whiteColor()
-        
-        toCourseField.inputView = pickerView
-        
-        // For keyboard
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.dismissKeyboard))
-        view.addGestureRecognizer(tap)
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,18 +104,36 @@ class NewPostViewController: UIViewController {
     }
     
     func load() {
-        JSONHelper.getAllCourses({ (courses, error) in
+        
+        // Set up courses
+        JSONHelper.getAllCourses { (courses, error) in
             self.courses = courses!
             self.pickerView.reloadAllComponents()
-        })
+        }
+        
+        // Set up image
+        profilePic.layer.cornerRadius = 5
+        profilePic.layer.masksToBounds = true
+        
+        // Set up username
+        username.text = LoginHelper.fullname
     }
     
-    // For keyboard
-    func dismissKeyboard() {
-        view.endEditing(true)
+    func setupBodyDefaultText(myBool: Bool) {
+        
+        if myBool == true {
+            bodyText.text = "Enter text here"
+            bodyText.textColor = UIColor.lightGrayColor()
+        }
+        else {
+            bodyText.text = ""
+            bodyText.textColor = UIColor.blackColor()
+        }
+        
     }
     
-    // For Animations
+    // For keyboard animations
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -130,24 +168,50 @@ class NewPostViewController: UIViewController {
         //let rawAnimationCurve = (notification.userInfo![UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).unsignedIntValue << 16
         //let animationCurve = UIViewAnimationOptions(rawValue: UInt(rawAnimationCurve))
         
-        bottomLayoutConstraint.constant = CGRectGetMaxY(view.bounds) - CGRectGetMinY(convertedKeyboardEndFrame)
+        bottomConstraint.constant = CGRectGetMaxY(view.bounds) - CGRectGetMinY(convertedKeyboardEndFrame)
         
         UIView.animateWithDuration(animationDuration, delay: 0.0, options: .BeginFromCurrentState, animations: {
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
-    
 }
 
 extension NewPostViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        
         pickerView.reloadAllComponents()
+        return true
+    }
+    
+}
+
+extension NewPostViewController: UITextViewDelegate {
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        
+        if bodyDefaultText == true {
+            bodyDefaultText = false
+            setupBodyDefaultText(bodyDefaultText)
+        }
+        else if bodyText.text == "" {
+            bodyDefaultText = true
+            setupBodyDefaultText(bodyDefaultText)
+        }
         
         return true
     }
     
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        if bodyDefaultText == true {
+            bodyDefaultText = false
+            setupBodyDefaultText(bodyDefaultText)
+        }
+        else if bodyText.text == "" {
+            bodyDefaultText = true
+            setupBodyDefaultText(bodyDefaultText)
+        }
+        
+        return true
+    }
 }
 
 extension NewPostViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -165,8 +229,7 @@ extension NewPostViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        toCourseField.text = "     " + courses[row].title
-        // SET UP THE ID
+        courseField.text = courses[row].title
         selectedCourse = courses[row].id
     }
     

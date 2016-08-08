@@ -112,10 +112,18 @@ extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
     // Set up stylistic properties
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        if section == posts.count-1 {
+            return 10
+        }
+        
         return 5
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 10
+        }
         return 5
     }
     
@@ -132,9 +140,11 @@ extension BoardViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! CoursePostCell
-        cell.setupCard()
-        
         let section = indexPath.section
+        
+        cell.setupCard()
+        print(posts[section].user)
+        cell.setupProfile(posts[section].user)
         
         // Set up info
         cell.titleButton.setTitle(posts[section].courseName, forState: .Normal)

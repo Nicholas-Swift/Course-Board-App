@@ -27,16 +27,18 @@ class CoursePostCell: UITableViewCell {
         cardView.layer.shadowOffset = CGSizeMake(0.2, 0.2)
         cardView.layer.shadowRadius = 2
         cardView.layer.shadowOpacity = 0.2
-        
-        // Set up image
-        profileImageView.layer.cornerRadius = 5
-        profileImageView.layer.masksToBounds = true
     }
     
-    func setupProfile() {
+    func setupProfile(id: String) {
         // Set up image
         profileImageView.layer.cornerRadius = 5
         profileImageView.layer.masksToBounds = true
+        
+//        FirebaseHelper.getProfilePic(id) { (image, error) in
+//            if image != nil {
+//                self.profileImageView.image = image!
+//            }
+//        }
     }
     
 }

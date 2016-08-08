@@ -36,19 +36,19 @@ class EditProductViewController: UITableViewController {
     @IBOutlet weak var liveField: UITextField!
     
     @IBOutlet weak var valuePropLabel: UILabel!
-    @IBOutlet weak var valuePropField: UITextField!
+    @IBOutlet weak var valuePropField: UITextView!
     
     @IBOutlet weak var customerLabel: UILabel!
-    @IBOutlet weak var customerField: UITextField!
+    @IBOutlet weak var customerField: UITextView!
     
     @IBOutlet weak var assumptionsLabel: UILabel!
-    @IBOutlet weak var assumptionsField: UITextField!
+    @IBOutlet weak var assumptionsField: UITextView!
     
     @IBOutlet weak var finishedProductLabel: UILabel!
-    @IBOutlet weak var finishedProductField: UITextField!
+    @IBOutlet weak var finishedProductField: UITextView!
     
     @IBOutlet weak var mvpLabel: UILabel!
-    @IBOutlet weak var mvpField: UITextField!
+    @IBOutlet weak var mvpField: UITextView!
     
     @IBOutlet weak var deleteProductButton: UIButton!
     
@@ -62,11 +62,27 @@ class EditProductViewController: UITableViewController {
     
     // Actions
     @IBAction func deleteProductAction(sender: AnyObject) {
-        JSONHelper.deleteProduct(product.id) { (bool, error) in
-            print("DELETED PRODUCT")
-            UpdateHelper.productsUpdated = false
-            self.navigationController?.popToRootViewControllerAnimated(true)
+        
+        let alert = UIAlertController(title: "Delete Product", message: "Are you sure you want to delete " + product.name + "?", preferredStyle: .Alert)
+        
+        let okAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            //print("Cancel!")
         }
+        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) {
+            UIAlertAction in
+            
+            JSONHelper.deleteProduct(self.product.id) { (bool, error) in
+                //print("DELETED PRODUCT")
+                UpdateHelper.productsUpdated = false
+                self.navigationController?.popToRootViewControllerAnimated(true)
+            }
+        }
+        
+        alert.addAction(okAction)
+        alert.addAction(deleteAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func cancelBarAction(sender: AnyObject) {
@@ -137,6 +153,31 @@ class EditProductViewController: UITableViewController {
         
         advisorField.inputView = pickerView
         courseField.inputView = pickerView
+        
+        // Set up description view properly
+        valuePropField.layer.borderWidth = 0.5
+        valuePropField.layer.borderColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1).CGColor
+        valuePropField.layer.cornerRadius = 5
+        
+        // Set up description view properly
+        customerField.layer.borderWidth = 0.5
+        customerField.layer.borderColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1).CGColor
+        customerField.layer.cornerRadius = 5
+        
+        // Set up description view properly
+        assumptionsField.layer.borderWidth = 0.5
+        assumptionsField.layer.borderColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1).CGColor
+        assumptionsField.layer.cornerRadius = 5
+        
+        // Set up description view properly
+        finishedProductField.layer.borderWidth = 0.5
+        finishedProductField.layer.borderColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1).CGColor
+        finishedProductField.layer.cornerRadius = 5
+        
+        // Set up description view properly
+        mvpField.layer.borderWidth = 0.5
+        mvpField.layer.borderColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1).CGColor
+        mvpField.layer.cornerRadius = 5
         
         // Set up delete product
         deleteProductButton.layer.cornerRadius = 5

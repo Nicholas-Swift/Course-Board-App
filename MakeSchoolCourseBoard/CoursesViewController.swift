@@ -23,6 +23,7 @@ class CoursesViewController: UIViewController {
         super.viewDidLoad()
         
         // Update
+        tableView.alpha = 0
         update()
         
         // Pull to refresh to put everything in
@@ -42,17 +43,19 @@ class CoursesViewController: UIViewController {
     
     func update() {
         // Remove ability to add course if user is a student
+        
         if LoginHelper.role == "Student" {
             addBarButton.enabled = false
-            addBarButton.image = nil
+            addBarButton.tintColor = UIColor.whiteColor()
+        }
+        else {
+            addBarButton.enabled = true
+            addBarButton.tintColor = ColorHelper.blueColor
         }
         
         // Get courses and fill tableview
-        tableView.alpha = 0
+        //tableView.alpha = 0
         JSONHelper.getAllCourses({ (courses, error) in
-            
-            // End refreshing
-            self.refreshControl.endRefreshing()
             
             if error == nil {
                 if let courses = courses {
@@ -70,13 +73,17 @@ class CoursesViewController: UIViewController {
             else {
                 UpdateHelper.coursesUpdated = false
             }
+            
+            // End refreshing
+            self.refreshControl.endRefreshing()
         })
     }
     
     override func viewWillAppear(animated: Bool) {
+
         // Update
         if UpdateHelper.coursesUpdated == false {
-            update()
+            self.update()
             UpdateHelper.coursesUpdated = true
         }
         

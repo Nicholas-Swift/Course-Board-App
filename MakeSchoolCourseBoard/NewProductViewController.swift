@@ -21,7 +21,8 @@ class NewProductViewController: UITableViewController {
     @IBOutlet weak var productNameField: UITextField!
     @IBOutlet weak var advisorField: UITextField!
     @IBOutlet weak var courseField: UITextField!
-    @IBOutlet weak var problemField: UITextField!
+    @IBOutlet weak var problemTextView: UITextView!
+    
     
     // For picker view
     var instructors: [User] = []
@@ -43,7 +44,7 @@ class NewProductViewController: UITableViewController {
         productNameLabel.textColor = UIColor.blackColor(); advisorLabel.textColor = UIColor.blackColor(); courseLabel.textColor = UIColor.blackColor(); problemLabel.textColor = UIColor.blackColor();
         
         let name = productNameField.text ?? ""
-        let problem = problemField.text ?? ""
+        let problem = problemTextView.text ?? ""
         
         var save = true
         
@@ -87,6 +88,11 @@ class NewProductViewController: UITableViewController {
         
         advisorField.inputView = pickerView
         courseField.inputView = pickerView
+        
+        // Set up description view properly
+        problemTextView.layer.borderWidth = 0.5
+        problemTextView.layer.borderColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1).CGColor
+        problemTextView.layer.cornerRadius = 5
         
         // For keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewProductViewController.dismissKeyboard))

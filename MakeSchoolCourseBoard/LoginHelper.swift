@@ -16,6 +16,7 @@ class LoginHelper {
     static var token: String!
     
     static var id: String!
+    static var fullname: String!
     static var role: String!
     
     // Log in to account
@@ -43,6 +44,7 @@ class LoginHelper {
                     
                     JSONHelper.getMe({ (user, error) in
                         self.id = user.id
+                        self.fullname = user.fullname
                         self.role = user.role
                         complete(success: true, error: nil)
                     })

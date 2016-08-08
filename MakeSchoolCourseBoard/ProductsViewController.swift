@@ -21,6 +21,7 @@ class ProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.alpha = 0
         update()
         
         // Pull to refresh to put everything in
@@ -55,7 +56,7 @@ class ProductsViewController: UIViewController {
     
     func update() {
         // Get courses and fill tableview
-        tableView.alpha = 0
+        //tableView.alpha = 0
         JSONHelper.getAllProducts({ (products, error) in
             
             // End refreshing

@@ -238,12 +238,22 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
         // Set up the info cell
         
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("testCell") as! AccountInfoCell
+            
+            var idStr = "testCell2"
+            
+            if id == nil || id == "" {
+                idStr = "testCell"
+            }
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(idStr) as! AccountInfoCell
             cell.setup()
             
             cell.fullnameLabel.text = user.fullname ?? ""
             cell.usernameLabel.text = user.username ?? ""
-            cell.emailLabel.text = user.email ?? ""
+            
+            if id == nil || id == "" {
+                cell.emailLabel.text = user.email ?? ""
+            }
             
             return cell
         }
