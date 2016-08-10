@@ -41,7 +41,6 @@ class LoginHelper {
                     
                     // Set the token
                     token = json["token"].stringValue
-                    print(token)
                     
                     JSONHelper.getMe({ (user, error) in
                         self.id = user.id

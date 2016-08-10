@@ -35,11 +35,21 @@ class SettingsViewController: UITableViewController {
     let roles = ["Student", "Instructor", "Staff"]
     
     // Actions
+    
+    var photoTakingHelper: PhotoTakingHelper?
     @IBAction func changePictureAction(sender: AnyObject) {
-        
-        print("CHANGE PICTURE PLEASE")
-        
+        takePhoto()
     }
+    
+    func takePhoto() {
+        // instantiate photo taking class, provide callback for when photo is selected
+        photoTakingHelper = PhotoTakingHelper(viewController: self.tabBarController!) { (image: UIImage?) in
+            self.profilePicture.image = image
+            self.profilePicture.layer.cornerRadius = 5
+            self.profilePicture.layer.masksToBounds = true
+        }
+    }
+    
     
     @IBAction func logoutAction(sender: AnyObject) {
         LoginHelper.logout()
@@ -88,11 +98,13 @@ class SettingsViewController: UITableViewController {
         if update == true {
             UpdateHelper.updateAll()
             LoginHelper.role = role!
-            print("updateAll In Settings")
+            //print("updateAll In Settings")
             
             JSONHelper.updateUser((first: first!, last: last!, username: username!, email: email!, role: role!)) { (bool, error) in
                 self.navigationController?.popViewControllerAnimated(true)
             }
+            
+            FirebaseHelper.uploadPic(profilePicture.image!)
             
         }
     }
@@ -114,6 +126,16 @@ class SettingsViewController: UITableViewController {
         // Set up profile picture image
         profilePicture.layer.cornerRadius = 5
         profilePicture.layer.masksToBounds = true
+        
+        FirebaseHelper.getPicUrl(LoginHelper.id) { (url, error) in
+            
+            if error == nil {
+                //let urlString = url
+                //print(urlString!)
+                
+                self.profilePicture.af_setImageWithURL(NSURL(string: url!)!)
+            }
+        }
         
         // Set up logout button
         logoutButton.layer.cornerRadius = 5

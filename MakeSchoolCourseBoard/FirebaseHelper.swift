@@ -24,8 +24,8 @@ class FirebaseHelper {
     static func uploadPic(image: UIImage) {
         
         // Create a reference to the path where you want to upload the file
-        let storageRef: FIRStorageReference = storRef.child("ProfileImages/\(LoginHelper.id).png")
-        let profileImageData = UIImagePNGRepresentation(image)
+        let storageRef: FIRStorageReference = storRef.child("ProfileImages/\(LoginHelper.id).jpg")
+        let profileImageData = UIImageJPEGRepresentation(image, 0.25)
         
         // Upload the file to the path defined above
         storageRef.putData(profileImageData!, metadata: nil) { metadata, error in

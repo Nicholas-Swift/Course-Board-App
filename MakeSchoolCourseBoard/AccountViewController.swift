@@ -21,6 +21,8 @@ class AccountViewController: UIViewController {
     var headerArray: [String] = []
     var headerDict: [String: Int] = [:]
     
+    var refreshControl: UIRefreshControl!
+    
     // For ViewController
     
     override func viewDidLoad() {
@@ -30,6 +32,11 @@ class AccountViewController: UIViewController {
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        // Pull to refresh to put everything in
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(AccountViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
+        
         // Change to not translucent
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
@@ -38,20 +45,30 @@ class AccountViewController: UIViewController {
         //self.tableView.separatorColor = UIColor.clearColor()
         
         // Update
+        tableView.alpha = 0
+        update()
+    }
+    
+    func refresh() {
         update()
     }
     
     override func viewWillAppear(animated: Bool) {
+        
         if UpdateHelper.accountUpdated == false {
             update()
             UpdateHelper.accountUpdated = true
         }
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        refreshControl.endRefreshing()
+    }
+    
+    
     // TO UPDATE!
     func update() {
         // Load account
-        tableView.alpha = 0
         loadAccount()
     }
     
@@ -82,6 +99,9 @@ class AccountViewController: UIViewController {
             else {
                 
             }
+            
+            // End refreshing
+            self.refreshControl.endRefreshing()
         }
     }
     
@@ -100,6 +120,9 @@ class AccountViewController: UIViewController {
             else {
                 UpdateHelper.accountUpdated = false
             }
+            
+            // End refreshing
+            self.refreshControl.endRefreshing()
         }
     }
     
@@ -115,7 +138,6 @@ class AccountViewController: UIViewController {
         
         // Courses
         var coursesNum = 0
-        print("\n\n\n\n\n \(user.courses.count)")
         if let _ = user.courses { coursesNum = user.courses.count }
         
         // Products
@@ -135,9 +157,7 @@ class AccountViewController: UIViewController {
                 removeArray.append(i)
             }
             else {
-                print(headerArray[i])
                 let one = headerArray[i]
-                print(tempArray[i])
                 let two = tempArray[i]
                 
                 headerDict[one] = two
@@ -172,7 +192,6 @@ class AccountViewController: UIViewController {
             let destination = segue.destinationViewController as! CourseViewController
             destination.id = id
             
-            print(id)
         }
             
             // If going to product
@@ -182,7 +201,6 @@ class AccountViewController: UIViewController {
             let destination = segue.destinationViewController as! ProductViewController
             destination.id = id
             
-            print(id)
         }
     }
     
@@ -334,7 +352,7 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if index >= 0 {
-            print("Segue to \(user.courses[index]) ... \(user.courseNames[index])")
+            //print("Segue to \(user.courses[index]) ... \(user.courseNames[index])")
             
             performSegueWithIdentifier("toCourse", sender: user.courses[index]) // Segue to account
         }
@@ -352,7 +370,7 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if index >= 0 {
-            print("Segue to \(user.products[index]) ... \(user.productNames[index])")
+            //print("Segue to \(user.products[index]) ... \(user.productNames[index])")
             
             performSegueWithIdentifier("toProduct", sender: user.products[index]) // Segue to account
         }

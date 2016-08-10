@@ -25,10 +25,11 @@ class CourseViewController: UIViewController {
             JSONHelper.enrollCourse(id) { (course, error) in
                 
                 // Change title and then update the previous screen to reload??
-                self.enrollBarButton.title = "Post"
+                self.enrollBarButton.title = nil //"Post"
+                self.enrollBarButton.image = UIImage(named: "Create New-50")
             }
         }
-        else if self.enrollBarButton.title == "Post" { // POST
+        else if self.enrollBarButton.image == UIImage(named: "Create New-50") { // POST
             
             performSegueWithIdentifier("newPost", sender: self)
         }
@@ -44,8 +45,8 @@ class CourseViewController: UIViewController {
         
         // Load Course
         tableView.alpha = 0
-        self.navigationItem.title = ""
-        self.enrollBarButton.title = " "
+        self.navigationItem.title = nil
+        self.enrollBarButton.title = nil
         loadCourse()
         
         // Table view remove separator
@@ -61,7 +62,6 @@ class CourseViewController: UIViewController {
         JSONHelper.getCourse(id) { (course, error) in
             
             if error == nil {
-                print(course?.endsOn)
                 self.course = course
                 
                 // Change navbar title
@@ -69,8 +69,8 @@ class CourseViewController: UIViewController {
                 
                 // Change the bar button to 'post' if student is enrolled in course.
                 if self.course.students.contains(LoginHelper.id) {
-                    self.enrollBarButton.title = "Post"
-                    //self.enrollBarButton.tintColor = UIColor.greenColor()
+                    self.enrollBarButton.title = nil //"Post"
+                    self.enrollBarButton.image = UIImage(named: "Create New-50")
                 }
                 else {
                     self.enrollBarButton.title = "Enroll"
@@ -139,9 +139,7 @@ class CourseViewController: UIViewController {
                 removeArray.append(i)
             }
             else {
-                print(headerArray[i])
                 let one = headerArray[i]
-                print(tempArray[i])
                 let two = tempArray[i]
                 
                 headerDict[one] = two
@@ -170,7 +168,6 @@ class CourseViewController: UIViewController {
             let destination = segue.destinationViewController as! AccountViewController
             destination.id = id
             
-            print(id)
         }
         
         // If going to product
@@ -180,7 +177,6 @@ class CourseViewController: UIViewController {
             let destination = segue.destinationViewController as! ProductViewController
             destination.id = id
             
-            print(id)
         }
         
         // If going to post
@@ -316,8 +312,8 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
     func cellInstructor(sender: UIButton) {
         //print(sender.titleLabel?.text)
         
-        print("instructor")
-        print("Segue to \(course.instructor) ... \(course.instructorName)")
+        //print("instructor")
+        //print("Segue to \(course.instructor) ... \(course.instructorName)")
         
         performSegueWithIdentifier("toAccount", sender: course.instructor) // Segue to account
     }
@@ -334,8 +330,8 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if index >= 0 {
-            print("student")
-            print("Segue to \(course.students[index]) ... \(course.studentNames[index])")
+            //print("student")
+            //print("Segue to \(course.students[index]) ... \(course.studentNames[index])")
             
             performSegueWithIdentifier("toAccount", sender: course.students[index]) // Segue to account
         }
@@ -353,7 +349,7 @@ extension CourseViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if index >= 0 {
-            print("Segue to \(course.products[index]) ... \(course.productNames[index])")
+            //print("Segue to \(course.products[index]) ... \(course.productNames[index])")
             
             performSegueWithIdentifier("toProduct", sender: course.products[index]) // Segue to account
         }

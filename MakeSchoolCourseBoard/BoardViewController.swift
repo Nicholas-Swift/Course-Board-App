@@ -37,7 +37,7 @@ class BoardViewController: UIViewController {
         tableView.addSubview(refreshControl)
         
         // no separator color
-        tableView.separatorColor = UIColor.clearColor()
+        //tableView.separatorColor = UIColor.clearColor()
         
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 150
@@ -55,7 +55,7 @@ class BoardViewController: UIViewController {
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewDidDisappear(animated: Bool) {
         refreshControl.endRefreshing()
     }
     
@@ -66,9 +66,6 @@ class BoardViewController: UIViewController {
     func loadPosts() {
         
         JSONHelper.getUserPosts(LoginHelper.id) { (posts, error) in
-            
-            // End refresh
-            self.refreshControl.endRefreshing()
             
             if error == nil {
                 self.posts = posts
@@ -82,6 +79,9 @@ class BoardViewController: UIViewController {
             else {
                 UpdateHelper.boardUpdated = false
             }
+            
+            // End refresh
+            self.refreshControl.endRefreshing()
         }
         
     }
@@ -102,7 +102,6 @@ class BoardViewController: UIViewController {
             let destination = segue.destinationViewController as! CourseViewController
             destination.id = id
             
-            print(id)
         }
     }
 }

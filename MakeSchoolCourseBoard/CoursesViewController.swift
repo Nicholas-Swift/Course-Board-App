@@ -93,7 +93,7 @@ class CoursesViewController: UIViewController {
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewDidDisappear(animated: Bool) {
         refreshControl.endRefreshing()
     }
     
@@ -124,10 +124,16 @@ extension CoursesViewController: UITableViewDelegate, UITableViewDataSource {
     // Set up stylistic properties
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == tableView.numberOfSections-1 {
+            return 10
+        }
         return 5
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 10
+        }
         return 5
     }
     
@@ -154,6 +160,6 @@ extension CoursesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 90
+        return 100
     }
 }

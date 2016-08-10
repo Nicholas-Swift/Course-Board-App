@@ -54,6 +54,10 @@ class ProductsViewController: UIViewController {
         }
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        refreshControl.endRefreshing()
+    }
+    
     func update() {
         // Get courses and fill tableview
         //tableView.alpha = 0
@@ -107,10 +111,18 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
     
     // For looks
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        if section == tableView.numberOfSections-1 {
+            return 10
+        }
+        
         return 5
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 10
+        }
         return 5
     }
     
@@ -125,7 +137,7 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 120
+        return 130
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

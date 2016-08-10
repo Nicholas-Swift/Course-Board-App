@@ -118,10 +118,10 @@ class EditProductViewController: UITableViewController {
             advisorLabel.textColor = UIColor.redColor()
             update = false
         }
-        if course == "" {
+        /*if course == "" {
             courseLabel.textColor = UIColor.redColor()
             update = false
-        }
+        }*/
         if problem == "" {
             problemLabel.textColor = UIColor.redColor()
             update = false
@@ -243,14 +243,21 @@ extension EditProductViewController: UITextFieldDelegate {
         if textField == advisorField {
             textFieldSelected = "advisor"
             pickerView.reloadAllComponents()
+            if instructors.count >= 0 {
+                advisorField.text = instructors[0].fullname
+                selectedInstructor = instructors[0].id
+            }
         }
         else if textField == courseField {
             textFieldSelected = "course"
             pickerView.reloadAllComponents()
+            if courses.count >= 0 {
+                courseField.text = courses[0].title
+                selectedCourse = courses[0].id
+            }
         }
         else {
             textFieldSelected = ""
-            pickerView.reloadAllComponents()
         }
         
         return true
@@ -292,12 +299,10 @@ extension EditProductViewController: UIPickerViewDelegate, UIPickerViewDataSourc
         if textFieldSelected == "advisor" {
             advisorField.text = instructors[row].fullname
             selectedInstructor = instructors[row].id
-            print(selectedInstructor)
         }
         else if textFieldSelected == "course" {
             courseField.text = courses[row].title
             selectedCourse = courses[row].id
-            print(selectedCourse)
         }
     }
     

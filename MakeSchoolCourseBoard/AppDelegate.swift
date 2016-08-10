@@ -8,21 +8,27 @@
 
 import UIKit
 import Firebase
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
         // Firebase
         FIRApp.configure()
         
+        // Fabric for Crashlytics
+        Fabric.with([Crashlytics()])
+        
         // Change tab bar and nav bar colors
         UITabBar.appearance().tintColor = ColorHelper.blueColor
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: ColorHelper.blueColor]
+        //UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: ColorHelper.blueColor]
+        UINavigationBar.appearance().titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Helvetica Neue", size: 20)!, NSForegroundColorAttributeName: ColorHelper.blueColor]
         
         return true
     }

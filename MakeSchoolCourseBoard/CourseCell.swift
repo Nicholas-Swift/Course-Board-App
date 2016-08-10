@@ -18,10 +18,10 @@ class CourseCell: UITableViewCell {
     @IBOutlet weak var cardView: UIView!
     
     func setupCard() {
-        cardView.layer.cornerRadius = 3
+        cardView.layer.cornerRadius = 2
         
         cardView.layer.shadowOffset = CGSizeMake(0.2, 0.2)
-        cardView.layer.shadowRadius = 2
+        cardView.layer.shadowRadius = 1
         cardView.layer.shadowOpacity = 0.2
     }
     

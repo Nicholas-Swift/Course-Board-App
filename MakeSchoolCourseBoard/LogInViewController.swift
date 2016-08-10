@@ -23,9 +23,13 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     
     @IBOutlet weak var logInButton: UIButton!
+    @IBOutlet weak var loadingImage: UIImageView!
     
     // Actions
     @IBAction func logInAction(sender: AnyObject) {
+        
+        // Show loading
+        loadingImage.hidden = false
         
         // Log In
         logInButton.enabled = false
@@ -38,6 +42,7 @@ class LogInViewController: UIViewController {
             
             if success {
                 // Success! Go to next view
+                
                 self.performSegueWithIdentifier("LogInSegue", sender: self)
             }
             else {
@@ -58,6 +63,8 @@ class LogInViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: click, style: .Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
+            
+            self.loadingImage.hidden = true
         }
     }
     
@@ -72,7 +79,6 @@ class LogInViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
         
     }
-    
     
     // For ViewController
     
@@ -90,6 +96,18 @@ class LogInViewController: UIViewController {
             
             self.logInButton.alpha = 1
         })
+        
+        // Set up text field delegates
+        usernameField.delegate = self
+        passwordField.delegate = self
+        
+        // Set up image gif
+        let strImg : String = "http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif"
+        let url: NSURL = NSURL(string: strImg)!
+        loadingImage.image = UIImage.animatedImageWithAnimatedGIFURL(url)
+        
+        loadingImage.hidden = true
+
         
         // For keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LogInViewController.dismissKeyboard))
@@ -153,4 +171,29 @@ class LogInViewController: UIViewController {
         }, completion: nil)
     }
 
+}
+
+extension LogInViewController: UITextFieldDelegate {
+    
+    // No weird animations
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        textField.resignFirstResponder()
+        textField.layoutIfNeeded()
+    }
+    
+    // Return key moves the cursor or logs in
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == self.usernameField {
+            passwordField.becomeFirstResponder()
+            usernameField.resignFirstResponder()
+            //passwordField.becomeFirstResponder()
+        }
+        else if textField == self.passwordField {
+            self.logInAction(self)
+        }
+        
+        return true
+    }
 }

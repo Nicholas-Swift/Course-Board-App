@@ -135,7 +135,6 @@ class NewCourseViewController: UITableViewController {
         
         if update == true {
             JSONHelper.addCourse((instructor: instructor, title: title, description: description, startsOn: startsOn, endsOn: endsOn, location: location, hours: hours, objectives: objectives)) { (bool, error) in
-                print("added")
                 UpdateHelper.coursesUpdated = false
                 self.navigationController?.popViewControllerAnimated(true)
             }
@@ -364,7 +363,7 @@ class NewCourseViewController: UITableViewController {
             startDateField.text = dateString
             
             // Set up selected start in correct format for website
-            print(DateHelper.toWebDate(String(datePicker.date)))
+            //print(DateHelper.toWebDate(String(datePicker.date)))
             selectedStart = DateHelper.toWebDate(String(datePicker.date))
         }
         else if textFieldSelected == "end" {
@@ -376,7 +375,7 @@ class NewCourseViewController: UITableViewController {
             endDateField.text = dateString
             
             // Set up selected end in correct format for website
-            print(DateHelper.toWebDate(String(datePicker.date)))
+            //print(DateHelper.toWebDate(String(datePicker.date)))
             selectedEnd = DateHelper.toWebDate(String(datePicker.date))
         }
     }
@@ -464,12 +463,10 @@ extension NewCourseViewController: UITextFieldDelegate {
         }
         else if textField == startDateField {
             textFieldSelected = "start"
-            print("START")
             pickerView.reloadAllComponents()
         }
         else if textField == endDateField {
             textFieldSelected = "end"
-            print("END")
             pickerView.reloadAllComponents()
         }
         else {
@@ -510,7 +507,7 @@ extension NewCourseViewController: UIPickerViewDelegate, UIPickerViewDataSource 
         if textFieldSelected == "instructor" {
             instructorField.text = instructors[row].fullname
             selectedInstructor = instructors[row].id
-            print(selectedInstructor)
+            //print(selectedInstructor)
         }
     }
     

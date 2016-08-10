@@ -45,7 +45,7 @@ class NewPostViewController: UIViewController {
         let course = selectedCourse ?? ""
         let body = bodyText.text ?? ""
         
-        if course == "" && body == ""{
+        if course == "" && (body == "" || body == "Enter text here...") {
             let alert = UIAlertController(title: "Missing Fields", message: "Please pick a course to post to and add a message to post", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             
@@ -57,21 +57,37 @@ class NewPostViewController: UIViewController {
             
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        if body == "" {
+        if (body == "" || body == "Enter text here...") {
             let alert = UIAlertController(title: "Missing Field", message: "Please add a message to your post", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             
             self.presentViewController(alert, animated: true, completion: nil)
         }
         
-        print(course)
-        print(body)
-        
 //        JSONHelper.newPost((courseId: course, body: body)) { (bool, error) in
 //            print("DONE")
 //            UpdateHelper.boardUpdated = false
 //            self.navigationController?.popViewControllerAnimated(true)
 //        }
+        
+        let alert = UIAlertController(title: "Create a new post?", message: nil, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Destructive) {
+            UIAlertAction in
+        }
+        let okAction = UIAlertAction(title: "OK", style: .Default) {
+            UIAlertAction in
+            
+            JSONHelper.newPost((courseId: course, body: body)) { (bool, error) in
+                UpdateHelper.boardUpdated = false
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
         
     }
     
@@ -129,8 +145,8 @@ class NewPostViewController: UIViewController {
     func setupBodyDefaultText(myBool: Bool) {
         
         if myBool == true {
-            bodyText.text = "Enter text here"
-            bodyText.textColor = UIColor.lightGrayColor()
+            bodyText.text = "Enter text here..."
+            bodyText.textColor = UIColor.darkGrayColor()
         }
         else {
             bodyText.text = ""
@@ -187,8 +203,18 @@ extension NewPostViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         pickerView.reloadAllComponents()
+        if courses.count >= 0 {
+            courseField.text = courses[0].title
+            selectedCourse = courses[0].id
+        }
         return true
     }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        textField.resignFirstResponder()
+        textField.layoutIfNeeded()
+    }
+    
     
 }
 

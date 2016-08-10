@@ -177,17 +177,13 @@ class JSONHelper {
         tempDict["hours"] = tuple.hours
         tempDict["objectives"] = tuple.objectives
         
-        print(tempDict)
         
         // Must include course or the server crashes
         Alamofire.request(.POST, apiToContact, headers: headers, parameters: tempDict, encoding: .JSON).validate().responseJSON() { response in
-            print(response)
             switch response.result {
             case .Success:
                 if let value = response.result.value {
-                    let json = JSON(value)
-                    print(json)
-                    print("complete")
+                    _ = JSON(value)
                     
                     complete(bool: true, error: nil)
                 }
@@ -260,8 +256,6 @@ class JSONHelper {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
-                    
-                    print(json)
                         
                     let product = Product()
                         
@@ -354,13 +348,10 @@ class JSONHelper {
         
         // Make the request
         Alamofire.request(.POST, apiToContact, headers: headers, parameters: tempDict, encoding: .JSON).validate().responseJSON() { response in
-            print(response)
             switch response.result {
             case .Success:
                 if let value = response.result.value {
-                    let json = JSON(value)
-                    print(json)
-                    print("complete")
+                    let _ = JSON(value)
                     
                     complete(bool: true, error: nil)
                     
@@ -378,7 +369,6 @@ class JSONHelper {
         
         // Call the api
         let apiToContact = JSONHelper.baseApi + "products/" + tuple.id
-        print("\n\n\n\n" + apiToContact + "\n\n\n\n")
         
         // Set up headers
         let headers = ["Authorization": "Basic " + LoginHelper.token]
@@ -446,13 +436,10 @@ class JSONHelper {
 
         // Must include course or the server crashes
         Alamofire.request(.DELETE, apiToContact, headers: headers, encoding: .JSON).validate().responseJSON() { response in
-            print(response)
             switch response.result {
             case .Success:
                 if let value = response.result.value {
-                    let json = JSON(value)
-                    print(json)
-                    print("complete")
+                    _ = JSON(value)
                     
                     complete(bool: true, error: nil)
                     
@@ -483,8 +470,6 @@ class JSONHelper {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
-                    
-                    print(json)
                     
                     let user = User()
                     
@@ -523,14 +508,12 @@ class JSONHelper {
                     
                     user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
                     let temp = json["enrolledCourses"].arrayValue.map{$0["_id"].stringValue}
-                    print(temp)
                     for thing in temp {
                         user.courses.append(thing)
                     }
                     
                     user.courseNames = json["courses"].arrayValue.map{$0["title"].stringValue}
                     let temp2 = json["enrolledCourses"].arrayValue.map{$0["title"].stringValue};
-                    print(temp2)
                     for thing in temp2 {
                         user.courseNames.append(thing)
                     }
@@ -719,8 +702,6 @@ class JSONHelper {
                 if let value = response.result.value {
                     let json = JSON(value)
                     
-                    print(json)
-                    
                     var posts: [Post] = []
                     for i in 0..<json.count {
                         let post = Post()
@@ -761,8 +742,6 @@ class JSONHelper {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
-                    
-                    print(json)
                     
                     var posts: [Post] = []
                     for i in 0..<json.count {
@@ -806,13 +785,10 @@ class JSONHelper {
         
         // Send request to server
         Alamofire.request(.POST, apiToContact, headers: headers, parameters: tempDict, encoding: .JSON).validate().responseJSON() { response in
-            print(response)
             switch response.result {
             case .Success:
                 if let value = response.result.value {
-                    let json = JSON(value)
-                    print(json)
-                    print("complete")
+                    _ = JSON(value)
                     
                     complete(bool: true, error: nil)
                     

@@ -188,12 +188,10 @@ extension NewProductViewController: UIPickerViewDelegate, UIPickerViewDataSource
         if textFieldSelected == "advisor" {
             advisorField.text = instructors[row].fullname
             selectedInstructor = instructors[row].id
-            print(selectedInstructor)
         }
         else if textFieldSelected == "course" {
             courseField.text = courses[row].title
             selectedCourse = courses[row].id
-            print(selectedCourse)
         }
     }
     

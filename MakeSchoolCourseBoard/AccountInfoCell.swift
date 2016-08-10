@@ -26,8 +26,8 @@ class AccountInfoCell: UITableViewCell {
         FirebaseHelper.getPicUrl(id) { (url, error) in
             
             if error == nil {
-                let urlString = url
-                print(urlString!)
+                //let urlString = url
+                //print(urlString!)
                 
                 self.profilePic.af_setImageWithURL(NSURL(string: url!)!)
             }

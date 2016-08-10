@@ -25,14 +25,12 @@ class ProductViewController: UIViewController {
             JSONHelper.joinProduct(id) { (course, error) in
                 
                 // Change title and reload previous screen!
-                self.joinBarButton.title = "Edit"
-                UpdateHelper.productsUpdated = false
-                UpdateHelper.accountUpdated = false
-                UpdateHelper.coursesUpdated = false
-                UpdateHelper.boardUpdated = false
+                self.joinBarButton.title = nil //"Edit"
+                self.joinBarButton.image = UIImage(named: "Edit Property-50")
+                UpdateHelper.updateAll()
             }
         }
-        else if self.joinBarButton.title == "Edit" { // EDIT PRODUCT
+        else if self.joinBarButton.image == UIImage(named: "Edit Property-50") { // EDIT PRODUCT
             performSegueWithIdentifier("editProduct", sender: self)
         }
     }
@@ -46,8 +44,8 @@ class ProductViewController: UIViewController {
         
         // Load product
         tableView.alpha = 0
-        self.navigationItem.title = ""
-        self.joinBarButton.title = " "
+        self.navigationItem.title = nil
+        self.joinBarButton.title = nil
         loadProduct()
         
         // Let the cells resize to the correct height based on information
@@ -69,8 +67,8 @@ class ProductViewController: UIViewController {
                 
                 // Change the bar button to 'joined' if student is joined in product.
                 if self.product.contributors.contains(LoginHelper.id) {
-                    self.joinBarButton.title = "Edit"
-                    //self.joinBarButton.tintColor = ()
+                    self.joinBarButton.title = nil //"Edit"
+                    self.joinBarButton.image = UIImage(named: "Edit Property-50")
                 }
                 else {
                     self.joinBarButton.title = "Join"
@@ -147,9 +145,9 @@ class ProductViewController: UIViewController {
                 removeArray.append(i)
             }
             else {
-                print(headerArray[i])
+                //print(headerArray[i])
                 let one = headerArray[i]
-                print(tempArray[i])
+                //print(tempArray[i])
                 let two = tempArray[i]
                 
                 headerDict[one] = two
@@ -178,7 +176,7 @@ class ProductViewController: UIViewController {
             let destination = segue.destinationViewController as! AccountViewController
             destination.id = id
             
-            print(id)
+            //print(id)
         }
         else if segue.identifier == "editProduct" {
             let destination = segue.destinationViewController as! EditProductViewController
@@ -268,16 +266,18 @@ extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
         else if headerArray[indexPath.section] == tempArray[4] {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! CourseTextCell
             
-            cell.infoButton.setTitle(product.finishedProduct ?? "", forState: .Normal)
+            //cell.infoButton.setTitle(product.finishedProduct ?? "", forState: .Normal)
+            cell.infoLabel.text = self.product.finishedProduct ?? ""
             
             return cell
         }
         else if headerArray[indexPath.section] == tempArray[5] {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell") as! CourseButtonCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! CourseTextCell
             
-            cell.infoButton.setTitle(product.mvp ?? "", forState: .Normal)
+            //cell.infoButton.setTitle(product.mvp ?? "", forState: .Normal)
+            cell.infoLabel.text = self.product.mvp ?? ""
             
             return cell
         }
@@ -345,7 +345,7 @@ extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
     func cellAdvisor(sender: UIButton) {
         //print(sender.titleLabel?.text)
         
-        print("Segue to \(product.instructor) ... \(product.instructorName)")
+        //print("Segue to \(product.instructor) ... \(product.instructorName)")
         
         performSegueWithIdentifier("toAccount", sender: product.instructor) // Segue to account
     }
@@ -362,7 +362,7 @@ extension ProductViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if index >= 0 {
-            print("Segue to \(product.contributors[index]) ... \(product.contributorNames[index])")
+            //print("Segue to \(product.contributors[index]) ... \(product.contributorNames[index])")
             
             performSegueWithIdentifier("toAccount", sender: product.contributors[index]) // Segue to account
         }
