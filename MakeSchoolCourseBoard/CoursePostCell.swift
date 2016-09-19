@@ -33,7 +33,11 @@ class CoursePostCell: UITableViewCell {
     
     func setupProfile(id: String) {
         // Set up image
-        profileImageView.layer.cornerRadius = 5
+        
+        //profileImageView.layer.cornerRadius = 5
+        profileImageView.layer.borderColor = ColorHelper.lightGrayColor.CGColor
+        profileImageView.layer.borderWidth = 0.5
+        
         profileImageView.layer.masksToBounds = true
         
         FirebaseHelper.getPicUrl(id) { (url, error) in

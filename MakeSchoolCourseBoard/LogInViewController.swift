@@ -80,10 +80,44 @@ class LogInViewController: UIViewController {
         
     }
     
+    // Other
+    
+    func attemptLogin() {
+        
+        self.loadingImage.hidden = false
+        
+        // Get the token from NSUserDefaults
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let savedToken = defaults.stringForKey("token") {
+            print(savedToken)
+            
+            LoginHelper.login(savedToken, complete: { (success, error) in
+                if success {
+                    // Success! Go to next view
+                    
+                    self.performSegueWithIdentifier("LogInSegue", sender: self)
+                }
+                else {
+                    print("Logging in with token failed")
+                }
+            })
+            
+            self.loadingImage.hidden = true
+            
+        }
+        else {
+            print("Logging in with token failed")
+        }
+        
+    }
+    
     // For ViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Try to log in with saved jwttoken
+        attemptLogin()
         
         // Initial animations
         usernameField.alpha = 0

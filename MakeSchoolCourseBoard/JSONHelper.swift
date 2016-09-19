@@ -263,7 +263,7 @@ class JSONHelper {
                         
                     product.createdAt = json["createdAt"].stringValue
                     product.updatedAt = json["updatedAt"].stringValue
-                        
+                    
                     product.name = json["name"].stringValue
                     product.instructor = json["instructor"]["_id"].stringValue
                     product.instructorName = json["instructor"]["fullname"].stringValue // for instructor
@@ -284,7 +284,7 @@ class JSONHelper {
                     product.mvp = json["mvp"].stringValue //???
                         
                     product.contributors = json["contributors"].arrayValue.map{$0["_id"].stringValue}
-                    product.contributorNames = json["contributors"].arrayValue.map{$0["fullname"].stringValue}
+                    product.contributorNames = json["contributors"].arrayValue.map{$0["username"].stringValue}
                     
                     // complete and return product
                     complete(product: product, error: nil)

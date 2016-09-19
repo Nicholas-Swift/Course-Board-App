@@ -20,7 +20,12 @@ class AccountInfoCell: UITableViewCell {
     @IBOutlet weak var emailLabel: UILabel!
     
     func setup(id: String) {
-        profilePic.layer.cornerRadius = 4
+        // Set up image
+        
+        //profileImageView.layer.cornerRadius = 5
+        profilePic.layer.borderColor = ColorHelper.lightGrayColor.CGColor
+        profilePic.layer.borderWidth = 0.5
+        
         profilePic.layer.masksToBounds = true
 
         FirebaseHelper.getPicUrl(id) { (url, error) in

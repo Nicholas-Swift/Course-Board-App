@@ -42,6 +42,10 @@ class LoginHelper {
                     // Set the token
                     token = json["token"].stringValue
                     
+                    // Save the loaded JWT token
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setObject(token, forKey: "token")
+                    
                     JSONHelper.getMe({ (user, error) in
                         self.id = user.id
                         self.fullname = user.fullname
@@ -61,10 +65,39 @@ class LoginHelper {
         }
     }
     
+    static func login(token: String, complete: (success: Bool, error: NSError?) -> Void) {
+        
+        // Set the token
+        self.token = token
+        
+        // Check the token
+        JSONHelper.getMe({ (user, error) in
+            
+            if user != nil {
+                self.id = user.id
+                self.fullname = user.fullname
+                self.role = user.role
+                
+                complete(success: true, error: nil)
+            }
+            else {
+                self.token = nil
+                
+                complete(success: false, error: error)
+            }
+            
+        })
+        
+    }
+    
     static func logout() {
         token = nil
         id = nil
         role = nil
+        
+        // Remove the default JWT token
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(nil, forKey: "token")
         
         UpdateHelper.updateAll()
     }

@@ -128,7 +128,11 @@ class NewPostViewController: UIViewController {
         }
         
         // Set up image
-        profilePic.layer.cornerRadius = 5
+        
+        //profileImageView.layer.cornerRadius = 5
+        profilePic.layer.borderColor = ColorHelper.lightGrayColor.CGColor
+        profilePic.layer.borderWidth = 0.5
+        
         profilePic.layer.masksToBounds = true
         
         FirebaseHelper.getPicUrl(LoginHelper.id) { (url, error) in
