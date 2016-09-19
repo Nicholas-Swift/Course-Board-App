@@ -89,7 +89,7 @@ class LogInViewController: UIViewController {
         // Get the token from NSUserDefaults
         let defaults = NSUserDefaults.standardUserDefaults()
         if let savedToken = defaults.stringForKey("token") {
-            print(savedToken)
+            //print(savedToken)
             
             LoginHelper.login(savedToken, complete: { (success, error) in
                 if success {
@@ -98,7 +98,19 @@ class LogInViewController: UIViewController {
                     self.performSegueWithIdentifier("LogInSegue", sender: self)
                 }
                 else {
-                    print("Logging in with token failed")
+                    var title = "Incorrect email or password"
+                    var message = "The email or password you entered is incorrect. Please try again."
+                    var click = "OK"
+                    
+                    if error!.code != -6003 {
+                        title = "Cannot connect to server"
+                        message = "Make sure you are connected to the internet."
+                        click = "OK"
+                    }
+                    
+                    let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: click, style: .Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
             })
             
@@ -106,7 +118,7 @@ class LogInViewController: UIViewController {
             
         }
         else {
-            print("Logging in with token failed")
+            print("No token found")
         }
         
     }
