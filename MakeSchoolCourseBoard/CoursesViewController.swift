@@ -22,6 +22,10 @@ class CoursesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set up Nav Bar style
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage.imageWithColor(UIColor.whiteColor()), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage.imageWithColor(ColorHelper.redditLightGrayColor)
+        
         // Update
         tableView.alpha = 0
         update()
@@ -35,6 +39,9 @@ class CoursesViewController: UIViewController {
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
         self.tabBarController?.tabBar.translucent = false
+        
+        // Remove separator color
+        self.tableView.separatorColor = UIColor.clearColor()
     }
     
     func refresh() {

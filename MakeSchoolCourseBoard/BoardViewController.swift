@@ -22,10 +22,19 @@ class BoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Change to not translucent
+        // Set up Tab Bar style
+        self.tabBarController?.tabBar.layer.borderWidth = 0.5
+        self.tabBarController?.tabBar.layer.borderColor = ColorHelper.redditLightGrayColor.CGColor
+        self.tabBarController?.tabBar.clipsToBounds = true
+        
+        self.tabBarController?.tabBar.translucent = false
+        
+        // Set up Nav Bar style
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage.imageWithColor(UIColor.whiteColor()), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage.imageWithColor(ColorHelper.redditLightGrayColor)
+        
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = ColorHelper.blueColor
-        self.tabBarController?.tabBar.translucent = false
         
         // Load posts
         tableView.alpha = 0
@@ -37,7 +46,7 @@ class BoardViewController: UIViewController {
         tableView.addSubview(refreshControl)
         
         // no separator color
-        //tableView.separatorColor = UIColor.clearColor()
+        tableView.separatorColor = UIColor.clearColor()
         
         // Let the cells resize to the correct height based on information
         tableView.estimatedRowHeight = 150

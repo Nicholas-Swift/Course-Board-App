@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Change tab bar and nav bar colors
         UITabBar.appearance().tintColor = ColorHelper.blueColor
+        
+        UITabBar.appearance().translucent = false
+        
         //UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: ColorHelper.blueColor]
         UINavigationBar.appearance().titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Helvetica Neue", size: 20)!, NSForegroundColorAttributeName: ColorHelper.blueColor]
         
