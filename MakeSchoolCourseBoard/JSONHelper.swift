@@ -571,7 +571,17 @@ class JSONHelper {
                     user.role = json["role"].stringValue
                     
                     user.courses = json["courses"].arrayValue.map{$0["_id"].stringValue}
+                    let temp = json["enrolledCourses"].arrayValue.map{$0["_id"].stringValue}
+                    for thing in temp {
+                        user.courses.append(thing)
+                    }
+                    
                     user.courseNames = json["courses"].arrayValue.map{$0["title"].stringValue}
+                    let temp2 = json["enrolledCourses"].arrayValue.map{$0["title"].stringValue};
+                    for thing in temp2 {
+                        user.courseNames.append(thing)
+                    }
+                    
                     user.products = json["products"].arrayValue.map{$0["_id"].stringValue}
                     user.productNames = json["products"].arrayValue.map{$0["name"].stringValue}
                     user.posts = json["posts"].arrayValue.map{$0.stringValue}
