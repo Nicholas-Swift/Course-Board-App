@@ -258,7 +258,7 @@ class JSONHelper {
                     let json = JSON(value)
                         
                     let product = Product()
-                        
+                    
                     product.id = json["_id"].stringValue
                         
                     product.createdAt = json["createdAt"].stringValue
@@ -269,7 +269,7 @@ class JSONHelper {
                     product.instructorName = json["instructor"]["fullname"].stringValue // for instructor
                     product.course = json["course"].stringValue
                     product.problem = json["problem"].stringValue
-                        
+                    
                     product.valueProp = json["valueProp"].stringValue
                     product.githubUrl = json["githubUrl"].stringValue
                     product.agileUrl = json["agileUrl"].stringValue

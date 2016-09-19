@@ -123,8 +123,10 @@ class SettingsViewController: UITableViewController {
         emailField.text = user.email ?? ""
         roleField.text = user.role ?? ""
         
-        // Set up profile picture image
-        profilePicture.layer.cornerRadius = 5
+        // Set up profile picture
+        //profilePicture.layer.cornerRadius = 5
+        profilePicture.layer.borderColor = ColorHelper.lightGrayColor.CGColor
+        profilePicture.layer.borderWidth = 0.5
         profilePicture.layer.masksToBounds = true
         
         FirebaseHelper.getPicUrl(LoginHelper.id) { (url, error) in

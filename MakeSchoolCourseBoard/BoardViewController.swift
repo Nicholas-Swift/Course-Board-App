@@ -104,6 +104,7 @@ class BoardViewController: UIViewController {
             
         }
     }
+    
 }
 
 extension BoardViewController: UITableViewDelegate, UITableViewDataSource {

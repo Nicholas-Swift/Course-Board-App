@@ -41,21 +41,8 @@ class CoursePostCell: UITableViewCell {
         profileImageView.layer.masksToBounds = true
         
         FirebaseHelper.getPicUrl(id) { (url, error) in
-            
             if error == nil {
-                //let urlString = url
-                
-                self.profileImageView.af_setImageWithURL(NSURL(string: url!)!)
-//                let newImage = UIImageView()
-//                newImage.af_setImageWithURL(NSURL(string: url!)!)
-//                
-//                let toImage = newImage.image
-//                
-//                UIView.transitionWithView(self.profileImageView,
-//                                          duration:0.1,
-//                                          options: UIViewAnimationOptions.TransitionCrossDissolve,
-//                                          animations: { self.profileImageView.image = toImage },
-//                                          completion: nil)
+                self.profileImageView.loadImageUsingCacheWithUrlString(url!)
             }
         }
     }

@@ -29,6 +29,7 @@
 		0170D31D1D3570000008BB0C /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0170D31C1D3570000008BB0C /* AccountViewController.swift */; };
 		0170D3221D3593BB0008BB0C /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0170D3211D3593BB0008BB0C /* ProductViewController.swift */; };
 		0170FAC61D592B7200EA04FF /* PhotoTakingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0170FAC51D592B7200EA04FF /* PhotoTakingHelper.swift */; };
+		017DF2611D8FB27100660ADC /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017DF2601D8FB27100660ADC /* ImageHelper.swift */; };
 		01A2CB7C1D394E1F000EDD2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7B1D394E1F000EDD2B /* User.swift */; };
 		01A2CB7E1D394E2F000EDD2B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2CB7D1D394E2F000EDD2B /* Post.swift */; };
 		01A853701D4495B900046207 /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A8536F1D4495B900046207 /* BoardViewController.swift */; };
@@ -77,6 +78,7 @@
 		0170D3211D3593BB0008BB0C /* ProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
 		0170FAC51D592B7200EA04FF /* PhotoTakingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTakingHelper.swift; sourceTree = "<group>"; };
 		0170FAF71D59669400EA04FF /* MakeSchoolCourseBoard-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MakeSchoolCourseBoard-Bridging-Header.h"; sourceTree = "<group>"; };
+		017DF2601D8FB27100660ADC /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		01A2CB7B1D394E1F000EDD2B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		01A2CB7D1D394E2F000EDD2B /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		01A8536F1D4495B900046207 /* BoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				01C1A44B1D48178B00D0BE5C /* FirebaseHelper.swift */,
 				01C1AF971D482B1F00CDE302 /* UpdateHelper.swift */,
 				0170FAC51D592B7200EA04FF /* PhotoTakingHelper.swift */,
+				017DF2601D8FB27100660ADC /* ImageHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				01D20C581D5137FE0075A076 /* NewPostViewController.swift in Sources */,
 				0113B0861D36EB93003AD618 /* JSONHelper.swift in Sources */,
 				0170FAC61D592B7200EA04FF /* PhotoTakingHelper.swift in Sources */,
+				017DF2611D8FB27100660ADC /* ImageHelper.swift in Sources */,
 				01B5F72B1D8F25CF00F4FBE3 /* UIImage+animatedGIF.m in Sources */,
 				01DDE8CD1D4BF68D00CDCA7A /* EditProductViewController.swift in Sources */,
 				014181451D497CF7005381C2 /* SettingsViewController.swift in Sources */,
