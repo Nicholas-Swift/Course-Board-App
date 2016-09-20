@@ -4,9 +4,11 @@ TODO:
 	* Add a disclosure indicator to delete your post if it's your post.
 
 * Course
+	* Add location, hours, and people to courses
 	* Change the edit button to a "..." button for reddit-like options to "Create New Post", "Unenroll from Course", "others...."
 
 * Product
+	* Add contributors and created on for products
 	* Change the edit button to a "..." button for a reddit-like options to "Leave product team", "Edit Product", "Delete Product"
 
 * Profile
